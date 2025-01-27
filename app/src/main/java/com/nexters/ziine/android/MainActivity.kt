@@ -1,17 +1,16 @@
-package com.nexters.ziine.android
+package com.nexters.ziine.android.presentation.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.nexters.ziine.android.ui.theme.ZiineTheme
+import com.nexters.ziine.android.presentation.navigation.ZiineNavHost
+import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,29 +18,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ZiineTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = MaterialTheme.colorScheme.background)
+                ) { innerPadding ->
+                    ZiineNavHost(
+                        padding = innerPadding,
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ZiineTheme {
-        Greeting("Android")
     }
 }
