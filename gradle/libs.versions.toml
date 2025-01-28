@@ -45,6 +45,9 @@ kotlinx-serialization-converter = "1.0.0"
 # test
 test-kotest = "5.8.1"
 
+#ktlint
+ktlint = "12.1.2"
+
 [libraries]
 
 # kotlin
@@ -127,3 +130,5 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }
+
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
