@@ -16,7 +16,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun ZiineTheme(content: @Composable () -> Unit,) {
+fun ZiineTheme(content: @Composable () -> Unit) {
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
