@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ziine-android"
 include(":app")
+include(":data")
