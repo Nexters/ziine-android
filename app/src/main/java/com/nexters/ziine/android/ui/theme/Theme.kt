@@ -14,9 +14,10 @@ private val DarkColorScheme = darkColorScheme(
     background = Gray900,
     onBackground = Gray0,
 )
+
 @Composable
 fun ZiineTheme(
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -31,6 +32,6 @@ fun ZiineTheme(
     MaterialTheme(
         colorScheme = DarkColorScheme,
         typography = Typography,
-        content = content
+        content = content,
     )
 }

@@ -46,7 +46,7 @@ kotlinx-serialization-converter = "1.0.0"
 test-kotest = "5.8.1"
 
 #ktlint
-ktlint = "12.1.2"
+ktlint = "11.6.1"
 
 [libraries]
 

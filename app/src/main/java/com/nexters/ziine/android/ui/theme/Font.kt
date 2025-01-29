@@ -60,40 +60,40 @@ val Paragraph1 = TextStyle(
     fontFamily = pretendardFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 16.sp,
-    lineHeight = 26.sp
+    lineHeight = 26.sp,
 )
 
 val Paragraph2 = TextStyle(
     fontFamily = pretendardFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 14.sp,
-    lineHeight = 22.sp
+    lineHeight = 22.sp,
 )
 
 val Paragraph3 = TextStyle(
     fontFamily = pretendardFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 13.sp,
-    lineHeight = 21.sp
+    lineHeight = 21.sp,
 )
 
 val Paragraph4 = TextStyle(
     fontFamily = pretendardFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 12.sp,
-    lineHeight = 19.sp
+    lineHeight = 19.sp,
 )
 
 val Paragraph5 = TextStyle(
     fontFamily = pretendardFamily,
     fontWeight = FontWeight.Normal,
     fontSize = 11.sp,
-    lineHeight = 18.sp
+    lineHeight = 18.sp,
 )
 
 val Paragraph6 = TextStyle(
     fontFamily = pretendardFamily,
     fontWeight = FontWeight.Normal,
     fontSize = 10.sp,
-    lineHeight = 16.sp
+    lineHeight = 16.sp,
 )
