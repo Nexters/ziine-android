@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.nexters.ziine.android.presentation.artworks.ArtworksScreen
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 

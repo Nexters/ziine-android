@@ -19,7 +19,7 @@ fun ZiineNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Route.Magazine,
+        startDestination = Route.Splash,
     ) {
         splashScreen(padding = padding)
         artworksScreen(padding = padding)

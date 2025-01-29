@@ -19,9 +19,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             ZiineTheme {
                 Scaffold(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(color = MaterialTheme.colorScheme.background)
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .background(color = MaterialTheme.colorScheme.background)
                 ) { innerPadding ->
                     ZiineNavHost(
                         padding = innerPadding,
