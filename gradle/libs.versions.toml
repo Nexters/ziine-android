@@ -16,20 +16,20 @@ kotlinx-collections-immutable = "0.3.8"
 # android
 agp = "8.7.3"
 activity-compose = "1.10.0"
-androidx-compose-foundation = "1.8.0-alpha08"
+androidx-compose-foundation = "1.8.0-beta01"
 androidx-lifecycle = "2.8.7"
-androidx-navigation = "2.8.5"
+androidx-navigation = "2.8.6"
 androidx-core-splashscreen = "1.0.1"
 androidx-datastore = "1.1.2"
 androidx-core-ktx = "1.15.0"
 androidx-startup = "1.2.0"
 androidx-hilt-navigation-compose = "1.2.0"
-compose-bom = "2025.01.00"
+compose-bom = "2025.01.01"
 
 # google
 google-secrets = "2.0.1"
 google-service = "4.4.2"
-hilt = "2.52"
+hilt = "2.55"
 ksp = "2.1.0-1.0.29"
 
 # third-party
@@ -85,10 +85,6 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidx-datastore" }
 androidx-startup = { group = "androidx.startup", name = "startup-runtime", version.ref = "androidx-startup" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidx-hilt-navigation-compose" }
-
-# google
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 
 # google
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
