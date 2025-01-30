@@ -11,7 +11,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.nexters.ziine.android.presentation.MainActivity
 import com.nexters.ziine.android.presentation.common.extensions.startActivityWithAnimation
-import com.nexters.ziine.android.presentation.ui.theme.Gray900
 import com.nexters.ziine.android.presentation.ui.theme.Primary500
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,23 +33,16 @@ class SplashActivity : ComponentActivity() {
                 systemUiController.setSystemBarsColor(
                     color = Primary500,
                     darkIcons = false,
-                    isNavigationBarContrastEnforced = false,
                 )
 
-                onDispose {
-                    systemUiController.setSystemBarsColor(
-                        color = Gray900,
-                        darkIcons = false,
-                        isNavigationBarContrastEnforced = false,
-                    )
-                }
+                onDispose {}
             }
 
             LaunchedEffect(key1 = Unit) {
                 delay(500)
                 activity?.startActivityWithAnimation<MainActivity>(
                     withFinish = true,
-                    intentBuilder = { this }
+                    intentBuilder = { this },
                 )
             }
 

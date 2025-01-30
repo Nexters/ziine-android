@@ -14,7 +14,7 @@ import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.ui.theme.Subtitle1
 
 @Composable
-fun SplashScreen(modifier: Modifier = Modifier,) {
+fun SplashScreen(modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.primary,
