@@ -1,18 +1,19 @@
 package com.nexters.ziine.android.presentation.artworks
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.nexters.ziine.android.presentation.navigation.Route
+import com.nexters.ziine.android.presentation.navigation.MainTabRoute
 
-fun NavGraphBuilder.artworksScreen(
-    padding: PaddingValues,
-    modifier: Modifier = Modifier
-) {
-    composable<Route.Artworks> {
+fun NavController.navigateToArtworks(navOptions: NavOptions) {
+    navigate(MainTabRoute.Artworks, navOptions)
+}
+
+fun NavGraphBuilder.artworksScreen(modifier: Modifier = Modifier) {
+    composable<MainTabRoute.Artworks> {
         ArtworksRoute(
-            padding = padding,
             modifier = modifier,
         )
     }

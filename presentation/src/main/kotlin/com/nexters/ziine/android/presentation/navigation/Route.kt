@@ -4,11 +4,16 @@ import kotlinx.serialization.Serializable
 
 sealed interface Route {
     @Serializable
-    data object Splash : Route
+    data object ArtworkDetail : Route
 
     @Serializable
-    data object Artworks : Route
+    data object MagazineDetail : Route
+}
+
+sealed interface MainTabRoute : Route {
+    @Serializable
+    data object Artworks : MainTabRoute
 
     @Serializable
-    data object Magazine : Route
+    data object Magazine : MainTabRoute
 }

@@ -13,6 +13,7 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = Gray900,
     background = Gray900,
     onBackground = Gray0,
+    onSurfaceVariant = Gray600,
 )
 
 @Composable
@@ -27,6 +28,7 @@ fun ZiineTheme(content: @Composable () -> Unit) {
             }
         }
     }
+
     MaterialTheme(
         colorScheme = DarkColorScheme,
         typography = Typography,
