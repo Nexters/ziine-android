@@ -19,7 +19,7 @@ import javax.inject.Singleton
 object RetrofitModule {
     @Provides
     fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS }
+        HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
     @Provides
     fun providesAdjustMaxRequestPerHostOKHttpDispatcher(): Dispatcher = Dispatcher().apply {
