@@ -1,6 +1,5 @@
 package com.nexters.ziine.android.presentation.artworks
 
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -11,10 +10,8 @@ fun NavController.navigateToArtworks(navOptions: NavOptions) {
     navigate(MainTabRoute.Artworks, navOptions)
 }
 
-fun NavGraphBuilder.artworksScreen(modifier: Modifier = Modifier) {
+fun NavGraphBuilder.artworksScreen() {
     composable<MainTabRoute.Artworks> {
-        ArtworksRoute(
-            modifier = modifier,
-        )
+        ArtworksRoute()
     }
 }
