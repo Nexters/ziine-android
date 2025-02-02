@@ -1,3 +1,5 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google {
@@ -21,4 +23,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "ziine-android"
 include(":app")
+include(":presentation")
 include(":data")
