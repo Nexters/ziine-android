@@ -50,10 +50,17 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
+
+    implementation(libs.coil.compose)
+    implementation(libs.landscapist.bom)
+    implementation(libs.landscapist.coil)
+    implementation(libs.landscapist.placeholder)
+    implementation(libs.landscapist.animation)
 }
