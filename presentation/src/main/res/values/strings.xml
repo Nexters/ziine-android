@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">ziine</string>
     <string name="artworks">Artworks</string>
     <string name="manazine">Magazine</string>
-    <string name="ziine">Ziine</string>
 </resources>
