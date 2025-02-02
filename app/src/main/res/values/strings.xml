@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">ziine-android</string>
+    <string name="app_name">Ziine</string>
+    <string name="app_name_dev">Ziine.dev</string>
 </resources>
