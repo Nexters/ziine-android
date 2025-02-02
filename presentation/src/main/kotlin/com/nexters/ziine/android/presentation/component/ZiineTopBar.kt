@@ -70,7 +70,8 @@ fun ZiineTopBar(
             var tabPositions by remember { mutableStateOf(List(tabs.size) { TabPosition(0, 0) }) }
             var selectedTabWidth by remember { mutableIntStateOf(0) }
 
-            val targetOffset = if (currentTab != null) tabPositions[tabs.indexOf(currentTab)].offset else 0
+            val targetOffset: Int =
+                if (currentTab != null) tabPositions[tabs.indexOf(currentTab)].offset else 0
             val animatedOffset by animateIntAsState(
                 targetValue = targetOffset,
                 animationSpec = spring(
