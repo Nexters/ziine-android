@@ -2,12 +2,10 @@ package com.nexters.ziine.android.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.nexters.ziine.android.presentation.artworks.navigateToArtworks
@@ -16,16 +14,8 @@ import com.nexters.ziine.android.presentation.magazine.navigateToMagazine
 class MainNavController(
     val navController: NavHostController,
 ) {
-    private val currentDestination: NavDestination?
-        @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination
-
-    val startDestination = MainTab.ARTWORKS.route
-
-    val currentTab: MainTab?
-        @Composable get() = MainTab.find { tab ->
-            currentDestination?.hasRoute(tab::class) == true
-        }
+    val startDestination: MainTabRoute = MainTab.ARTWORKS.route
+    val tabController = TabController(navController)
 
     fun navigate(tab: MainTab) {
         val navOptions = navOptions {
@@ -63,12 +53,6 @@ class MainNavController(
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean {
         return navController.currentDestination?.hasRoute<T>() == true
     }
-
-    @Composable
-    fun shouldShowTopBar() =
-        MainTab.contains {
-            currentDestination?.hasRoute(it::class) == true
-        }
 }
 
 @Composable

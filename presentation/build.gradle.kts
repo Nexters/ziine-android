@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.nexters.ziine.android.presentation"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 28

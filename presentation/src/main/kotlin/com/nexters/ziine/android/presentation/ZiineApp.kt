@@ -28,7 +28,8 @@ import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun ZiineApp(modifier: Modifier = Modifier) {
-    val navigator = rememberMainNavController()
+    val mainNavController = rememberMainNavController()
+    val tabController = mainNavController.tabController
 
     Scaffold(
         modifier = Modifier
@@ -36,11 +37,11 @@ fun ZiineApp(modifier: Modifier = Modifier) {
             .background(color = MaterialTheme.colorScheme.background),
         topBar = {
             ZiineTopBar(
-                visible = navigator.shouldShowTopBar(),
+                visible = tabController.shouldShowTopBar(),
                 tabs = MainTab.entries.toImmutableList(),
-                currentTab = navigator.currentTab,
+                currentTab = tabController.currentTab,
                 onTabSelected = {
-                    navigator.navigate(it)
+                    mainNavController.navigate(it)
                 },
                 modifier = Modifier
                     .windowInsetsPadding(
@@ -67,8 +68,8 @@ fun ZiineApp(modifier: Modifier = Modifier) {
             modifier = modifier
                 .fillMaxSize()
                 .padding(padding),
-            navController = navigator.navController,
-            startDestination = navigator.startDestination,
+            navController = mainNavController.navController,
+            startDestination = mainNavController.startDestination,
         ) {
             artworksScreen()
             magazineScreen()
