@@ -1,4 +1,4 @@
-package com.nexters.ziine.android.ui.theme
+package com.nexters.ziine.android.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

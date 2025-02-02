@@ -1,4 +1,4 @@
-package com.nexters.ziine.android.ui.theme
+package com.nexters.ziine.android.presentation.ui.theme
 
 import android.app.Activity
 import androidx.compose.material3.MaterialTheme
@@ -13,12 +13,11 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = Gray900,
     background = Gray900,
     onBackground = Gray0,
+    onSurfaceVariant = Gray600,
 )
 
 @Composable
-fun ZiineTheme(
-    content: @Composable () -> Unit,
-) {
+fun ZiineTheme(content: @Composable () -> Unit) {
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -29,6 +28,7 @@ fun ZiineTheme(
             }
         }
     }
+
     MaterialTheme(
         colorScheme = DarkColorScheme,
         typography = Typography,
