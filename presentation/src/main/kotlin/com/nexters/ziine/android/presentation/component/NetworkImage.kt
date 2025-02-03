@@ -59,11 +59,35 @@ fun NetworkImage(
             },
             imageOptions = ImageOptions(
                 contentScale = contentScale,
-                alignment = Alignment.TopCenter,
+                alignment = Alignment.Center,
                 contentDescription = contentDescription,
             ),
         )
     }
+//    if (LocalInspectionMode.current) {
+//        Image(
+//            painter = loadingImage,
+//            contentDescription = "Example Image Icon",
+//            modifier = modifier,
+//        )
+//    } else {
+//        val imageLoader = ImageLoader.Builder(context)
+//            .memoryCache {
+//                MemoryCache.Builder(context)
+//                    .maxSizePercent(0.25)
+//                    .build()
+//            }
+//            .build()
+//
+//        AsyncImage(
+//            model = imageUrl,
+//            contentDescription = contentDescription,
+//            modifier = modifier,
+//            contentScale = contentScale,
+//            placeholder = loadingImage,
+//            imageLoader = imageLoader
+//        )
+//    }
 }
 
 @ComponentPreview
