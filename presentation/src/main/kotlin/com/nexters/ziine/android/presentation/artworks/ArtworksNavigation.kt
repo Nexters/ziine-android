@@ -10,8 +10,8 @@ fun NavController.navigateToArtworks(navOptions: NavOptions) {
     navigate(MainTabRoute.Artworks, navOptions)
 }
 
-fun NavGraphBuilder.artworksScreen() {
+fun NavGraphBuilder.artworksScreen(navigateToArtworkDetail: (Int, String, String, String) -> Unit,) {
     composable<MainTabRoute.Artworks> {
-        ArtworksRoute()
+        ArtworksRoute(navigateToArtworkDetail = navigateToArtworkDetail)
     }
 }

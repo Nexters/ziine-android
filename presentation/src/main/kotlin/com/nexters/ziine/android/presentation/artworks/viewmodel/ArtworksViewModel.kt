@@ -27,7 +27,7 @@ class ArtworksViewModel
 
         fun onAction(action: ArtworksUiAction) {
             when (action) {
-                is ArtworksUiAction.OnArtworkItemSelect -> navigateToArtworkDetail(action.artworkId)
+                is ArtworksUiAction.OnArtworkItemSelect -> navigateToArtworkDetail(action.id, action.artistName, action.imageUrl, action.title)
             }
         }
 
@@ -82,9 +82,14 @@ class ArtworksViewModel
             }
         }
 
-        private fun navigateToArtworkDetail(artworkId: Int) {
+        private fun navigateToArtworkDetail(
+            id: Int,
+            artistName: String,
+            imageUrl: String,
+            title: String,
+        ) {
             viewModelScope.launch {
-                _uiEvent.send(ArtworksUiEvent.NavigateToArtworkDetail(artworkId))
+                _uiEvent.send(ArtworksUiEvent.NavigateToArtworkDetail(id, artistName, imageUrl, title))
             }
         }
     }

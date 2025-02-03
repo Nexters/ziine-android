@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.nexters.ziine.android.presentation.artworkdetail.navigateToArtworkDetail
 import com.nexters.ziine.android.presentation.artworks.navigateToArtworks
 import com.nexters.ziine.android.presentation.magazine.navigateToMagazine
 
@@ -30,6 +31,15 @@ class MainNavController(
             MainTab.ARTWORKS -> navController.navigateToArtworks(navOptions)
             MainTab.MAGAZINE -> navController.navigateToMagazine(navOptions)
         }
+    }
+
+    fun navigateToArtworkDetail(
+        id: Int,
+        title: String,
+        artist: String,
+        imageUrl: String
+    ) {
+        navController.navigateToArtworkDetail(id, title, artist, imageUrl)
     }
 
     private fun popBackStack() {

@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
+import com.nexters.ziine.android.presentation.artworkdetail.artworkDetailScreen
 import com.nexters.ziine.android.presentation.artworks.artworksScreen
 import com.nexters.ziine.android.presentation.component.ZiineTopBar
 import com.nexters.ziine.android.presentation.magazine.magazineScreen
@@ -71,8 +72,9 @@ fun ZiineApp(modifier: Modifier = Modifier) {
             navController = mainNavController.navController,
             startDestination = mainNavController.startDestination,
         ) {
-            artworksScreen()
+            artworksScreen(navigateToArtworkDetail = mainNavController::navigateToArtworkDetail)
             magazineScreen()
+            artworkDetailScreen()
         }
     }
 }
