@@ -1,11 +1,11 @@
-package com.nexters.ziine.android.presentation.artworks
+package com.nexters.ziine.android.presentation.artworkdetail
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -27,6 +27,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.nexters.ziine.android.presentation.R
+import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetail
+import com.nexters.ziine.android.presentation.artworks.ArtworkItem
 import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
 import com.nexters.ziine.android.presentation.component.NetworkImage
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
@@ -37,9 +39,8 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-internal fun ArtworkItem(
-    artwork: UiArtwork,
-    onArtworkItemSelect: () -> Unit,
+fun ArtworkDetailItem(
+    artwork: UiArtworkDetail,
     animatedVisibilityScope: AnimatedVisibilityScope,
     sharedTransitionScope: SharedTransitionScope,
     modifier: Modifier = Modifier,
@@ -54,14 +55,12 @@ internal fun ArtworkItem(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .heightIn(max = 900.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .clickable(onClick = onArtworkItemSelect),
+                .clip(RoundedCornerShape(16.dp)),
         ) {
             NetworkImage(
                 imageUrl = artwork.imageUrl,
                 contentDescription = "Artwork by ${artwork.artistName}",
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.FillWidth,
             )
 
@@ -110,10 +109,10 @@ internal fun ArtworkItem(
 }
 
 // should fix preview not showing correctly because of SharedTransitionScope
- @OptIn(ExperimentalSharedTransitionApi::class)
- @ComponentPreview
- @Composable
- private fun ArtworkItemPreview() {
+@OptIn(ExperimentalSharedTransitionApi::class)
+@ComponentPreview
+@Composable
+private fun ArtworkItemPreview() {
     ZiineTheme {
         SharedTransitionScope {
             AnimatedVisibility(visible = true) {
@@ -131,4 +130,4 @@ internal fun ArtworkItem(
             }
         }
     }
- }
+}

@@ -5,6 +5,10 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,9 +33,12 @@ import com.nexters.ziine.android.presentation.preview.ArtworksPreviewParameterPr
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworksRoute(
     navigateToArtworkDetail: (Int, String, String, String) -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    sharedTransitionScope: SharedTransitionScope,
     artworksViewModel: ArtworksViewModel = hiltViewModel(),
 ) {
     val artworksUiState by artworksViewModel.uiState.collectAsStateWithLifecycle()
@@ -51,13 +58,18 @@ internal fun ArtworksRoute(
 
     ArtworksScreen(
         uiState = artworksUiState,
+        animatedVisibilityScope = animatedVisibilityScope,
+        sharedTransitionScope = sharedTransitionScope,
         onAction = artworksViewModel::onAction,
     )
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworksScreen(
     uiState: ArtworksUiState,
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    sharedTransitionScope: SharedTransitionScope,
     onAction: (ArtworksUiAction) -> Unit,
 ) {
     val context = LocalContext.current
@@ -96,12 +108,16 @@ internal fun ArtworksScreen(
                             ),
                         )
                     },
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    sharedTransitionScope = sharedTransitionScope,
                 )
             }
         }
     }
 }
 
+// should fix preview not showing correctly because of SharedTransitionScope
+@OptIn(ExperimentalSharedTransitionApi::class)
 @DevicePreview
 @Composable
 private fun ArtworksScreenPreview(
@@ -109,9 +125,15 @@ private fun ArtworksScreenPreview(
     uiState: ArtworksUiState,
 ) {
     ZiineTheme {
-        ArtworksScreen(
-            uiState = uiState,
-            onAction = {},
-        )
+        SharedTransitionScope {
+            AnimatedVisibility(visible = true) {
+                ArtworksScreen(
+                    uiState = uiState,
+                    onAction = {},
+                    animatedVisibilityScope = this,
+                    sharedTransitionScope = this@SharedTransitionScope,
+                )
+            }
+        }
     }
 }

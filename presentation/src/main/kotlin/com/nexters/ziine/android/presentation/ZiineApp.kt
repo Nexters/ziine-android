@@ -1,5 +1,7 @@
 package com.nexters.ziine.android.presentation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -27,6 +29,7 @@ import com.nexters.ziine.android.presentation.navigation.MainTab
 import com.nexters.ziine.android.presentation.navigation.rememberMainNavController
 import kotlinx.collections.immutable.toImmutableList
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ZiineApp(modifier: Modifier = Modifier) {
     val mainNavController = rememberMainNavController()
@@ -65,16 +68,21 @@ fun ZiineApp(modifier: Modifier = Modifier) {
             }
         },
     ) { padding ->
-        NavHost(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(padding),
-            navController = mainNavController.navController,
-            startDestination = mainNavController.startDestination,
-        ) {
-            artworksScreen(navigateToArtworkDetail = mainNavController::navigateToArtworkDetail)
-            magazineScreen()
-            artworkDetailScreen()
+        SharedTransitionLayout {
+            NavHost(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                navController = mainNavController.navController,
+                startDestination = mainNavController.startDestination,
+            ) {
+                artworksScreen(
+                    navigateToArtworkDetail = mainNavController::navigateToArtworkDetail,
+                    sharedTransitionScope = this@SharedTransitionLayout
+                )
+                magazineScreen()
+                artworkDetailScreen(sharedTransitionScope = this@SharedTransitionLayout)
+            }
         }
     }
 }
