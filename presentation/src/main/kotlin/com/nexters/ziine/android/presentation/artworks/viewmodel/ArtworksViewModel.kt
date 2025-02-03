@@ -32,10 +32,10 @@ class ArtworksViewModel
         }
 
         init {
-            getAlbumList()
+            fetchAlbumList()
         }
 
-        private fun getAlbumList() {
+        private fun fetchAlbumList() {
             viewModelScope.launch {
                 _uiState.update {
                     it.copy(
