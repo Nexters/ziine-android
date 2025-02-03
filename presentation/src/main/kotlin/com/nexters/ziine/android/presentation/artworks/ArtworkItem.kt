@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.nexters.ziine.android.presentation.R
-import com.nexters.ziine.android.presentation.artworks.model.Artwork
+import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
 import com.nexters.ziine.android.presentation.component.NetworkImage
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
 import com.nexters.ziine.android.presentation.ui.theme.Gray0
@@ -33,7 +33,7 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
 @Composable
 fun ArtworkItem(
-    artwork: Artwork,
+    artwork: UiArtwork,
     onArtworkItemSelect: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -102,7 +102,7 @@ fun ArtworkItem(
 private fun ArtworkItemPreview() {
     ZiineTheme {
         ArtworkItem(
-            artwork = Artwork(
+            artwork = UiArtwork(
                 id = 1,
                 imageUrl = "https://example.com/artwork.jpg",
                 artistName = "Artist Name",
