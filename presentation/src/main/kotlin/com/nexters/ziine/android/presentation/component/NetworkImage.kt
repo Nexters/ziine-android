@@ -6,8 +6,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
+import coil.ImageLoader
+import coil.memory.MemoryCache
+import coil.request.ImageRequest
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
@@ -22,37 +26,42 @@ fun NetworkImage(
     imageUrl: String?,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    placeholder: Painter = painterResource(id = R.drawable.placeholder),
+    loadingImage: Painter = painterResource(id = R.drawable.placeholder),
     failureImage: Painter = painterResource(id = R.drawable.placeholder),
     contentScale: ContentScale = ContentScale.Crop,
 ) {
+    val context = LocalContext.current
+
     if (LocalInspectionMode.current) {
         Image(
-            painter = placeholder,
+            painter = loadingImage,
             contentDescription = "Example Image Icon",
             modifier = modifier,
         )
     } else {
         CoilImage(
-            imageModel = { imageUrl },
+            imageRequest = {
+                ImageRequest.Builder(context)
+                    .data(imageUrl)
+                    .build()
+            },
+            imageLoader = {
+                ImageLoader.Builder(context)
+                    .memoryCache { MemoryCache.Builder(context).maxSizePercent(0.25).build() }
+                    .build()
+            },
             modifier = modifier,
             component = rememberImageComponent {
                 +CrossfadePlugin(duration = 500)
-                +PlaceholderPlugin.Loading(placeholder)
-                +PlaceholderPlugin.Failure(placeholder)
+                // 사진이 어떻게 나오는지 확인하기 위해 개발용으로 넣어둠, API 연동 후 제거 예정
+                // +PlaceholderPlugin.Loading(loadingImage)
+                +PlaceholderPlugin.Failure(failureImage)
             },
             imageOptions = ImageOptions(
                 contentScale = contentScale,
-                alignment = Alignment.Center,
+                alignment = Alignment.TopCenter,
                 contentDescription = contentDescription,
             ),
-            failure = {
-                Image(
-                    painter = failureImage,
-                    contentDescription = "Failure Image",
-                    modifier = modifier,
-                )
-            },
         )
     }
 }
