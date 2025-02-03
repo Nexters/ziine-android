@@ -43,9 +43,7 @@ fun ArtworkItem(
             .padding(horizontal = 16.dp)
             .heightIn(max = 900.dp)
             .clip(RoundedCornerShape(16.dp))
-            .clickable(
-                onClick = onArtworkItemSelect,
-            ),
+            .clickable(onClick = onArtworkItemSelect),
     ) {
         NetworkImage(
             imageUrl = artwork.imageUrl,

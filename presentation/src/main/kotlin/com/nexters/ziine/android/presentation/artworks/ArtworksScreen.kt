@@ -1,5 +1,10 @@
 package com.nexters.ziine.android.presentation.artworks
 
+import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,8 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -38,7 +42,15 @@ internal fun ArtworksScreen(
     uiState: ArtworksUiState,
     onAction: (ArtworksUiAction) -> Unit,
 ) {
-    val haptic = LocalHapticFeedback.current
+    val context = LocalContext.current
+    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val vibratorManager =
+            context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        vibratorManager.defaultVibrator
+    } else {
+        @Suppress("DEPRECATION")
+        context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    }
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -56,7 +68,7 @@ internal fun ArtworksScreen(
                 ArtworkItem(
                     artwork = artwork,
                     onArtworkItemSelect = {
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
                         onAction(ArtworksUiAction.OnArtworkItemSelect(artworkId = artwork.id))
                     },
                 )
