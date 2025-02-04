@@ -3,7 +3,6 @@ package com.nexters.ziine.android.presentation.artworks
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,12 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
-import com.nexters.ziine.android.presentation.R
+import com.nexters.ziine.android.presentation.artworks.model.UiArtist
 import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
 import com.nexters.ziine.android.presentation.component.NetworkImage
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
@@ -64,7 +62,7 @@ internal fun ArtworkItem(
         ) {
             NetworkImage(
                 imageUrl = artwork.imageUrl,
-                contentDescription = "Artwork by ${artwork.artistName}",
+                contentDescription = "${artwork.title} by ${artwork.artist.name}",
                 modifier = Modifier
                     .fillMaxWidth(),
                 contentScale = ContentScale.FillWidth,
@@ -77,17 +75,16 @@ internal fun ArtworkItem(
                     .align(Alignment.TopStart),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.placeholder),
-                    contentDescription = "Profile picture of ${artwork.artistName}",
+                NetworkImage(
+                    imageUrl = artwork.artist.profileImageUrl,
+                    contentDescription = "Profile Image of ${artwork.artist.name}",
                     modifier = Modifier
                         .size(28.dp)
                         .clip(CircleShape),
-                    contentScale = ContentScale.Crop,
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
-                    text = artwork.artistName,
+                    text = artwork.artist.name,
                     style = Paragraph2,
                     color = Gray0,
                     modifier = Modifier.weight(1f),
@@ -129,7 +126,11 @@ private fun ArtworkItemPreview() {
                         artwork = UiArtwork(
                             id = 1,
                             imageUrl = "",
-                            artistName = "Artist Name",
+                            artist = UiArtist(
+                                id = 1,
+                                name = "Artist Name",
+                                profileImageUrl = "",
+                            ),
                             title = "Artwork Name",
                         ),
                         onArtworkItemSelect = {},

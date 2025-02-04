@@ -35,10 +35,9 @@ import com.nexters.ziine.android.presentation.preview.ArtworksPreviewParameterPr
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworksRoute(
-    navigateToArtworkDetail: (Int, String, String, String) -> Unit,
+    navigateToArtworkDetail: (Int, String, String) -> Unit,
     artworksViewModel: ArtworksViewModel = hiltViewModel(),
 ) {
     val artworksUiState by artworksViewModel.uiState.collectAsStateWithLifecycle()
@@ -48,7 +47,6 @@ internal fun ArtworksRoute(
             is ArtworksUiEvent.NavigateToArtworkDetail -> {
                 navigateToArtworkDetail(
                     event.id,
-                    event.artistName,
                     event.imageUrl,
                     event.title,
                 )
@@ -62,7 +60,6 @@ internal fun ArtworksRoute(
     )
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworksScreen(
     uiState: ArtworksUiState,
@@ -98,7 +95,6 @@ internal fun ArtworksScreen(
                         onAction(
                             ArtworksUiAction.OnArtworkItemSelect(
                                 artwork.id,
-                                artwork.artistName,
                                 artwork.imageUrl,
                                 artwork.title,
                             ),

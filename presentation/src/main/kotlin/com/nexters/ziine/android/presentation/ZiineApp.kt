@@ -5,6 +5,8 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -64,16 +66,22 @@ fun ZiineApp(modifier: Modifier = Modifier) {
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {},
-                shape = CircleShape,
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onBackground,
+            AnimatedVisibility(
+                visible = tabController.shouldShowTopBar(),
+                enter = fadeIn(),
+                exit = fadeOut(),
             ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Add",
-                )
+                FloatingActionButton(
+                    onClick = {},
+                    shape = CircleShape,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onBackground,
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Add",
+                    )
+                }
             }
         },
     ) { padding ->

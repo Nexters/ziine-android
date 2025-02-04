@@ -1,3 +1,5 @@
 package com.nexters.ziine.android.presentation.artworkdetail.viewmodel
 
-sealed interface ArtworkDetailUiAction
+sealed interface ArtworkDetailUiAction {
+    data object OnBackClick : ArtworkDetailUiAction
+}

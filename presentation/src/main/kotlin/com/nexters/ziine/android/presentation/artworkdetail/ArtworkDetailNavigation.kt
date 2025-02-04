@@ -7,11 +7,10 @@ import com.nexters.ziine.android.presentation.navigation.Route
 
 fun NavController.navigateToArtworkDetail(
     id: Int,
-    artistName: String,
     imageUrl: String,
     title: String
 ) {
-    navigate(Route.ArtworkDetail(id, artistName, imageUrl, title))
+    navigate(Route.ArtworkDetail(id, imageUrl, title))
 }
 
 fun NavGraphBuilder.artworkDetailScreen() {
