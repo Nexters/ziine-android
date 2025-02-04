@@ -5,9 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
@@ -21,8 +23,8 @@ fun NetworkImage(
     // failureImage: Painter = painterResource(id = R.drawable.placeholder),
     contentScale: ContentScale = ContentScale.Crop,
 ) {
-//    val context = LocalContext.current
-//
+    val context = LocalContext.current
+
 //    if (LocalInspectionMode.current) {
 //        Image(
 //            painter = loadingImage,
@@ -54,16 +56,13 @@ fun NetworkImage(
         )
     } else {
         AsyncImage(
-//            model = ImageRequest.Builder(LocalContext.current)
-//                .data(imageUrl)
-//                .crossfade(true)
-//                .build(),
-            model = imageUrl,
+            model = ImageRequest.Builder(context)
+                .data(imageUrl)
+                .crossfade(true)
+                .build(),
             contentDescription = contentDescription,
             modifier = modifier,
             contentScale = contentScale,
-            // 사진이 어떻게 나오는지 확인하기 위해 개발용으로 넣어둠, API 연동 후 제거 예정
-            placeholder = loadingImage,
         )
     }
 }
