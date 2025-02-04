@@ -1,9 +1,8 @@
 package com.nexters.ziine.android.presentation.artworks
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +26,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
+import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
 import com.nexters.ziine.android.presentation.component.NetworkImage
@@ -40,10 +42,13 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 internal fun ArtworkItem(
     artwork: UiArtwork,
     onArtworkItemSelect: () -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
-    sharedTransitionScope: SharedTransitionScope,
     modifier: Modifier = Modifier,
 ) {
+    val sharedTransitionScope = LocalSharedTransitionScope.current
+        ?: throw IllegalStateException("No SharedElementScope found")
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No AnimatedVisibilityScope found")
+
     with(sharedTransitionScope) {
         Box(
             modifier = modifier
@@ -109,26 +114,28 @@ internal fun ArtworkItem(
     }
 }
 
-// should fix preview not showing correctly because of SharedTransitionScope
- @OptIn(ExperimentalSharedTransitionApi::class)
- @ComponentPreview
- @Composable
- private fun ArtworkItemPreview() {
+@OptIn(ExperimentalSharedTransitionApi::class)
+@ComponentPreview
+@Composable
+private fun ArtworkItemPreview() {
     ZiineTheme {
-        SharedTransitionScope {
+        SharedTransitionLayout {
             AnimatedVisibility(visible = true) {
-                ArtworkItem(
-                    artwork = UiArtwork(
-                        id = 1,
-                        imageUrl = "",
-                        artistName = "Artist Name",
-                        title = "Artwork Name",
-                    ),
-                    onArtworkItemSelect = {},
-                    animatedVisibilityScope = this,
-                    sharedTransitionScope = this@SharedTransitionScope,
-                )
+                CompositionLocalProvider(
+                    LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
+                ) {
+                    ArtworkItem(
+                        artwork = UiArtwork(
+                            id = 1,
+                            imageUrl = "",
+                            artistName = "Artist Name",
+                            title = "Artwork Name",
+                        ),
+                        onArtworkItemSelect = {},
+                    )
+                }
             }
         }
     }
- }
+}

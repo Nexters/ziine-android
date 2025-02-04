@@ -1,7 +1,5 @@
 package com.nexters.ziine.android.presentation.artworkdetail
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -16,12 +14,8 @@ fun NavController.navigateToArtworkDetail(
     navigate(Route.ArtworkDetail(id, artistName, imageUrl, title))
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
-fun NavGraphBuilder.artworkDetailScreen(sharedTransitionScope: SharedTransitionScope) {
+fun NavGraphBuilder.artworkDetailScreen() {
     composable<Route.ArtworkDetail> {
-        ArtworkDetailRoute(
-            animatedVisibilityScope = this@composable,
-            sharedTransitionScope = sharedTransitionScope,
-        )
+        ArtworkDetailRoute()
     }
 }

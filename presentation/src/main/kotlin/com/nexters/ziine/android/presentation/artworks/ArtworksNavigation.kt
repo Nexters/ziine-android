@@ -1,7 +1,5 @@
 package com.nexters.ziine.android.presentation.artworks
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -12,16 +10,10 @@ fun NavController.navigateToArtworks(navOptions: NavOptions) {
     navigate(MainTabRoute.Artworks, navOptions)
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
-fun NavGraphBuilder.artworksScreen(
-    navigateToArtworkDetail: (Int, String, String, String) -> Unit,
-    sharedTransitionScope: SharedTransitionScope,
-) {
+fun NavGraphBuilder.artworksScreen(navigateToArtworkDetail: (Int, String, String, String) -> Unit) {
     composable<MainTabRoute.Artworks> {
         ArtworksRoute(
             navigateToArtworkDetail = navigateToArtworkDetail,
-            animatedVisibilityScope = this@composable,
-            sharedTransitionScope = sharedTransitionScope,
         )
     }
 }

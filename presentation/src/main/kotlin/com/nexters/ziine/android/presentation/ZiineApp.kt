@@ -1,7 +1,10 @@
 package com.nexters.ziine.android.presentation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -18,6 +21,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
@@ -28,6 +33,10 @@ import com.nexters.ziine.android.presentation.magazine.magazineScreen
 import com.nexters.ziine.android.presentation.navigation.MainTab
 import com.nexters.ziine.android.presentation.navigation.rememberMainNavController
 import kotlinx.collections.immutable.toImmutableList
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
+val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibilityScope?> { null }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -69,19 +78,25 @@ fun ZiineApp(modifier: Modifier = Modifier) {
         },
     ) { padding ->
         SharedTransitionLayout {
-            NavHost(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(padding),
-                navController = mainNavController.navController,
-                startDestination = mainNavController.startDestination,
-            ) {
-                artworksScreen(
-                    navigateToArtworkDetail = mainNavController::navigateToArtworkDetail,
-                    sharedTransitionScope = this@SharedTransitionLayout
-                )
-                magazineScreen()
-                artworkDetailScreen(sharedTransitionScope = this@SharedTransitionLayout)
+            AnimatedVisibility(visible = true) {
+                CompositionLocalProvider(
+                    LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
+                ) {
+                    NavHost(
+                        modifier = modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        navController = mainNavController.navController,
+                        startDestination = mainNavController.startDestination,
+                    ) {
+                        artworksScreen(
+                            navigateToArtworkDetail = mainNavController::navigateToArtworkDetail,
+                        )
+                        magazineScreen()
+                        artworkDetailScreen()
+                    }
+                }
             }
         }
     }

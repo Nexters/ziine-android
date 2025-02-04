@@ -1,6 +1,5 @@
 package com.nexters.ziine.android.presentation.navigation
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 sealed interface Route {
