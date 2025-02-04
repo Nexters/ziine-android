@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.nexters.ziine.android.presentation.registerArtwork.navigation.RegisterArtWorkNavHost
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
 class RegisterArtworkActivity : ComponentActivity() {
@@ -14,16 +15,13 @@ class RegisterArtworkActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ZiineTheme {
+                RegisterArtWorkNavHost()
             }
         }
     }
-
-
 
     companion object {
         fun getIntent(context: Context): Intent =
             Intent(context, RegisterArtworkActivity::class.java)
     }
 }
-
-
