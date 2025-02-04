@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.nexters.ziine.android.presentation.preview.ComponentPreview
 
 private val DarkColorScheme = darkColorScheme(
     primary = Primary500,
@@ -14,6 +15,7 @@ private val DarkColorScheme = darkColorScheme(
     background = Gray900,
     onBackground = Gray0,
     onSurfaceVariant = Gray600,
+    outlineVariant = Gray700,
 )
 
 @Composable
@@ -35,3 +37,4 @@ fun ZiineTheme(content: @Composable () -> Unit) {
         content = content,
     )
 }
+
