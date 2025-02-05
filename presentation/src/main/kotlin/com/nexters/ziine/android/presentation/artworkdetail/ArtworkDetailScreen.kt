@@ -109,6 +109,7 @@ internal fun ArtworkDetailScreen(
                 ArtworkDescription(
                     uiState = uiState,
                     onAction = onAction,
+                    animatedVisibilityScope = animatedVisibilityScope,
                 )
             }
             item {
