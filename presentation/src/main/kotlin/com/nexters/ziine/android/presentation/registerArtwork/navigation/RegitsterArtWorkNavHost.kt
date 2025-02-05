@@ -11,6 +11,7 @@ import com.nexters.ziine.android.presentation.registerArtwork.register.registerS
 @Composable
 fun RegisterArtWorkNavHost(
     modifier: Modifier = Modifier,
+    activityFinishAction: () -> Unit
 ) {
     val navController = rememberNavController()
 
@@ -19,7 +20,7 @@ fun RegisterArtWorkNavHost(
         navController = navController,
         startDestination = RegisterArtWorkRoute.Pending,
     ) {
-        pendingScreen()
+        pendingScreen(activityFinishAction = activityFinishAction)
         registerScreen()
         completeScreen()
     }

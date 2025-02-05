@@ -11,10 +11,11 @@ fun NavController.navigateToPending(navOptions: NavOptions) {
     navigate(RegisterArtWorkRoute.Pending, navOptions)
 }
 
-fun NavGraphBuilder.pendingScreen(modifier: Modifier = Modifier) {
+fun NavGraphBuilder.pendingScreen(modifier: Modifier = Modifier, activityFinishAction: () -> Unit) {
     composable<RegisterArtWorkRoute.Pending> {
-       PendingRoute(
+        PendingRoute(
             modifier = modifier,
+            activityFinishAction
         )
     }
 }

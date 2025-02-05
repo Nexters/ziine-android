@@ -26,7 +26,10 @@ class RegisterArtworkActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(color = MaterialTheme.colorScheme.background)
                 ) { innerPadding ->
-                    RegisterArtWorkNavHost(modifier = Modifier.padding(innerPadding))
+                    RegisterArtWorkNavHost(
+                        modifier = Modifier.padding(innerPadding),
+                        activityFinishAction = ::finish
+                    )
                 }
             }
         }
