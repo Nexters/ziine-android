@@ -75,6 +75,9 @@ internal fun ArtworkDetailRoute(
     )
 }
 
+// TODO TopBar scroll down 시 배경 색상 변경
+// TODO ArtworkDetailItem statusBar 영역을 포함하도록
+// TODO 클릭 이벤트 임시 구현 (뒤로가가, 링크 복사)
 @Composable
 internal fun ArtworkDetailScreen(
     uiState: ArtworkDetailUiState,
