@@ -86,24 +86,19 @@ fun ZiineApp(modifier: Modifier = Modifier) {
         },
     ) { padding ->
         SharedTransitionLayout {
-            AnimatedVisibility(visible = true) {
-                CompositionLocalProvider(
-                    LocalSharedTransitionScope provides this@SharedTransitionLayout,
-                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
+            CompositionLocalProvider(
+                LocalSharedTransitionScope provides this@SharedTransitionLayout,
+            ) {
+                NavHost(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(padding),
+                    navController = mainNavController.navController,
+                    startDestination = mainNavController.startDestination,
                 ) {
-                    NavHost(
-                        modifier = modifier
-                            .fillMaxSize()
-                            .padding(padding),
-                        navController = mainNavController.navController,
-                        startDestination = mainNavController.startDestination,
-                    ) {
-                        artworksScreen(
-                            navigateToArtworkDetail = mainNavController::navigateToArtworkDetail,
-                        )
-                        magazineScreen()
-                        artworkDetailScreen()
-                    }
+                    artworksScreen(navigateToArtworkDetail = mainNavController::navigateToArtworkDetail,)
+                    magazineScreen()
+                    artworkDetailScreen()
                 }
             }
         }

@@ -6,6 +6,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Arrangement
@@ -38,6 +39,7 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 @Composable
 internal fun ArtworksRoute(
     navigateToArtworkDetail: (Int, String, String) -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     artworksViewModel: ArtworksViewModel = hiltViewModel(),
 ) {
     val artworksUiState by artworksViewModel.uiState.collectAsStateWithLifecycle()
@@ -57,6 +59,7 @@ internal fun ArtworksRoute(
     ArtworksScreen(
         uiState = artworksUiState,
         onAction = artworksViewModel::onAction,
+        animatedVisibilityScope = animatedVisibilityScope,
     )
 }
 
@@ -64,6 +67,7 @@ internal fun ArtworksRoute(
 internal fun ArtworksScreen(
     uiState: ArtworksUiState,
     onAction: (ArtworksUiAction) -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     val context = LocalContext.current
     val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -100,6 +104,7 @@ internal fun ArtworksScreen(
                             ),
                         )
                     },
+                    animatedVisibilityScope = animatedVisibilityScope,
                 )
             }
         }
@@ -123,6 +128,7 @@ private fun ArtworksScreenPreview(
                     ArtworksScreen(
                         uiState = uiState,
                         onAction = {},
+                        animatedVisibilityScope = this@AnimatedVisibility,
                     )
                 }
             }

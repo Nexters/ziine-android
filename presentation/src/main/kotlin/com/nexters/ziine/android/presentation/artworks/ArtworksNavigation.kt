@@ -10,10 +10,11 @@ fun NavController.navigateToArtworks(navOptions: NavOptions) {
     navigate(MainTabRoute.Artworks, navOptions)
 }
 
-fun NavGraphBuilder.artworksScreen(navigateToArtworkDetail: (Int, String, String) -> Unit) {
+fun NavGraphBuilder.artworksScreen(navigateToArtworkDetail: (Int, String, String) -> Unit,) {
     composable<MainTabRoute.Artworks> {
         ArtworksRoute(
             navigateToArtworkDetail = navigateToArtworkDetail,
+            animatedVisibilityScope = this@composable,
         )
     }
 }

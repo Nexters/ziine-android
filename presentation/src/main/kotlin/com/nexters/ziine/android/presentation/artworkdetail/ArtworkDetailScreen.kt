@@ -1,6 +1,7 @@
 package com.nexters.ziine.android.presentation.artworkdetail
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Box
@@ -8,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -40,11 +40,13 @@ import com.nexters.ziine.android.presentation.preview.ArtworksPreviewParameterPr
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.ui.theme.Gray900
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
-import kotlinx.coroutines.launch
 import tech.thdev.compose.exteions.system.ui.controller.rememberExSystemUiController
 
 @Composable
-internal fun ArtworkDetailRoute(artworkDetailViewModel: ArtworkDetailViewModel = hiltViewModel()) {
+internal fun ArtworkDetailRoute(
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    artworkDetailViewModel: ArtworkDetailViewModel = hiltViewModel()
+) {
     val artworkDetailUiState by artworkDetailViewModel.uiState.collectAsStateWithLifecycle()
 
     val systemUiController = rememberExSystemUiController()
@@ -69,6 +71,7 @@ internal fun ArtworkDetailRoute(artworkDetailViewModel: ArtworkDetailViewModel =
         uiState = artworkDetailUiState,
         onAction = artworkDetailViewModel::onAction,
         snackbarHostState = snackbarHostState,
+        animatedVisibilityScope = animatedVisibilityScope,
     )
 }
 
@@ -77,6 +80,7 @@ internal fun ArtworkDetailScreen(
     uiState: ArtworkDetailUiState,
     onAction: (ArtworkDetailUiAction) -> Unit,
     snackbarHostState: SnackbarHostState,
+    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -89,14 +93,17 @@ internal fun ArtworkDetailScreen(
         SnackbarHost(
             modifier = Modifier.align(Alignment.BottomCenter),
             hostState = snackbarHostState,
-            snackbar = { ZiineSnackbar(message = it.visuals.message)},
+            snackbar = { ZiineSnackbar(message = it.visuals.message) },
         )
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
         ) {
             item {
-                ArtworkDetailItem(artwork = uiState.artwork)
+                ArtworkDetailItem(
+                    artwork = uiState.artwork,
+                    animatedVisibilityScope = animatedVisibilityScope,
+                )
             }
             item {
                 ArtworkDescription(
@@ -148,6 +155,7 @@ private fun ArtworkDetailScreenPreview(
                         uiState = uiState,
                         onAction = {},
                         snackbarHostState = remember { SnackbarHostState() },
+                        animatedVisibilityScope = this@AnimatedVisibility,
                     )
                 }
             }

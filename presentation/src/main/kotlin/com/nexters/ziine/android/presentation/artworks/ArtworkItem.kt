@@ -1,6 +1,7 @@
 package com.nexters.ziine.android.presentation.artworks
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.clickable
@@ -40,12 +41,11 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 internal fun ArtworkItem(
     artwork: UiArtwork,
     onArtworkItemSelect: () -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No SharedElementScope found")
-    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
-        ?: throw IllegalStateException("No AnimatedVisibilityScope found")
 
     with(sharedTransitionScope) {
         Box(
@@ -134,6 +134,7 @@ private fun ArtworkItemPreview() {
                             title = "Artwork Name",
                         ),
                         onArtworkItemSelect = {},
+                        animatedVisibilityScope = this@AnimatedVisibility,
                     )
                 }
             }

@@ -27,7 +27,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetail
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiAction

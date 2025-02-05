@@ -15,6 +15,6 @@ fun NavController.navigateToArtworkDetail(
 
 fun NavGraphBuilder.artworkDetailScreen() {
     composable<Route.ArtworkDetail> {
-        ArtworkDetailRoute()
+        ArtworkDetailRoute(animatedVisibilityScope = this@composable)
     }
 }

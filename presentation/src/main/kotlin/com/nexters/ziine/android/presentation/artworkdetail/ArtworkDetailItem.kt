@@ -1,6 +1,7 @@
 package com.nexters.ziine.android.presentation.artworkdetail
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Box
@@ -25,12 +26,11 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 @Composable
 internal fun ArtworkDetailItem(
     artwork: UiArtworkDetail,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No SharedElementScope found")
-    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
-        ?: throw IllegalStateException("No AnimatedVisibilityScope found")
 
     with(sharedTransitionScope) {
         Box(
@@ -48,47 +48,6 @@ internal fun ArtworkDetailItem(
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.FillWidth,
             )
-
-//            Row(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(top = 20.dp, start = 20.dp)
-//                    .align(Alignment.TopStart),
-//                verticalAlignment = Alignment.CenterVertically,
-//            ) {
-//                Image(
-//                    painter = painterResource(id = R.drawable.placeholder),
-//                    contentDescription = "Profile picture of ${artwork.artistName}",
-//                    modifier = Modifier
-//                        .size(28.dp)
-//                        .clip(CircleShape),
-//                    contentScale = ContentScale.Crop,
-//                )
-//                Spacer(modifier = Modifier.width(6.dp))
-//                Text(
-//                    text = artwork.artistName,
-//                    style = Paragraph2,
-//                    color = Gray0,
-//                    modifier = Modifier.weight(1f),
-//                )
-//            }
-//
-//            Row(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
-//                    .align(Alignment.BottomStart),
-//                verticalAlignment = Alignment.CenterVertically,
-//                horizontalArrangement = Arrangement.SpaceBetween,
-//            ) {
-//                Text(
-//                    text = artwork.title,
-//                    color = Gray0,
-//                    maxLines = 2,
-//                    overflow = TextOverflow.Ellipsis,
-//                    style = Heading4,
-//                )
-//            }
         }
     }
 }
@@ -116,6 +75,7 @@ private fun ArtworkItemPreview() {
                             title = "Artwork Name",
                         ),
                         onArtworkItemSelect = {},
+                        animatedVisibilityScope = this@AnimatedVisibility,
                     )
                 }
             }
