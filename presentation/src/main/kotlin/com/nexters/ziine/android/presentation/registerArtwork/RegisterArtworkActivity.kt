@@ -6,6 +6,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.ui.Modifier
 import com.nexters.ziine.android.presentation.registerArtwork.navigation.RegisterArtWorkNavHost
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
@@ -15,7 +21,13 @@ class RegisterArtworkActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ZiineTheme {
-                RegisterArtWorkNavHost()
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = MaterialTheme.colorScheme.background)
+                ) { innerPadding ->
+                    RegisterArtWorkNavHost(modifier = Modifier.padding(innerPadding))
+                }
             }
         }
     }
