@@ -1,5 +1,8 @@
 package com.nexters.ziine.android.presentation.artworkdetail
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -23,6 +26,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,8 +37,10 @@ import com.nexters.ziine.android.presentation.artworkdetail.component.ArtistDesc
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtworkDescription
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtworkDetailTopBar
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiAction
+import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiEvent
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiState
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailViewModel
+import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
 import com.nexters.ziine.android.presentation.component.ZiineSnackbar
 import com.nexters.ziine.android.presentation.preview.ArtworksPreviewParameterProvider
 import com.nexters.ziine.android.presentation.preview.DevicePreview
@@ -44,11 +50,13 @@ import tech.thdev.compose.exteions.system.ui.controller.rememberExSystemUiContro
 
 @Composable
 internal fun ArtworkDetailRoute(
+    popBackStack: () -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
     artworkDetailViewModel: ArtworkDetailViewModel = hiltViewModel()
 ) {
     val artworkDetailUiState by artworkDetailViewModel.uiState.collectAsStateWithLifecycle()
 
+    val context = LocalContext.current
     val systemUiController = rememberExSystemUiController()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -67,6 +75,39 @@ internal fun ArtworkDetailRoute(
         }
     }
 
+    ObserveAsEvents(flow = artworkDetailViewModel.uiEvent) { event ->
+        when (event) {
+            is ArtworkDetailUiEvent.NavigateBack -> popBackStack()
+            is ArtworkDetailUiEvent.ShareUrl -> {
+                val clipboardManager =
+                    context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("artwork_url", event.url)
+                clipboardManager.setPrimaryClip(clip)
+
+//                scope.launch {
+//                    snackbarHostState.showSnackbar(context.getString(R.string.link_has_been_copied))
+//                }
+            }
+
+            is ArtworkDetailUiEvent.CopyValue -> {
+                val clipboardManager =
+                    context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("value", event.value)
+                clipboardManager.setPrimaryClip(clip)
+
+//                val snackbarMessage = if (event.type == context.getString(R.string.instagram)) {
+//                    context.getString(R.string.instagram_id_has_been_copied)
+//                } else {
+//                    context.getString(R.string.link_has_been_copied)
+//                }
+//
+//                scope.launch {
+//                    snackbarHostState.showSnackbar(snackbarMessage)
+//                }
+            }
+        }
+    }
+
     ArtworkDetailScreen(
         uiState = artworkDetailUiState,
         onAction = artworkDetailViewModel::onAction,
@@ -77,7 +118,6 @@ internal fun ArtworkDetailRoute(
 
 // TODO TopBar scroll down 시 배경 색상 변경
 // TODO ArtworkDetailItem statusBar 영역을 포함하도록
-// TODO 클릭 이벤트 임시 구현 (뒤로가가, 링크 복사)
 @Composable
 internal fun ArtworkDetailScreen(
     uiState: ArtworkDetailUiState,
@@ -88,17 +128,6 @@ internal fun ArtworkDetailScreen(
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        ArtworkDetailTopBar(
-            onAction = onAction,
-            modifier = Modifier.align(Alignment.TopCenter),
-        )
-
-        SnackbarHost(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            hostState = snackbarHostState,
-            snackbar = { ZiineSnackbar(message = it.visuals.message) },
-        )
-
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
         ) {
@@ -111,7 +140,7 @@ internal fun ArtworkDetailScreen(
             item {
                 ArtworkDescription(
                     uiState = uiState,
-                    onAction = onAction,
+                    onShareClick = { url -> onAction(ArtworkDetailUiAction.OnShareClick(url)) },
                     animatedVisibilityScope = animatedVisibilityScope,
                 )
             }
@@ -131,13 +160,26 @@ internal fun ArtworkDetailScreen(
             item {
                 ArtistDescription(
                     uiState = uiState,
-                    onAction = onAction,
+                    onCopyClick = { type, value ->
+                        onAction(ArtworkDetailUiAction.OnCopyClick(type, value))
+                    },
                 )
             }
             item {
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
+
+        ArtworkDetailTopBar(
+            onBackClick = { onAction(ArtworkDetailUiAction.OnBackClick) },
+            modifier = Modifier.align(Alignment.TopCenter),
+        )
+
+        SnackbarHost(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            hostState = snackbarHostState,
+            snackbar = { ZiineSnackbar(message = it.visuals.message) },
+        )
     }
 }
 

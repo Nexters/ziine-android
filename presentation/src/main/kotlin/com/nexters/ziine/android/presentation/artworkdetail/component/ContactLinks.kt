@@ -38,21 +38,31 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-internal fun ContactLinks(contacts: ImmutableList<UiContact>) {
+internal fun ContactLinks(
+    contacts: ImmutableList<UiContact>,
+    onCopyClick: (String, String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(if (contacts.isEmpty()) 0.dp else ((contacts.size * 44).dp)),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         items(contacts) { contact ->
-            ContactLink(contact = contact)
+            ContactLink(
+                contact = contact,
+                onCopyClick = onCopyClick,
+            )
         }
     }
 }
 
 @Composable
-private fun ContactLink(contact: UiContact) {
+private fun ContactLink(
+    contact: UiContact,
+    onCopyClick: (String, String) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -87,7 +97,7 @@ private fun ContactLink(contact: UiContact) {
                 .height(27.dp)
                 .clip(RoundedCornerShape(100.dp))
                 .background(MaterialTheme.colorScheme.primaryContainer)
-                .clickable {},
+                .clickable { onCopyClick(contact.type, contact.value) },
             contentAlignment = Alignment.Center,
         ) {
             Text(
@@ -105,10 +115,11 @@ private fun ContactLink(contact: UiContact) {
 private fun ContactsPreview() {
     ZiineTheme {
         ContactLinks(
-            persistentListOf(
+            contacts = persistentListOf(
                 UiContact(type = stringResource(R.string.instagram), value = "y_joo_z"),
                 UiContact(type = stringResource(R.string.website), value = "www.aaaabbbbcccc.com"),
             ),
+            onCopyClick = { _, _ -> },
         )
     }
 }

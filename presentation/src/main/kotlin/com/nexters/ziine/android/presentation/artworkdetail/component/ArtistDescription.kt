@@ -23,7 +23,6 @@ import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtistDetail
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetail
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiContact
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiExhibition
-import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiAction
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiState
 import com.nexters.ziine.android.presentation.component.NetworkImage
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
@@ -36,7 +35,7 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 internal fun ArtistDescription(
     uiState: ArtworkDetailUiState,
-    onAction: (ArtworkDetailUiAction) -> Unit,
+    onCopyClick: (String, String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -89,7 +88,10 @@ internal fun ArtistDescription(
             color = MaterialTheme.colorScheme.onBackground,
         )
         Spacer(modifier = Modifier.height(40.dp))
-        ContactLinks(contacts = uiState.artwork.artist.contact)
+        ContactLinks(
+            contacts = uiState.artwork.artist.contact,
+            onCopyClick = onCopyClick,
+        )
     }
 }
 
@@ -132,7 +134,7 @@ private fun ArtistDescriptionPreview() {
                     )
                 ),
             ),
-            onAction = {},
+            onCopyClick = { _, _ -> },
         )
     }
 }

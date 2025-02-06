@@ -36,7 +36,6 @@ import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetail
-import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiAction
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiState
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
 import com.nexters.ziine.android.presentation.ui.theme.Heading4
@@ -51,7 +50,7 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 @Composable
 internal fun ArtworkDescription(
     uiState: ArtworkDetailUiState,
-    onAction: (ArtworkDetailUiAction) -> Unit,
+    onShareClick: (String) -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
@@ -83,7 +82,7 @@ internal fun ArtworkDescription(
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 IconButton(
-                    onClick = {},
+                    onClick = { onShareClick(uiState.url) },
                     modifier = Modifier.then(Modifier.size(32.dp))
                 ) {
                     Icon(
@@ -215,11 +214,10 @@ private fun ArtworkDescriptionPreview() {
                                 description = "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text",
                             ),
                         ),
-                        onAction = {},
+                        onShareClick = {},
                         animatedVisibilityScope = this@AnimatedVisibility,
                     )
                 }
-
             }
         }
     }

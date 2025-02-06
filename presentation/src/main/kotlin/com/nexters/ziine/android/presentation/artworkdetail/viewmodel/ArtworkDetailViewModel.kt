@@ -37,11 +37,16 @@ class ArtworkDetailViewModel
         private val _uiEvent = Channel<ArtworkDetailUiEvent>()
         val uiEvent: Flow<ArtworkDetailUiEvent> = _uiEvent.receiveAsFlow()
 
-        fun onAction(action: ArtworkDetailUiAction) {
-        }
-
         init {
             fetchArtworkDetail()
+        }
+
+        fun onAction(action: ArtworkDetailUiAction) {
+            when (action) {
+                is ArtworkDetailUiAction.OnBackClick -> navigateBack()
+                is ArtworkDetailUiAction.OnShareClick -> shareUrl(action.url)
+                is ArtworkDetailUiAction.OnCopyClick -> copyValue(action.type, action.value)
+            }
         }
 
         private fun fetchArtworkDetail() {
@@ -76,8 +81,30 @@ class ArtworkDetailViewModel
                                 email = "yjoo@ziine.com",
                             ),
                         ),
+                        url = "https://m.naver.com/",
                     )
                 }
+            }
+        }
+
+        private fun navigateBack() {
+            viewModelScope.launch {
+                _uiEvent.send(ArtworkDetailUiEvent.NavigateBack)
+            }
+        }
+
+        private fun shareUrl(url: String) {
+            viewModelScope.launch {
+                _uiEvent.send(ArtworkDetailUiEvent.ShareUrl(url))
+            }
+        }
+
+        private fun copyValue(
+            type: String,
+            value: String
+        ) {
+            viewModelScope.launch {
+                _uiEvent.send(ArtworkDetailUiEvent.CopyValue(type, value))
             }
         }
     }

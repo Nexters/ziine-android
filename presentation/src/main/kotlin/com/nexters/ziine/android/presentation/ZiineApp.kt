@@ -98,7 +98,7 @@ fun ZiineApp(modifier: Modifier = Modifier) {
                 ) {
                     artworksScreen(navigateToArtworkDetail = mainNavController::navigateToArtworkDetail,)
                     magazineScreen()
-                    artworkDetailScreen()
+                    artworkDetailScreen(popBackStack = mainNavController::popBackStackIfNotArtworks)
                 }
             }
         }

@@ -13,8 +13,11 @@ fun NavController.navigateToArtworkDetail(
     navigate(Route.ArtworkDetail(id, imageUrl, title))
 }
 
-fun NavGraphBuilder.artworkDetailScreen() {
+fun NavGraphBuilder.artworkDetailScreen(popBackStack: () -> Unit) {
     composable<Route.ArtworkDetail> {
-        ArtworkDetailRoute(animatedVisibilityScope = this@composable)
+        ArtworkDetailRoute(
+            popBackStack = popBackStack,
+            animatedVisibilityScope = this@composable,
+        )
     }
 }
