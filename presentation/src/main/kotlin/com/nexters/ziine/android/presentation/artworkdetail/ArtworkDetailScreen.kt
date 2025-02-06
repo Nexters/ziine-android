@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
@@ -22,9 +23,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -63,10 +68,11 @@ internal fun ArtworkDetailRoute(
     val systemUiController = rememberExSystemUiController()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    var isScrolling by remember { mutableStateOf(false) }
 
-    DisposableEffect(systemUiController) {
+    DisposableEffect(systemUiController, isScrolling) {
         systemUiController.setSystemBarsColor(
-            color = Color.Transparent,
+            color = if (isScrolling) Gray900 else Color.Transparent,
             darkIcons = false,
         )
 
@@ -117,10 +123,10 @@ internal fun ArtworkDetailRoute(
         onAction = artworkDetailViewModel::onAction,
         snackbarHostState = snackbarHostState,
         animatedVisibilityScope = animatedVisibilityScope,
+        onScrollingChanged = { isScrolling = it }
     )
 }
 
-// TODO TopBar scroll down 시 배경 색상 변경
 @Composable
 internal fun ArtworkDetailScreen(
     padding: PaddingValues,
@@ -128,13 +134,26 @@ internal fun ArtworkDetailScreen(
     onAction: (ArtworkDetailUiAction) -> Unit,
     snackbarHostState: SnackbarHostState,
     animatedVisibilityScope: AnimatedVisibilityScope,
+    onScrollingChanged: (Boolean) -> Unit,
 ) {
+    val scrollState = rememberLazyListState()
+    val isScrolling by remember {
+        derivedStateOf {
+            scrollState.isScrollInProgress
+        }
+    }
+
+    LaunchedEffect(isScrolling) {
+        onScrollingChanged(isScrolling)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(bottom = padding.calculateBottomPadding()),
     ) {
         LazyColumn(
+            state = scrollState,
             modifier = Modifier.fillMaxSize(),
         ) {
             item {
@@ -178,6 +197,7 @@ internal fun ArtworkDetailScreen(
 
         ArtworkDetailTopBar(
             onBackClick = { onAction(ArtworkDetailUiAction.OnBackClick) },
+            isScrolling = isScrolling,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = padding.calculateTopPadding()),
@@ -211,6 +231,7 @@ private fun ArtworkDetailScreenPreview(
                         onAction = {},
                         snackbarHostState = remember { SnackbarHostState() },
                         animatedVisibilityScope = this@AnimatedVisibility,
+                        onScrollingChanged = {},
                     )
                 }
             }
