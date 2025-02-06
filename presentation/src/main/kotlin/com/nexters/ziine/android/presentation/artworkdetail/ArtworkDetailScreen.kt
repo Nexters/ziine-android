@@ -8,10 +8,12 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -50,6 +52,7 @@ import tech.thdev.compose.exteions.system.ui.controller.rememberExSystemUiContro
 
 @Composable
 internal fun ArtworkDetailRoute(
+    padding: PaddingValues,
     popBackStack: () -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
     artworkDetailViewModel: ArtworkDetailViewModel = hiltViewModel()
@@ -109,6 +112,7 @@ internal fun ArtworkDetailRoute(
     }
 
     ArtworkDetailScreen(
+        padding = padding,
         uiState = artworkDetailUiState,
         onAction = artworkDetailViewModel::onAction,
         snackbarHostState = snackbarHostState,
@@ -117,16 +121,18 @@ internal fun ArtworkDetailRoute(
 }
 
 // TODO TopBar scroll down 시 배경 색상 변경
-// TODO ArtworkDetailItem statusBar 영역을 포함하도록
 @Composable
 internal fun ArtworkDetailScreen(
+    padding: PaddingValues,
     uiState: ArtworkDetailUiState,
     onAction: (ArtworkDetailUiAction) -> Unit,
     snackbarHostState: SnackbarHostState,
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = padding.calculateBottomPadding()),
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -172,7 +178,9 @@ internal fun ArtworkDetailScreen(
 
         ArtworkDetailTopBar(
             onBackClick = { onAction(ArtworkDetailUiAction.OnBackClick) },
-            modifier = Modifier.align(Alignment.TopCenter),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = padding.calculateTopPadding()),
         )
 
         SnackbarHost(
@@ -198,6 +206,7 @@ private fun ArtworkDetailScreenPreview(
                     LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility
                 ) {
                     ArtworkDetailScreen(
+                        padding = PaddingValues(),
                         uiState = uiState,
                         onAction = {},
                         snackbarHostState = remember { SnackbarHostState() },

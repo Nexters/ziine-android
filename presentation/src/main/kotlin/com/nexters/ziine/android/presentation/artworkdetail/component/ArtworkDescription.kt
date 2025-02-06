@@ -44,8 +44,6 @@ import com.nexters.ziine.android.presentation.ui.theme.Paragraph3
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph4
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
-// TODO 스낵바
-// TODO FAB VISIBILITY
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworkDescription(
@@ -103,9 +101,9 @@ internal fun ArtworkDescription(
                         .wrapContentWidth()
                         .clip(RoundedCornerShape(100.dp))
                         .border(
-                            1.dp,
-                            MaterialTheme.colorScheme.outlineVariant,
-                            RoundedCornerShape(100.dp)
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.outlineVariant,
+                            shape = RoundedCornerShape(100.dp)
                         )
                         .background(MaterialTheme.colorScheme.tertiaryContainer),
                     contentAlignment = Alignment.Center,

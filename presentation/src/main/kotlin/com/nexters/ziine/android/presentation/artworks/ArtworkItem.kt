@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,7 +37,7 @@ import com.nexters.ziine.android.presentation.ui.theme.Heading4
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph2
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
-// TODO title 영역 그라이언트 박스 깔아야함, 테두리도 적용해야함
+// TODO title 영역 그라이언트 박스 깔아야함
 // TODO NetworkImage 실패 이미지 처리
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -60,6 +61,11 @@ internal fun ArtworkItem(
                 .padding(horizontal = 16.dp)
                 .heightIn(max = 900.dp)
                 .clip(RoundedCornerShape(16.dp))
+                .border(
+                    width = 1.5.dp,
+                    color = Gray0.copy(alpha = 0.1f),
+                    shape = RoundedCornerShape(16.dp),
+                )
                 .clickable(onClick = onArtworkItemSelect),
         ) {
             NetworkImage(

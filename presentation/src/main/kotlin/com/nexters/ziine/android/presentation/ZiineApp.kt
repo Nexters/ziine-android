@@ -60,7 +60,7 @@ fun ZiineApp(modifier: Modifier = Modifier) {
                 },
                 modifier = Modifier
                     .windowInsetsPadding(
-                        WindowInsets.safeDrawing.only(WindowInsetsSides.Top)
+                        WindowInsets.safeDrawing.only(WindowInsetsSides.Top),
                     )
                     .padding(top = 20.dp, bottom = 8.dp),
             )
@@ -90,15 +90,19 @@ fun ZiineApp(modifier: Modifier = Modifier) {
                 LocalSharedTransitionScope provides this@SharedTransitionLayout,
             ) {
                 NavHost(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .padding(padding),
+                    modifier = modifier.fillMaxSize(),
                     navController = mainNavController.navController,
                     startDestination = mainNavController.startDestination,
                 ) {
-                    artworksScreen(navigateToArtworkDetail = mainNavController::navigateToArtworkDetail,)
-                    magazineScreen()
-                    artworkDetailScreen(popBackStack = mainNavController::popBackStackIfNotArtworks)
+                    artworksScreen(
+                        padding = padding,
+                        navigateToArtworkDetail = mainNavController::navigateToArtworkDetail,
+                    )
+                    magazineScreen(padding = padding)
+                    artworkDetailScreen(
+                        padding = padding,
+                        popBackStack = mainNavController::popBackStackIfNotArtworks,
+                    )
                 }
             }
         }

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -38,6 +39,7 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
 @Composable
 internal fun ArtworksRoute(
+    padding: PaddingValues,
     navigateToArtworkDetail: (Int, String, String) -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
     artworksViewModel: ArtworksViewModel = hiltViewModel(),
@@ -57,6 +59,7 @@ internal fun ArtworksRoute(
     }
 
     ArtworksScreen(
+        padding = padding,
         uiState = artworksUiState,
         onAction = artworksViewModel::onAction,
         animatedVisibilityScope = animatedVisibilityScope,
@@ -65,6 +68,7 @@ internal fun ArtworksRoute(
 
 @Composable
 internal fun ArtworksScreen(
+    padding: PaddingValues,
     uiState: ArtworksUiState,
     onAction: (ArtworksUiAction) -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
@@ -80,7 +84,9 @@ internal fun ArtworksScreen(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding),
         contentAlignment = Alignment.Center,
     ) {
         LazyColumn(
@@ -126,6 +132,7 @@ private fun ArtworksScreenPreview(
                     LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility
                 ) {
                     ArtworksScreen(
+                        padding = PaddingValues(),
                         uiState = uiState,
                         onAction = {},
                         animatedVisibilityScope = this@AnimatedVisibility,
