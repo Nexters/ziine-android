@@ -1,5 +1,9 @@
 package com.nexters.ziine.android.presentation.artworkdetail.component
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -27,12 +32,22 @@ internal fun ArtworkDetailTopBar(
     isScrolling: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val backgroundColor by animateColorAsState(
+        targetValue = if (isScrolling) MaterialTheme.colorScheme.background else Color.Transparent,
+        label = "backgroundColor"
+    )
+
+    val dividerColor by animateColorAsState(
+        targetValue = if (isScrolling) MaterialTheme.colorScheme.outline else Color.Transparent,
+        label = "dividerColor"
+    )
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
                 .height(44.dp)
-                .background(if (isScrolling) MaterialTheme.colorScheme.background else Color.Transparent,),
+                .background(backgroundColor),
         ) {
             IconButton(
                 onClick = onBackClick,
@@ -47,12 +62,11 @@ internal fun ArtworkDetailTopBar(
                 )
             }
         }
-        if (isScrolling) {
-            HorizontalDivider(
-                thickness = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
-            )
-        }
+
+        HorizontalDivider(
+            thickness = 1.dp,
+            color = dividerColor,
+        )
     }
 }
 
