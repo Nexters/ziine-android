@@ -29,19 +29,19 @@ object RetrofitModule {
     @Provides
     fun providesOKHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        oKHttpDispatcher: Dispatcher,
+        okHttpDispatcher: Dispatcher,
     ): OkHttpClient =
         OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(httpLoggingInterceptor)
-            .dispatcher(oKHttpDispatcher)
+            .dispatcher(okHttpDispatcher)
             .build()
 
     @Provides
     @Singleton
-    fun providesTripDrawRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun providesZiineRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val contentType = "application/json".toMediaType()
         /** baseurl 추후 추가 예정 */
         return Retrofit.Builder()
