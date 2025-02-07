@@ -8,6 +8,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -39,10 +40,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtistDescription
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtworkDescription
+import com.nexters.ziine.android.presentation.artworkdetail.component.ArtworkDetailItem
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtworkDetailTopBar
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiAction
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiEvent
@@ -50,7 +51,7 @@ import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDet
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailViewModel
 import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
 import com.nexters.ziine.android.presentation.component.ZiineSnackbar
-import com.nexters.ziine.android.presentation.preview.ArtworksPreviewParameterProvider
+import com.nexters.ziine.android.presentation.preview.ArtworkDetailPreviewParameterProvider
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.ui.theme.Gray900
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
@@ -160,6 +161,7 @@ internal fun ArtworkDetailScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(bottom = padding.calculateBottomPadding()),
     ) {
         LazyColumn(
@@ -225,7 +227,7 @@ internal fun ArtworkDetailScreen(
 @DevicePreview
 @Composable
 private fun ArtworkDetailScreenPreview(
-    @PreviewParameter(ArtworksPreviewParameterProvider::class)
+    @PreviewParameter(ArtworkDetailPreviewParameterProvider::class)
     uiState: ArtworkDetailUiState,
 ) {
     ZiineTheme {
@@ -233,7 +235,6 @@ private fun ArtworkDetailScreenPreview(
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
-                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility
                 ) {
                     ArtworkDetailScreen(
                         padding = PaddingValues(),
