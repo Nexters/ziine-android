@@ -2,4 +2,8 @@
     <string name="app_name">ziine-android</string>
     <string name="artworks">Artworks</string>
     <string name="manazine">Magazine</string>
+
+    <string name="register_artwork_main_title_first">작가님의 작품을 등록하기 전,</string>
+    <string name="register_artwork_main_title_second">꼭 확인해주세요!</string>
+
 </resources>
