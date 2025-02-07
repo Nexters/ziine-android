@@ -1,5 +1,10 @@
 package com.nexters.ziine.android.presentation.registerArtwork.pending
 
+import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
@@ -28,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -211,9 +217,13 @@ private fun StickyFooter() {
             .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.background),
     ) {
+        val vibrator = getVibrator()
+
         Spacer(modifier = Modifier.height(12.dp))
         Button(
-            onClick = {},
+            onClick = {
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+            },
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth(),
@@ -230,6 +240,20 @@ private fun StickyFooter() {
         }
         Spacer(modifier = Modifier.height(40.dp))
     }
+}
+
+@Composable
+private fun getVibrator(): Vibrator {
+    val context = LocalContext.current
+    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val vibratorManager =
+            context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        vibratorManager.defaultVibrator
+    } else {
+        @Suppress("DEPRECATION")
+        context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    }
+    return vibrator
 }
 
 @DevicePreview
