@@ -1,0 +1,64 @@
+package com.nexters.ziine.android.data.mapper.artwork
+
+import com.nexters.ziine.android.data.httpClient.dto.response.ArtistDetailResponse
+import com.nexters.ziine.android.data.httpClient.dto.response.ArtistResponse
+import com.nexters.ziine.android.data.httpClient.dto.response.ArtworkDetailResponse
+import com.nexters.ziine.android.data.httpClient.dto.response.ArtworkResponse
+import com.nexters.ziine.android.data.httpClient.dto.response.ContactResponse
+import com.nexters.ziine.android.data.httpClient.dto.response.ExhibitionResponse
+import com.nexters.ziine.android.domain.entity.Artist
+import com.nexters.ziine.android.domain.entity.ArtistDetail
+import com.nexters.ziine.android.domain.entity.ArtworkDetail
+import com.nexters.ziine.android.domain.entity.Artworks
+import com.nexters.ziine.android.domain.entity.Contact
+import com.nexters.ziine.android.domain.entity.Exhibition
+
+fun ArtworkResponse.toArtwork() =
+    Artworks(
+        id = id,
+        title = title,
+        imageUrl = imageUrl,
+        artist = artist.toArtist()
+    )
+
+fun ArtistResponse.toArtist() =
+    Artist(
+        id = id,
+        name = name,
+        profileImageUrl = profileImageUrl,
+    )
+
+fun ArtworkDetailResponse.toArtworkDetail() =
+    ArtworkDetail(
+        id = id,
+        title = title,
+        width = width,
+        height = height,
+        material = material,
+        description = description,
+        imageUrl = imageUrl,
+        artist = artist.toArtistDetail()
+    )
+
+fun ArtistDetailResponse.toArtistDetail() =
+    ArtistDetail(
+        id = id,
+        name = name,
+        profileImageUrl = profileImageUrl,
+        education = education,
+        exhibition = exhibition.map { it.toExhibition() },
+        contact = contact.map { it.toContact() },
+        email = email,
+    )
+
+fun ExhibitionResponse.toExhibition() =
+    Exhibition(
+        title = title,
+        exhibitionDate = exhibitionDate,
+    )
+
+fun ContactResponse.toContact() =
+    Contact(
+        type = type,
+        value = value,
+    )

@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
+    implementation(projects.domain)
 
     // hilt
     implementation(libs.hilt)
