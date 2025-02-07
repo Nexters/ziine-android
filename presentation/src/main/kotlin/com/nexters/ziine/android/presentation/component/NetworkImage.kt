@@ -20,7 +20,7 @@ fun NetworkImage(
     contentDescription: String?,
     modifier: Modifier = Modifier,
     loadingImage: Painter = painterResource(id = R.drawable.placeholder),
-    // failureImage: Painter = painterResource(id = R.drawable.placeholder),
+    failureImage: Painter = painterResource(id = R.drawable.placeholder),
     contentScale: ContentScale = ContentScale.Crop,
 ) {
     val context = LocalContext.current
@@ -62,6 +62,7 @@ fun NetworkImage(
                 .build(),
             contentDescription = contentDescription,
             modifier = modifier,
+            error = failureImage,
             contentScale = contentScale,
         )
     }

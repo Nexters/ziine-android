@@ -38,7 +38,6 @@ import com.nexters.ziine.android.presentation.ui.theme.Paragraph2
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
 // TODO title 영역 그라이언트 박스 깔아야함
-// TODO NetworkImage 실패 이미지 처리
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworkItem(
