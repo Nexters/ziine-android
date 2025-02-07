@@ -20,4 +20,6 @@
 
     <string name="register_artwork_third_content_title">승인까지의 시간은 최대 3일 소요 예정이에요.</string>
     <string name="register_artwork_thirdcontent_content_first">심사 통과 시, 별도의 추가 등록 과정 없이 자동으로 업로드 돼요.</string>
+
+    <string name="register_artwork_footer_button_text">작품 등록하기</string>
 </resources>
