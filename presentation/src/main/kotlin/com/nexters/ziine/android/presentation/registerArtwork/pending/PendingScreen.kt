@@ -27,11 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.component.RegisterTopBar
 import com.nexters.ziine.android.presentation.preview.DevicePreview
+import com.nexters.ziine.android.presentation.registerArtwork.pending.model.UiPendingGuideItem
 import com.nexters.ziine.android.presentation.ui.theme.Heading4
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph3
 import com.nexters.ziine.android.presentation.ui.theme.Subtitle1
@@ -69,6 +72,7 @@ private fun GuideUI(scrollState: ScrollState) {
             .verticalScroll(scrollState)
     ) {
         GuideMainTitle()
+        GuideContent(getPendingGuideItems())
     }
 }
 
@@ -97,7 +101,63 @@ private fun GuideMainTitle() {
 }
 
 @Composable
-private fun GuideContentForm(
+private fun GuideContent(pendingGuideItems: List<UiPendingGuideItem>) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Spacer(modifier = Modifier.height(16.dp))
+        pendingGuideItems.forEachIndexed { index, item ->
+            val order = index + 1
+            val title = item.title
+            val content = item.content
+            val imageId = item.imageId
+            GuideContentGeneralForm(order, title, content, imageId)
+            if (index != pendingGuideItems.lastIndex) {
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+        }
+        Spacer(modifier = Modifier.height(40.dp))
+    }
+}
+
+@Composable
+private fun getPendingGuideItems(): List<UiPendingGuideItem> =
+    listOf(
+        UiPendingGuideItem(
+            title = stringResource(R.string.register_artwork_first_content_title),
+            content = buildAnnotatedString {
+                withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onSurface)) {
+                    append(stringResource(R.string.register_artwork_first_content_content_first))
+                }
+                append(stringResource(R.string.register_artwork_first_content_content_second))
+            },
+            imageId = R.drawable.ic_arrow_back
+        ),
+        UiPendingGuideItem(
+            title = stringResource(R.string.register_artwork_second_content_title),
+            content = buildAnnotatedString {
+                withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onSurface)) {
+                    append(stringResource(R.string.register_artwork_second_content_content_first))
+                }
+                append(stringResource(R.string.register_artwork_second_content_content_second))
+                withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onSurface)) {
+                    append(stringResource(R.string.register_artwork_second_content_content_third))
+                }
+                append(stringResource(R.string.register_artwork_second_content_content_fourth))
+            },
+            imageId = R.drawable.ic_arrow_back
+        ),
+        UiPendingGuideItem(
+            title = stringResource(R.string.register_artwork_third_content_title),
+            content = buildAnnotatedString {
+                withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onSurface)) {
+                    append(stringResource(R.string.register_artwork_thirdcontent_content_first))
+                }
+            },
+            imageId = R.drawable.ic_arrow_back
+        )
+    )
+
+@Composable
+private fun GuideContentGeneralForm(
     order: Int,
     title: String,
     content: AnnotatedString,
