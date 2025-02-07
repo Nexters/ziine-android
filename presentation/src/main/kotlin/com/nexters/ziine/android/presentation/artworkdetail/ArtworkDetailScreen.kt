@@ -3,6 +3,7 @@ package com.nexters.ziine.android.presentation.artworkdetail
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -88,14 +89,23 @@ internal fun ArtworkDetailRoute(
         when (event) {
             is ArtworkDetailUiEvent.NavigateBack -> popBackStack()
             is ArtworkDetailUiEvent.ShareUrl -> {
-                val clipboardManager =
-                    context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText("artwork_url", event.url)
-                clipboardManager.setPrimaryClip(clip)
+//                val clipboardManager =
+//                    context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+//                val clip = ClipData.newPlainText("artwork_url", event.url)
+//                clipboardManager.setPrimaryClip(clip)
 
 //                scope.launch {
 //                    snackbarHostState.showSnackbar(context.getString(R.string.link_has_been_copied))
 //                }
+
+                val sendIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, event.url)
+                    type = "text/plain"
+                }
+
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                context.startActivity(shareIntent)
             }
 
             is ArtworkDetailUiEvent.CopyValue -> {
