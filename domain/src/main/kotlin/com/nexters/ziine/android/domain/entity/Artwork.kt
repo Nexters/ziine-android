@@ -1,6 +1,6 @@
 package com.nexters.ziine.android.domain.entity
 
-data class Artworks(
+data class Artwork(
     val id: Int,
     val title: String,
     val imageUrl: String,

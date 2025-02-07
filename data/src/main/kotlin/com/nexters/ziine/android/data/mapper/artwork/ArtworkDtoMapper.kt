@@ -9,12 +9,12 @@ import com.nexters.ziine.android.data.httpClient.dto.response.ExhibitionResponse
 import com.nexters.ziine.android.domain.entity.Artist
 import com.nexters.ziine.android.domain.entity.ArtistDetail
 import com.nexters.ziine.android.domain.entity.ArtworkDetail
-import com.nexters.ziine.android.domain.entity.Artworks
+import com.nexters.ziine.android.domain.entity.Artwork
 import com.nexters.ziine.android.domain.entity.Contact
 import com.nexters.ziine.android.domain.entity.Exhibition
 
 fun ArtworkResponse.toArtwork() =
-    Artworks(
+    Artwork(
         id = id,
         title = title,
         imageUrl = imageUrl,

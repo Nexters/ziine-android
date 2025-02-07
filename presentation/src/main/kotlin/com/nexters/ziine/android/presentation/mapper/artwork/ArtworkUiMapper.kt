@@ -3,7 +3,7 @@ package com.nexters.ziine.android.presentation.mapper.artwork
 import com.nexters.ziine.android.domain.entity.Artist
 import com.nexters.ziine.android.domain.entity.ArtistDetail
 import com.nexters.ziine.android.domain.entity.ArtworkDetail
-import com.nexters.ziine.android.domain.entity.Artworks
+import com.nexters.ziine.android.domain.entity.Artwork
 import com.nexters.ziine.android.domain.entity.Contact
 import com.nexters.ziine.android.domain.entity.Exhibition
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtistDetail
@@ -14,7 +14,7 @@ import com.nexters.ziine.android.presentation.artworks.model.UiArtist
 import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
 import kotlinx.collections.immutable.toImmutableList
 
-fun Artworks.toUiArtworks() =
+fun Artwork.toUiArtworks() =
     UiArtwork(
         id = id,
         title = title,
