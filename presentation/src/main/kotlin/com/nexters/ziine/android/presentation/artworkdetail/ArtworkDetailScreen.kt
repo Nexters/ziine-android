@@ -70,11 +70,11 @@ internal fun ArtworkDetailRoute(
     val systemUiController = rememberExSystemUiController()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    var isScrolling by remember { mutableStateOf(false) }
+    var isScrollPositionChanged by remember { mutableStateOf(false) }
 
-    DisposableEffect(systemUiController, isScrolling) {
+    DisposableEffect(systemUiController, isScrollPositionChanged) {
         systemUiController.setSystemBarsColor(
-            color = if (isScrolling) Gray900 else Color.Transparent,
+            color = if (isScrollPositionChanged) Gray900 else Color.Transparent,
             darkIcons = false,
         )
 
@@ -134,7 +134,7 @@ internal fun ArtworkDetailRoute(
         onAction = artworkDetailViewModel::onAction,
         snackbarHostState = snackbarHostState,
         animatedVisibilityScope = animatedVisibilityScope,
-        onScrollingChanged = { isScrolling = it }
+        onScrollPositionChanged = { isScrollPositionChanged = it }
     )
 }
 
@@ -145,17 +145,17 @@ internal fun ArtworkDetailScreen(
     onAction: (ArtworkDetailUiAction) -> Unit,
     snackbarHostState: SnackbarHostState,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    onScrollingChanged: (Boolean) -> Unit,
+    onScrollPositionChanged: (Boolean) -> Unit,
 ) {
     val scrollState = rememberLazyListState()
-    val isScrolling by remember {
+    val isAtTop by remember {
         derivedStateOf {
-            scrollState.isScrollInProgress
+            scrollState.firstVisibleItemIndex == 0 && scrollState.firstVisibleItemScrollOffset == 0
         }
     }
 
-    LaunchedEffect(isScrolling) {
-        onScrollingChanged(isScrolling)
+    LaunchedEffect(isAtTop) {
+        onScrollPositionChanged(!isAtTop)
     }
 
     Box(
@@ -209,7 +209,7 @@ internal fun ArtworkDetailScreen(
 
         ArtworkDetailTopBar(
             onBackClick = { onAction(ArtworkDetailUiAction.OnBackClick) },
-            isScrolling = isScrolling,
+            isAtTop = isAtTop,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = padding.calculateTopPadding()),
@@ -242,7 +242,7 @@ private fun ArtworkDetailScreenPreview(
                         onAction = {},
                         snackbarHostState = remember { SnackbarHostState() },
                         animatedVisibilityScope = this@AnimatedVisibility,
-                        onScrollingChanged = {},
+                        onScrollPositionChanged = {},
                     )
                 }
             }
