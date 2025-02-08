@@ -6,6 +6,8 @@ targetSdk = "35"
 versionCode = "1"
 versionName = "1.0.0"
 
+secrets-gradle-plugin = "2.0.1"
+
 # kotlin
 kotlin = "2.1.0"
 kotlinx-coroutines = "1.10.1"
@@ -131,7 +133,7 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 
-google-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "google-secrets" }
+secrets-gradle-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets-gradle-plugin" }
 google-service = { id = "com.google.gms.google-services", version.ref = "google-service" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

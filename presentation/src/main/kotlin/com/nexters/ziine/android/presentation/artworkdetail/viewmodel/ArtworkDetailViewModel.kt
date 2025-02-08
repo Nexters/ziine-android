@@ -4,13 +4,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.nexters.ziine.android.presentation.artworkdetail.model.UiContact
+import com.nexters.ziine.android.domain.repository.ArtworkRepository
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtistDetail
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetail
+import com.nexters.ziine.android.presentation.artworkdetail.model.UiContact
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiExhibition
+import com.nexters.ziine.android.presentation.mapper.artwork.toUiArtworkDetail
 import com.nexters.ziine.android.presentation.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +27,7 @@ import javax.inject.Inject
 class ArtworkDetailViewModel
     @Inject
     constructor(
+        private val artworkRepository: ArtworkRepository,
         savedStateHandle: SavedStateHandle,
     ) : ViewModel() {
         private val id = savedStateHandle.toRoute<Route.ArtworkDetail>().id
@@ -38,7 +41,7 @@ class ArtworkDetailViewModel
         val uiEvent: Flow<ArtworkDetailUiEvent> = _uiEvent.receiveAsFlow()
 
         init {
-            fetchArtworkDetail()
+            fetchArtworkDetail(id)
         }
 
         fun onAction(action: ArtworkDetailUiAction) {
@@ -49,41 +52,48 @@ class ArtworkDetailViewModel
             }
         }
 
-        private fun fetchArtworkDetail() {
+        private fun fetchArtworkDetail(id: Int) {
             viewModelScope.launch {
-                _uiState.update {
-                    it.copy(
-                        artwork = UiArtworkDetail(
-                            id = id,
-                            title = title,
-                            imageUrl = imageUrl,
-                            width = 100,
-                            height = 100,
-                            material = "페인트",
-                            description = "진짜 진짜 열심히 그림(진짜임)",
-                            artist = UiArtistDetail(
-                                id = 1,
-                                name = "멧돼지",
-                                profileImageUrl = "https://example.com/profile1/png",
-                                education = persistentListOf("세종대학교", "동양학과"),
-                                exhibition = persistentListOf(
-                                    UiExhibition(
-                                        title = "세종대학교 졸업전시회",
-                                        exhibitionDate = "2025.02.01",
-                                    ),
+                _uiState.update { it.copy(isLoading = true) }
+                artworkRepository.fetchArtworkDetail(id)
+                    .onSuccess { result ->
+                        val uiArtworkDetail = result.toUiArtworkDetail()
+                        _uiState.update {
+                            it.copy(
+                                artworkDetail = UiArtworkDetail(
+                                    id = id,
+                                    title = title,
+                                    width = uiArtworkDetail.width,
+                                    height = uiArtworkDetail.height,
+                                    material = uiArtworkDetail.material,
+                                    description = uiArtworkDetail.description,
+                                    imageUrl = imageUrl,
+                                    artist = UiArtistDetail(
+                                        id = uiArtworkDetail.artist.id,
+                                        name = uiArtworkDetail.artist.name,
+                                        profileImageUrl = uiArtworkDetail.artist.profileImageUrl,
+                                        education = uiArtworkDetail.artist.education.toImmutableList(),
+                                        exhibition = uiArtworkDetail.artist.exhibition.map {
+                                            UiExhibition(
+                                                title = it.title,
+                                                exhibitionDate = it.exhibitionDate
+                                            )
+                                        }.toImmutableList(),
+                                        contact = uiArtworkDetail.artist.contact.map {
+                                            UiContact(
+                                                type = it.type,
+                                                value = it.value
+                                            )
+                                        }.toImmutableList(),
+                                        email = uiArtworkDetail.artist.email
+                                    )
                                 ),
-                                contact = persistentListOf(
-                                    UiContact(
-                                        type = "INSTAGRAM",
-                                        value = "y_joo_z",
-                                    ),
-                                ),
-                                email = "yjoo@ziine.com",
-                            ),
-                        ),
-                        url = "https://m.naver.com/",
-                    )
-                }
+                                url = "https://m.naver.com"
+                            )
+                        }
+                    }.onFailure {
+                    }
+                _uiState.update { it.copy(isLoading = false) }
             }
         }
 
@@ -101,7 +111,7 @@ class ArtworkDetailViewModel
 
         private fun copyValue(
             type: String,
-            value: String
+            value: String,
         ) {
             viewModelScope.launch {
                 _uiEvent.send(ArtworkDetailUiEvent.CopyValue(type, value))

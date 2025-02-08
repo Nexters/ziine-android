@@ -1,5 +1,6 @@
 package com.nexters.ziine.android.data.di
 
+import com.nexters.ziine.android.data.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,7 +46,7 @@ object RetrofitModule {
         val contentType = "application/json".toMediaType()
         /** baseurl 추후 추가 예정 */
         return Retrofit.Builder()
-            .baseUrl("dummy")
+            .baseUrl(BuildConfig.SERVER_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(Json.asConverterFactory(contentType))
             .build()

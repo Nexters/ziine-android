@@ -21,6 +21,8 @@ data class ArtworkDetailResponse(
     val imageUrl: String,
     @SerialName("artist")
     val artist: ArtistDetailResponse,
+    @SerialName("shareUrl")
+    val shareUrl: String,
 )
 
 @Serializable

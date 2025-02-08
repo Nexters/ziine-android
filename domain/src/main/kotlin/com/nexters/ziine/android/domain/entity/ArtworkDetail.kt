@@ -9,6 +9,7 @@ data class ArtworkDetail(
     val description: String,
     val imageUrl: String,
     val artist: ArtistDetail,
+    val shareUrl: String,
 )
 
 data class ArtistDetail(

@@ -12,6 +12,7 @@ data class UiArtworkDetail(
     val description: String = "",
     val imageUrl: String = "",
     val artist: UiArtistDetail = UiArtistDetail(),
+    val shareUrl: String = "",
 )
 
 data class UiArtistDetail(
