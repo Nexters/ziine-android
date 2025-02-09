@@ -41,10 +41,15 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.nexters.ziine.android.presentation.R
+import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
 import com.nexters.ziine.android.presentation.component.RegisterTopBar
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.registerArtwork.pending.model.UiPendingGuideItem
+import com.nexters.ziine.android.presentation.registerArtwork.pending.viewmodel.PendingUiAction
+import com.nexters.ziine.android.presentation.registerArtwork.pending.viewmodel.PendingUiEvent
+import com.nexters.ziine.android.presentation.registerArtwork.pending.viewmodel.PendingViewModel
 import com.nexters.ziine.android.presentation.ui.theme.Heading4
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph3
 import com.nexters.ziine.android.presentation.ui.theme.Subtitle1
@@ -53,15 +58,30 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 import java.util.Locale
 
 @Composable
-internal fun PendingRoute(modifier: Modifier = Modifier, activityFinishAction: () -> Unit) {
+internal fun PendingRoute(
+    modifier: Modifier = Modifier,
+    activityFinishAction: () -> Unit,
+    navigateToRegister: () -> Unit,
+    pendingViewModel: PendingViewModel = hiltViewModel(),
+) {
+    ObserveAsEvents(flow = pendingViewModel.uiEvent) { event ->
+        when (event) {
+            is PendingUiEvent.NavigateToRegister -> navigateToRegister()
+            is PendingUiEvent.FinishActivity -> activityFinishAction()
+        }
+    }
+
     PendingScreen(
         modifier = modifier,
-        activityFinishAction,
+        onAction = pendingViewModel::onAction,
     )
 }
 
 @Composable
-internal fun PendingScreen(modifier: Modifier = Modifier, activityFinishAction: () -> Unit) {
+internal fun PendingScreen(
+    modifier: Modifier = Modifier,
+    onAction: (PendingUiAction) -> Unit,
+) {
     val scrollState = rememberScrollState()
     var isScrolled by remember { mutableStateOf(false) }
 
@@ -70,9 +90,9 @@ internal fun PendingScreen(modifier: Modifier = Modifier, activityFinishAction: 
     Column(
         modifier = modifier.fillMaxSize(),
     ) {
-        RegisterTopBar(isScrolled = isScrolled) { activityFinishAction() }
+        RegisterTopBar(isScrolled = isScrolled) { onAction(PendingUiAction.OnBackButtonClicked) }
         GuideUI(scrollState, Modifier.weight(1f))
-        StickyFooter()
+        StickyFooter() { onAction(PendingUiAction.OnMoveToRegisterButtonClicked) }
     }
 }
 
@@ -211,7 +231,7 @@ private fun GuideContentGeneralForm(
 }
 
 @Composable
-private fun StickyFooter() {
+private fun StickyFooter(onMoveToRegisterButtonClicked: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -223,6 +243,7 @@ private fun StickyFooter() {
         Button(
             onClick = {
                 vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                onMoveToRegisterButtonClicked()
             },
             modifier = Modifier
                 .padding(horizontal = 16.dp)
@@ -262,7 +283,7 @@ private fun PendingScreenPreview() {
     ZiineTheme {
         PendingScreen(
             modifier = Modifier.background(MaterialTheme.colorScheme.background),
-            activityFinishAction = {},
+            onAction = {},
         )
     }
 }

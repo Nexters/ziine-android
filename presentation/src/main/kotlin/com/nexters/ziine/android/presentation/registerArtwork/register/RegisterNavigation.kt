@@ -7,8 +7,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.nexters.ziine.android.presentation.registerArtwork.navigation.RegisterArtWorkRoute
 
-fun NavController.navigateToRegister(navOptions: NavOptions) {
-    navigate(RegisterArtWorkRoute.Register, navOptions)
+fun NavController.navigateToRegister() {
+    navigate(RegisterArtWorkRoute.Register)
 }
 
 fun NavGraphBuilder.registerScreen(modifier: Modifier = Modifier) {
