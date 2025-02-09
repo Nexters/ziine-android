@@ -1,6 +1,8 @@
 package com.nexters.ziine.android.presentation.common.webViews
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
@@ -9,7 +11,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
 
 /** Ziine기본 설정 웹뷰 생성 함수 */
@@ -19,8 +20,19 @@ internal fun getGeneralWebView(context: Context): WebView {
     return webView
 }
 
+@SuppressLint("SetJavaScriptEnabled")
 private fun WebView.setGeneralSetting() {
-    settings.javaScriptEnabled = true
+    settings.run {
+        javaScriptEnabled = true
+        javaScriptCanOpenWindowsAutomatically = true
+        loadsImagesAutomatically = true
+        useWideViewPort = true
+        loadWithOverviewMode = true
+        domStorageEnabled = true
+        allowFileAccess = true
+        mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        cacheMode = WebSettings.LOAD_NO_CACHE
+    }
     webViewClient = WebViewClient()
     webChromeClient = ZiineWebChromeClient()
 }
