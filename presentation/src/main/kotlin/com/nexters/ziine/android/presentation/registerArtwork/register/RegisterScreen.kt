@@ -44,10 +44,11 @@ private fun WebView.setRegisterSettingsToWebView(setIsScrolled: (Boolean) -> Uni
 
 @Composable
 private fun ComposeWrappedWebViewWithTopBar(modifier: Modifier = Modifier, setIsScrolled: (Boolean) -> Unit) {
-    ComposeWrappedWebView(
-        modifier = modifier.fillMaxSize(),
-        webView = getGeneralWebView().setRegisterSettingsToWebView(setIsScrolled),
-    )
+    ComposeWrappedWebView(modifier = modifier.fillMaxSize()) { context ->
+        getGeneralWebView(context).setRegisterSettingsToWebView(setIsScrolled).apply {
+            loadUrl("https://www.naver.com")
+        }
+    }
 }
 
 @DevicePreview
