@@ -35,6 +35,8 @@ private fun WebView.setGeneralSetting() {
     }
     webViewClient = WebViewClient()
     webChromeClient = ZiineWebChromeClient()
+    /** 기본 테마가 어두운 색이므로 웹뷰 깜방임 방지용 웹뷰 배경 투명화 */
+    setBackgroundColor(0)
 }
 
 @Composable
