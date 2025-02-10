@@ -9,8 +9,8 @@ data class ArtworkResponse(
     val id: Int,
     @SerialName("title")
     val title: String,
-    @SerialName("imageUrl")
-    val imageUrl: String,
+    @SerialName("artworkImageUrl")
+    val artworkImageUrl: String,
     @SerialName("artist")
     val artist: ArtistResponse,
 )

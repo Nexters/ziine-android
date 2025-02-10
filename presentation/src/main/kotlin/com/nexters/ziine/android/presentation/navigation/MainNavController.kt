@@ -36,9 +36,13 @@ class MainNavController(
     fun navigateToArtworkDetail(
         id: Int,
         title: String,
-        imageUrl: String
+        artworkImageUrl: String,
     ) {
-        navController.navigateToArtworkDetail(id, title, imageUrl)
+        navController.navigateToArtworkDetail(
+            id = id,
+            title = title,
+            artworkImageUrl = artworkImageUrl,
+        )
     }
 
     private fun popBackStack() {

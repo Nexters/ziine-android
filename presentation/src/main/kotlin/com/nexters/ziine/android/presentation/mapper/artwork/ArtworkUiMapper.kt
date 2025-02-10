@@ -18,7 +18,7 @@ fun Artwork.toUiArtworks() =
     UiArtwork(
         id = id,
         title = title,
-        imageUrl = imageUrl,
+        artworkImageUrl = artworkImageUrl,
         artist = artist.toUiArtist()
     )
 
@@ -37,7 +37,7 @@ fun ArtworkDetail.toUiArtworkDetail() =
         height = height,
         material = material,
         description = description,
-        imageUrl = imageUrl,
+        artworkImageUrl = artworkImageUrl,
         artist = artist.toUiArtistDetail()
     )
 

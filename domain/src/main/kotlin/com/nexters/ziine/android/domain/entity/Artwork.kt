@@ -3,7 +3,7 @@ package com.nexters.ziine.android.domain.entity
 data class Artwork(
     val id: Int,
     val title: String,
-    val imageUrl: String,
+    val artworkImageUrl: String,
     val artist: Artist,
 )
 

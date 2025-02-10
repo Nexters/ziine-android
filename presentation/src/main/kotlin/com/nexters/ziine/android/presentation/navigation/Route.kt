@@ -6,8 +6,8 @@ sealed interface Route {
     @Serializable
     data class ArtworkDetail(
         val id: Int,
-        val imageUrl: String,
-        val title: String
+        val title: String,
+        val artworkImageUrl: String,
     ) : Route
 
     @Serializable

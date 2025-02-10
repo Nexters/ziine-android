@@ -52,8 +52,8 @@ internal fun ArtworksRoute(
             is ArtworksUiEvent.NavigateToArtworkDetail -> {
                 navigateToArtworkDetail(
                     event.id,
-                    event.imageUrl,
                     event.title,
+                    event.artworkImageUrl,
                 )
             }
         }
@@ -106,7 +106,7 @@ internal fun ArtworksScreen(
                         onAction(
                             ArtworksUiAction.OnArtworkItemSelect(
                                 artwork.id,
-                                artwork.imageUrl,
+                                artwork.artworkImageUrl,
                                 artwork.title,
                             ),
                         )

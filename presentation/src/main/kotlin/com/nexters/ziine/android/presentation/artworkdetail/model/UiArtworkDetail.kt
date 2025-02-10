@@ -10,7 +10,7 @@ data class UiArtworkDetail(
     val height: Int = 0,
     val material: String = "",
     val description: String = "",
-    val imageUrl: String = "",
+    val artworkImageUrl: String = "",
     val artist: UiArtistDetail = UiArtistDetail(),
     val shareUrl: String = "",
 )

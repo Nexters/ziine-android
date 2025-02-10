@@ -26,63 +26,63 @@ class DefaultArtworkRepository
                 listOf(
                     ArtworkResponse(
                         id = 1,
+                        title = "Artwork 1",
+                        artworkImageUrl = "https://placehold.co/600x400/png",
                         artist = ArtistResponse(
                             id = 1,
                             name = "Artist 1",
                             profileImageUrl = "https://example.com/profile1.png",
                         ),
-                        imageUrl = "https://placehold.co/600x400/png",
-                        title = "Artwork 1",
                     ),
                     ArtworkResponse(
                         id = 2,
+                        title = "Artwork 2",
+                        artworkImageUrl = "https://placehold.co/400x600/png",
                         artist = ArtistResponse(
                             id = 2,
                             name = "Artist 2",
                             profileImageUrl = "https://example.com/profile2.png",
                         ),
-                        imageUrl = "https://placehold.co/400x600/png",
-                        title = "Artwork 2",
                     ),
                     ArtworkResponse(
                         id = 3,
+                        title = "Artwork 3",
+                        artworkImageUrl = "https://placehold.co/500x500/png",
                         artist = ArtistResponse(
                             id = 3,
                             name = "Artist 3",
                             profileImageUrl = "https://example.com/profile3.png",
                         ),
-                        imageUrl = "https://placehold.co/500x500/png",
-                        title = "Artwork 3",
                     ),
                     ArtworkResponse(
                         id = 4,
+                        title = "Artwork 4",
+                        artworkImageUrl = "https://placehold.co/300x500/png",
                         artist = ArtistResponse(
                             id = 4,
                             name = "Artist 4",
                             profileImageUrl = "https://example.com/profile4.png",
                         ),
-                        imageUrl = "https://placehold.co/300x500/png",
-                        title = "Artwork 4",
                     ),
                     ArtworkResponse(
                         id = 5,
+                        title = "Artwork 5",
+                        artworkImageUrl = "https://placehold.co/500x300/png",
                         artist = ArtistResponse(
                             id = 5,
                             name = "Artist 5",
                             profileImageUrl = "https://example.com/profile5.png",
                         ),
-                        imageUrl = "https://placehold.co/500x300/png",
-                        title = "Artwork 5",
                     ),
                     ArtworkResponse(
                         id = 6,
+                        title = "Artwork 6",
+                        artworkImageUrl = "https://placehold.co/400x800/png",
                         artist = ArtistResponse(
                             id = 6,
                             name = "Artist 6",
                             profileImageUrl = "https://example.com/profile1.png",
                         ),
-                        imageUrl = "https://placehold.co/400x800/png",
-                        title = "Artwork 6",
                     ),
                 ).map { it.toArtwork() }
             }
@@ -94,11 +94,11 @@ class DefaultArtworkRepository
                 ArtworkDetailResponse(
                     id = id,
                     title = "",
-                    imageUrl = "",
                     width = 100,
                     height = 100,
                     material = "페인트",
                     description = "진짜 진짜 열심히 그림(진짜임)",
+                    artworkImageUrl = "",
                     artist = ArtistDetailResponse(
                         id = 1,
                         name = "멧돼지",

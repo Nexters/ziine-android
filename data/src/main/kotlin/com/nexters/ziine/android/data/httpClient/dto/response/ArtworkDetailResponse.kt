@@ -17,8 +17,8 @@ data class ArtworkDetailResponse(
     val material: String,
     @SerialName("description")
     val description: String,
-    @SerialName("imageUrl")
-    val imageUrl: String,
+    @SerialName("artworkImageUrl")
+    val artworkImageUrl: String,
     @SerialName("artist")
     val artist: ArtistDetailResponse,
     @SerialName("shareUrl")

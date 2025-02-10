@@ -17,7 +17,7 @@ fun ArtworkResponse.toArtwork() =
     Artwork(
         id = id,
         title = title,
-        imageUrl = imageUrl,
+        artworkImageUrl = artworkImageUrl,
         artist = artist.toArtist()
     )
 
@@ -36,7 +36,7 @@ fun ArtworkDetailResponse.toArtworkDetail() =
         height = height,
         material = material,
         description = description,
-        imageUrl = imageUrl,
+        artworkImageUrl = artworkImageUrl,
         artist = artist.toArtistDetail(),
         shareUrl = shareUrl,
     )

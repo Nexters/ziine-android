@@ -7,7 +7,7 @@ data class ArtworkDetail(
     val height: Int,
     val material: String,
     val description: String,
-    val imageUrl: String,
+    val artworkImageUrl: String,
     val artist: ArtistDetail,
     val shareUrl: String,
 )
