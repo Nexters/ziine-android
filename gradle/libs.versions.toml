@@ -16,6 +16,7 @@ kotlinx-collections-immutable = "0.3.8"
 # android
 agp = "8.7.3"
 activity-compose = "1.10.0"
+androidx-activity-ktx = "1.10.0"
 androidx-compose-foundation = "1.8.0-alpha08"
 androidx-lifecycle = "2.8.7"
 androidx-navigation = "2.8.5"
@@ -64,6 +65,7 @@ kotlinx-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.r
 
 # androidx
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidx-activity-ktx" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidx-core-splashscreen" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation" }
