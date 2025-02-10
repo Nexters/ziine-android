@@ -43,7 +43,7 @@ landscapist = "2.3.6"
 javax-inject = "1"
 firebase-bom = "33.8.0"
 firebase-crashlytics = "3.0.2"
-kotlinx-serialization-converter = "1.0.0"
+lottie = "6.1.0"
 
 # test
 test-kotest = "5.8.1"
@@ -104,6 +104,7 @@ firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 compose-stable-marker = { group = "com.github.skydoves", name = "compose-stable-marker", version.ref = "compose-stable-marker" }
 compose-system-ui-controller = { group = "tech.thdev", name = "extensions-compose-system-ui-controller", version.ref = "compose-extensions" }
+lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 
 # test
 test-kotest-framework = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "test-kotest" }

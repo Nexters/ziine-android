@@ -39,7 +39,7 @@ class SplashActivity : ComponentActivity() {
             }
 
             LaunchedEffect(key1 = Unit) {
-                delay(500)
+                delay(1000)
                 activity?.startActivityWithAnimation<MainActivity>(
                     withFinish = true,
                     intentBuilder = { this },

@@ -59,4 +59,5 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(libs.compose.system.ui.controller)
+    implementation(libs.lottie.compose)
 }
