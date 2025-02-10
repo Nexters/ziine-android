@@ -20,6 +20,10 @@ import tech.thdev.compose.exteions.system.ui.controller.rememberExSystemUiContro
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashActivity : ComponentActivity() {
+    companion object {
+        private const val SPLASH_DURATION_MILLIS = 1300L
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -39,7 +43,7 @@ class SplashActivity : ComponentActivity() {
             }
 
             LaunchedEffect(key1 = Unit) {
-                delay(1000)
+                delay(SPLASH_DURATION_MILLIS)
                 activity?.startActivityWithAnimation<MainActivity>(
                     withFinish = true,
                     intentBuilder = { this },
