@@ -65,4 +65,5 @@ dependencies {
     implementation(libs.landscapist.placeholder)
     implementation(libs.landscapist.animation)
     implementation(libs.compose.system.ui.controller)
+    implementation(libs.lottie.compose)
 }
