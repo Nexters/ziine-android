@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
@@ -14,6 +15,14 @@ private val DarkColorScheme = darkColorScheme(
     background = Gray900,
     onBackground = Gray0,
     onSurfaceVariant = Gray600,
+    outline = Gray700,
+    outlineVariant = Primary100,
+    primaryContainer = Gray800,
+    onPrimaryContainer = Color(0xFF7E7E7E),
+    onSecondary = Gray500,
+    onTertiary = Gray200,
+    tertiaryContainer = Primary150,
+    onTertiaryContainer = Color(0xFF6C6C6C),
 )
 
 @Composable

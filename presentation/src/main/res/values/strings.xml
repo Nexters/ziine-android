@@ -1,4 +1,14 @@
 <resources>
     <string name="artworks">Artworks</string>
     <string name="manazine">Magazine</string>
+    <string name="artwork_size">작품 사이즈</string>
+    <string name="artwork_material">재료</string>
+    <string name="artist_exhibition_record">작가 전시 이력</string>
+    <string name="more_work_activities">더 많은 작품 활동</string>
+    <string name="instagram">INSTAGRAM</string>
+    <string name="copy">복사하기</string>
+    <string name="website">WEBSITE</string>
+    <string name="other">OTHER</string>
+    <string name="link_has_been_copied">링크가 복사되었습니다.</string>
+    <string name="instagram_id_has_been_copied">인스타그램 아이디가 복사되었습니다.</string>
 </resources>

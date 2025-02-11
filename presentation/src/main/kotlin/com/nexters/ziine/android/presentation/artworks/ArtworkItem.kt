@@ -1,6 +1,10 @@
 package com.nexters.ziine.android.presentation.artworks
 
-import androidx.compose.foundation.Image
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,14 +19,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.nexters.ziine.android.presentation.R
+import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
+import com.nexters.ziine.android.presentation.artworks.model.UiArtist
 import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
 import com.nexters.ziine.android.presentation.component.NetworkImage
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
@@ -31,82 +36,118 @@ import com.nexters.ziine.android.presentation.ui.theme.Heading4
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph2
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
+// TODO title 영역 그라이언트 박스 깔아야함
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworkItem(
     artwork: UiArtwork,
     onArtworkItemSelect: () -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .heightIn(max = 900.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .clickable(onClick = onArtworkItemSelect),
-    ) {
-        NetworkImage(
-            imageUrl = artwork.imageUrl,
-            contentDescription = "Artwork by ${artwork.artistName}",
-            modifier = Modifier.fillMaxWidth(),
-            contentScale = ContentScale.FillWidth,
-        )
+    val sharedTransitionScope = LocalSharedTransitionScope.current
+        ?: throw IllegalStateException("No SharedElementScope found")
 
-        Row(
-            modifier = Modifier
+    with(sharedTransitionScope) {
+        Box(
+            modifier = modifier
+                .sharedElement(
+                    rememberSharedContentState(key = artwork.imageUrl),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                )
                 .fillMaxWidth()
-                .padding(top = 20.dp, start = 20.dp)
-                .align(Alignment.TopStart),
-            verticalAlignment = Alignment.CenterVertically,
+                .padding(horizontal = 16.dp)
+                .heightIn(max = 900.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .border(
+                    width = 1.5.dp,
+                    color = Gray0.copy(alpha = 0.1f),
+                    shape = RoundedCornerShape(16.dp),
+                )
+                .clickable(onClick = onArtworkItemSelect),
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.placeholder),
-                contentDescription = "Profile picture of ${artwork.artistName}",
+            NetworkImage(
+                imageUrl = artwork.imageUrl,
+                contentDescription = "${artwork.title} by ${artwork.artist.name}",
                 modifier = Modifier
-                    .size(28.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop,
+                    .fillMaxWidth(),
+                contentScale = ContentScale.FillWidth,
             )
-            Spacer(modifier = Modifier.width(6.dp))
-            Text(
-                text = artwork.artistName,
-                style = Paragraph2,
-                color = Gray0,
-                modifier = Modifier.weight(1f),
-            )
-        }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
-                .align(Alignment.BottomStart),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(
-                text = artwork.title,
-                color = Gray0,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                style = Heading4,
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp, start = 20.dp)
+                    .align(Alignment.TopStart),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                NetworkImage(
+                    imageUrl = artwork.artist.profileImageUrl,
+                    contentDescription = "Profile Image of ${artwork.artist.name}",
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clip(CircleShape),
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = artwork.artist.name,
+                    style = Paragraph2,
+                    color = Gray0,
+                    modifier = Modifier.weight(1f),
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
+                    .align(Alignment.BottomStart),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = artwork.title,
+                    modifier = Modifier
+                        .sharedBounds(
+                            sharedContentState = rememberSharedContentState(key = artwork.title),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                        ),
+                    color = Gray0,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    style = Heading4,
+                )
+            }
         }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @ComponentPreview
 @Composable
 private fun ArtworkItemPreview() {
     ZiineTheme {
-        ArtworkItem(
-            artwork = UiArtwork(
-                id = 1,
-                imageUrl = "https://example.com/artwork.jpg",
-                artistName = "Artist Name",
-                title = "Artwork Name",
-            ),
-            onArtworkItemSelect = {},
-        )
+        SharedTransitionLayout {
+            AnimatedVisibility(visible = true) {
+                CompositionLocalProvider(
+                    LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                ) {
+                    ArtworkItem(
+                        artwork = UiArtwork(
+                            id = 1,
+                            imageUrl = "",
+                            artist = UiArtist(
+                                id = 1,
+                                name = "Artist Name",
+                                profileImageUrl = "",
+                            ),
+                            title = "Artwork Name",
+                        ),
+                        onArtworkItemSelect = {},
+                        animatedVisibilityScope = this@AnimatedVisibility,
+                    )
+                }
+            }
+        }
     }
 }

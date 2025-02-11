@@ -1,5 +1,6 @@
 package com.nexters.ziine.android.presentation.magazine
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -11,9 +12,13 @@ fun NavController.navigateToMagazine(navOptions: NavOptions) {
     navigate(MainTabRoute.Magazine, navOptions)
 }
 
-fun NavGraphBuilder.magazineScreen(modifier: Modifier = Modifier) {
+fun NavGraphBuilder.magazineScreen(
+    padding: PaddingValues,
+    modifier: Modifier = Modifier
+) {
     composable<MainTabRoute.Magazine> {
         MagazineRoute(
+            padding = padding,
             modifier = modifier,
         )
     }
