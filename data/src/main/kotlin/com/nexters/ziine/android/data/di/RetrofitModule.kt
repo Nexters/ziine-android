@@ -1,5 +1,6 @@
 package com.nexters.ziine.android.data.di
 
+import com.nexters.ziine.android.data.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,23 +30,23 @@ object RetrofitModule {
     @Provides
     fun providesOKHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        oKHttpDispatcher: Dispatcher,
+        okHttpDispatcher: Dispatcher,
     ): OkHttpClient =
         OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(httpLoggingInterceptor)
-            .dispatcher(oKHttpDispatcher)
+            .dispatcher(okHttpDispatcher)
             .build()
 
     @Provides
     @Singleton
-    fun providesTripDrawRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun providesZiineRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val contentType = "application/json".toMediaType()
         /** baseurl 추후 추가 예정 */
         return Retrofit.Builder()
-            .baseUrl("dummy")
+            .baseUrl(BuildConfig.SERVER_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(Json.asConverterFactory(contentType))
             .build()

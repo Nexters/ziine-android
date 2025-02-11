@@ -32,6 +32,7 @@ import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksUiEvent
 import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksUiState
 import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksViewModel
 import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
+import com.nexters.ziine.android.presentation.component.LoadingIndicator
 import com.nexters.ziine.android.presentation.preview.ArtworksPreviewParameterProvider
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
@@ -50,8 +51,8 @@ internal fun ArtworksRoute(
             is ArtworksUiEvent.NavigateToArtworkDetail -> {
                 navigateToArtworkDetail(
                     event.id,
-                    event.imageUrl,
                     event.title,
+                    event.artworkImageUrl,
                 )
             }
         }
@@ -104,7 +105,7 @@ internal fun ArtworksScreen(
                         onAction(
                             ArtworksUiAction.OnArtworkItemSelect(
                                 artwork.id,
-                                artwork.imageUrl,
+                                artwork.artworkImageUrl,
                                 artwork.title,
                             ),
                         )
@@ -113,6 +114,8 @@ internal fun ArtworksScreen(
                 )
             }
         }
+
+        LoadingIndicator(isLoading = uiState.isLoading)
     }
 }
 

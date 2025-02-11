@@ -46,7 +46,7 @@ internal fun ArtistDescription(
     ) {
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = uiState.artwork.artist.name,
+            text = uiState.artworkDetail.artist.name,
             style = Subtitle1,
             color = MaterialTheme.colorScheme.onBackground,
         )
@@ -56,21 +56,21 @@ internal fun ArtistDescription(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             NetworkImage(
-                imageUrl = uiState.artwork.artist.profileImageUrl,
-                contentDescription = "Profile Image of ${uiState.artwork.artist.name}",
+                imageUrl = uiState.artworkDetail.artist.profileImageUrl,
+                contentDescription = "Profile Image of ${uiState.artworkDetail.artist.name}",
                 modifier = Modifier
                     .size(28.dp)
                     .clip(CircleShape),
             )
             Spacer(modifier = Modifier.width(6.dp))
             Text(
-                text = uiState.artwork.artist.name,
+                text = uiState.artworkDetail.artist.name,
                 style = Paragraph2,
                 color = MaterialTheme.colorScheme.onBackground,
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        EducationTags(educations = uiState.artwork.artist.education)
+        EducationTags(educations = uiState.artworkDetail.artist.education)
         Spacer(modifier = Modifier.height(40.dp))
         Row(modifier = Modifier.fillMaxWidth()) {
             Text(
@@ -80,7 +80,7 @@ internal fun ArtistDescription(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        ExhibitionRecords(exhibitionRecords = uiState.artwork.artist.exhibition)
+        ExhibitionRecords(exhibitionRecords = uiState.artworkDetail.artist.exhibition)
         Spacer(modifier = Modifier.height(40.dp))
         Text(
             text = stringResource(R.string.more_work_activities),
@@ -89,7 +89,7 @@ internal fun ArtistDescription(
         )
         Spacer(modifier = Modifier.height(40.dp))
         ContactLinks(
-            contacts = uiState.artwork.artist.contact,
+            contacts = uiState.artworkDetail.artist.contact,
             onCopyClick = onCopyClick,
         )
     }
@@ -101,7 +101,7 @@ private fun ArtistDescriptionPreview() {
     ZiineTheme {
         ArtistDescription(
             uiState = ArtworkDetailUiState(
-                artwork = UiArtworkDetail(
+                artworkDetail = UiArtworkDetail(
                     artist = UiArtistDetail(
                         id = 0,
                         name = "작가명",

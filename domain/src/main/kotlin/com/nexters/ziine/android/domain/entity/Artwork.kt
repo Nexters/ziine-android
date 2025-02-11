@@ -1,13 +1,13 @@
-package com.nexters.ziine.android.presentation.artworks.model
+package com.nexters.ziine.android.domain.entity
 
-data class UiArtwork(
+data class Artwork(
     val id: Int,
     val title: String,
     val artworkImageUrl: String,
-    val artist: UiArtist,
+    val artist: Artist,
 )
 
-data class UiArtist(
+data class Artist(
     val id: Int,
     val name: String,
     val profileImageUrl: String,

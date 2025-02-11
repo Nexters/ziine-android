@@ -170,7 +170,7 @@ internal fun ArtworkDetailScreen(
         ) {
             item {
                 ArtworkDetailItem(
-                    artwork = uiState.artwork,
+                    artwork = uiState.artworkDetail,
                     animatedVisibilityScope = animatedVisibilityScope,
                 )
             }

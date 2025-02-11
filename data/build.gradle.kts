@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
@@ -15,6 +16,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "SERVER_BASE_URL", "\"${findProperty("SERVER_BASE_URL")}\"")
     }
 
     buildTypes {
@@ -31,12 +34,15 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
+    implementation(projects.domain)
 
     // hilt
     implementation(libs.hilt)
@@ -51,4 +57,8 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit.kotlinx.serialization.converter)
+}
+
+secrets {
+    defaultPropertiesFileName = "secrets.properties"
 }

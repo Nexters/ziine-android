@@ -67,10 +67,10 @@ internal fun ArtworkDescription(
                 verticalAlignment = Alignment.Top,
             ) {
                 Text(
-                    text = uiState.artwork.title,
+                    text = uiState.artworkDetail.title,
                     modifier = Modifier
                         .sharedBounds(
-                            sharedContentState = rememberSharedContentState(key = uiState.artwork.title),
+                            sharedContentState = rememberSharedContentState(key = uiState.artworkDetail.title),
                             animatedVisibilityScope = animatedVisibilityScope
                         )
                         .weight(1f),
@@ -120,7 +120,7 @@ internal fun ArtworkDescription(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = "${uiState.artwork.width}cm",
+                        text = "${uiState.artworkDetail.width}cm",
                         color = MaterialTheme.colorScheme.onSecondary,
                         style = Paragraph3,
                     )
@@ -132,7 +132,7 @@ internal fun ArtworkDescription(
                     )
                     Spacer(modifier = Modifier.width(2.dp))
                     Text(
-                        text = "${uiState.artwork.height}cm",
+                        text = "${uiState.artworkDetail.height}cm",
                         color = MaterialTheme.colorScheme.onSecondary,
                         style = Paragraph3,
                     )
@@ -168,7 +168,7 @@ internal fun ArtworkDescription(
                 Spacer(modifier = Modifier.width(8.dp))
                 Row {
                     Text(
-                        text = uiState.artwork.material,
+                        text = uiState.artworkDetail.material,
                         color = MaterialTheme.colorScheme.onSecondary,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
@@ -179,7 +179,7 @@ internal fun ArtworkDescription(
             Spacer(modifier = Modifier.height(20.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = uiState.artwork.description,
+                    text = uiState.artworkDetail.description,
                     style = Paragraph2,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
@@ -201,7 +201,7 @@ private fun ArtworkDescriptionPreview() {
                 ) {
                     ArtworkDescription(
                         uiState = ArtworkDetailUiState(
-                            artwork = UiArtworkDetail(
+                            artworkDetail = UiArtworkDetail(
                                 id = 0,
                                 title = "작품 제목 작품 제목 작품 제목 작품 제목 작품 제목 작품 제목",
                                 width = 120,

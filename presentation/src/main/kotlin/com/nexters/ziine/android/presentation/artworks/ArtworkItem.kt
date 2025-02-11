@@ -52,7 +52,7 @@ internal fun ArtworkItem(
         Box(
             modifier = modifier
                 .sharedElement(
-                    rememberSharedContentState(key = artwork.imageUrl),
+                    rememberSharedContentState(key = artwork.artworkImageUrl),
                     animatedVisibilityScope = animatedVisibilityScope,
                 )
                 .fillMaxWidth()
@@ -67,7 +67,7 @@ internal fun ArtworkItem(
                 .clickable(onClick = onArtworkItemSelect),
         ) {
             NetworkImage(
-                imageUrl = artwork.imageUrl,
+                imageUrl = artwork.artworkImageUrl,
                 contentDescription = "${artwork.title} by ${artwork.artist.name}",
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -135,7 +135,7 @@ private fun ArtworkItemPreview() {
                     ArtworkItem(
                         artwork = UiArtwork(
                             id = 1,
-                            imageUrl = "",
+                            artworkImageUrl = "",
                             artist = UiArtist(
                                 id = 1,
                                 name = "Artist Name",
