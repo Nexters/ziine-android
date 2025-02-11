@@ -51,7 +51,7 @@ fun NetworkImage(
     if (LocalInspectionMode.current) {
         Image(
             painter = loadingImage,
-            contentDescription = "Example Image Icon",
+            contentDescription = "Image for Preview",
             modifier = modifier,
         )
     } else {
