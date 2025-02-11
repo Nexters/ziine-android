@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PendingViewModel @Inject constructor() : ViewModel() {
-
     private val _uiEvent = Channel<PendingUiEvent>()
     val uiEvent: Flow<PendingUiEvent> = _uiEvent.receiveAsFlow()
 

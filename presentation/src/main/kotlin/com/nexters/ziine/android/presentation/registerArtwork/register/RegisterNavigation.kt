@@ -11,10 +11,12 @@ fun NavController.navigateToRegister() {
     navigate(RegisterArtWorkRoute.Register)
 }
 
-fun NavGraphBuilder.registerScreen(modifier: Modifier = Modifier) {
+fun NavGraphBuilder.registerScreen(modifier: Modifier = Modifier, backToPrevious: () -> Unit, navigateToComplete: () -> Unit) {
     composable<RegisterArtWorkRoute.Register> {
         RegisterRoute(
             modifier = modifier,
+            backToPrevious = backToPrevious,
+            navigateToComplete = navigateToComplete,
         )
     }
 }

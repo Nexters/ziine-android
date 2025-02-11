@@ -9,27 +9,47 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
 import com.nexters.ziine.android.presentation.common.webViews.ComposeWrappedWebView
+import com.nexters.ziine.android.presentation.common.webViews.ZiineWebViewBridge
+import com.nexters.ziine.android.presentation.common.webViews.ZiineWebViewBridge.Companion.ZIINE_APP_BRIDGE_NAME
 import com.nexters.ziine.android.presentation.component.RegisterTopBar
 import com.nexters.ziine.android.presentation.preview.DevicePreview
+import com.nexters.ziine.android.presentation.registerArtwork.register.viewmodel.RegisterUiAction
+import com.nexters.ziine.android.presentation.registerArtwork.register.viewmodel.RegisterUiEvent
+import com.nexters.ziine.android.presentation.registerArtwork.register.viewmodel.RegisterViewModel
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
 @Composable
-internal fun RegisterRoute(modifier: Modifier = Modifier) {
+internal fun RegisterRoute(
+    modifier: Modifier = Modifier,
+    backToPrevious: () -> Unit,
+    navigateToComplete: () -> Unit,
+    registerViewModel: RegisterViewModel = hiltViewModel(),
+) {
+    ObserveAsEvents(flow = registerViewModel.uiEvent) { event ->
+        when (event) {
+            is RegisterUiEvent.NavigateToComplete -> navigateToComplete()
+            is RegisterUiEvent.BackToPrevious -> backToPrevious()
+        }
+    }
+
     RegisterScreen(
         modifier = modifier,
+        onAction = registerViewModel::onAction,
     )
 }
 
 @Composable
-internal fun RegisterScreen(modifier: Modifier = Modifier) {
+internal fun RegisterScreen(modifier: Modifier = Modifier, onAction: (RegisterUiAction) -> Unit) {
     val (isScrolled, setIsScrolled) = remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier.fillMaxSize(),
     ) {
-        RegisterTopBar(isScrolled = isScrolled) { /** 기존화면으로 네비게이션 */ }
-        ComposeWrappedWebViewWithTopBar(modifier = Modifier.weight(1f), setIsScrolled)
+        RegisterTopBar(isScrolled = isScrolled) { onAction(RegisterUiAction.OnBackButtonClicked) }
+        ComposeWrappedWebViewWithTopBar(modifier = Modifier.weight(1f), setIsScrolled, onAction)
     }
 }
 
@@ -40,17 +60,24 @@ private fun WebView.setRegisterSettingsToWebView(setIsScrolled: (Boolean) -> Uni
     return this
 }
 
+private fun WebView.setBridgeToWebView(onAction: (RegisterUiAction) -> Unit): WebView {
+    val registerBridge = ZiineWebViewBridge(
+        navigateToRegisterComplete = { onAction(RegisterUiAction.OnMoveToCompleteButtonClicked) },
+    )
+    addJavascriptInterface(registerBridge, ZIINE_APP_BRIDGE_NAME)
+    return this
+}
 
 @Composable
-private fun ComposeWrappedWebViewWithTopBar(modifier: Modifier = Modifier, setIsScrolled: (Boolean) -> Unit) {
+private fun ComposeWrappedWebViewWithTopBar(modifier: Modifier = Modifier, setIsScrolled: (Boolean) -> Unit, onAction: (RegisterUiAction) -> Unit) {
     ComposeWrappedWebView(modifier = modifier.fillMaxSize()) { context ->
-        WebView(context).setRegisterSettingsToWebView(setIsScrolled).apply {
+        WebView(context).setRegisterSettingsToWebView(setIsScrolled).setBridgeToWebView(onAction).apply {
             setTestPage()
         }
     }
 }
 
-private fun WebView.setTestPage(){
+private fun WebView.setTestPage() {
     val htmlData = """
         <!DOCTYPE html>
         <html>
@@ -92,6 +119,7 @@ private fun RegisterScreenPreview() {
             modifier = Modifier.background(
                 MaterialTheme.colorScheme.background,
             ),
+            onAction = {},
         )
     }
 }
