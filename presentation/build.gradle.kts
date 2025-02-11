@@ -55,6 +55,7 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.core.splashscreen)
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
@@ -64,6 +65,7 @@ dependencies {
     implementation(libs.landscapist.coil)
     implementation(libs.landscapist.placeholder)
     implementation(libs.landscapist.animation)
+
     implementation(libs.compose.system.ui.controller)
     implementation(libs.lottie.compose)
 }

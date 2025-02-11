@@ -26,7 +26,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.artworks.model.UiArtist
 import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
@@ -38,7 +37,6 @@ import com.nexters.ziine.android.presentation.ui.theme.Paragraph2
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
 // TODO title 영역 그라이언트 박스 깔아야함
-// TODO NetworkImage 실패 이미지 처리
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworkItem(
@@ -133,7 +131,6 @@ private fun ArtworkItemPreview() {
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
-                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
                 ) {
                     ArtworkItem(
                         artwork = UiArtwork(

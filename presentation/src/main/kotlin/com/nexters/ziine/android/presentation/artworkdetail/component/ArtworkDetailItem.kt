@@ -1,4 +1,4 @@
-package com.nexters.ziine.android.presentation.artworkdetail
+package com.nexters.ziine.android.presentation.artworkdetail.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
@@ -12,7 +12,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetail
 import com.nexters.ziine.android.presentation.artworks.ArtworkItem
@@ -61,7 +60,6 @@ private fun ArtworkItemPreview() {
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
-                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
                 ) {
                     ArtworkItem(
                         artwork = UiArtwork(

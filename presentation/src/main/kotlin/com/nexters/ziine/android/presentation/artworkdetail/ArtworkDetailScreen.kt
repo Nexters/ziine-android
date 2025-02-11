@@ -8,6 +8,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -39,10 +40,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtistDescription
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtworkDescription
+import com.nexters.ziine.android.presentation.artworkdetail.component.ArtworkDetailItem
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtworkDetailTopBar
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiAction
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiEvent
@@ -50,7 +51,7 @@ import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDet
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailViewModel
 import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
 import com.nexters.ziine.android.presentation.component.ZiineSnackbar
-import com.nexters.ziine.android.presentation.preview.ArtworksPreviewParameterProvider
+import com.nexters.ziine.android.presentation.preview.ArtworkDetailPreviewParameterProvider
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.ui.theme.Gray900
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
@@ -69,11 +70,11 @@ internal fun ArtworkDetailRoute(
     val systemUiController = rememberExSystemUiController()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    var isScrolling by remember { mutableStateOf(false) }
+    var isScrollPositionChanged by remember { mutableStateOf(false) }
 
-    DisposableEffect(systemUiController, isScrolling) {
+    DisposableEffect(systemUiController, isScrollPositionChanged) {
         systemUiController.setSystemBarsColor(
-            color = if (isScrolling) Gray900 else Color.Transparent,
+            color = if (isScrollPositionChanged) Gray900 else Color.Transparent,
             darkIcons = false,
         )
 
@@ -133,7 +134,7 @@ internal fun ArtworkDetailRoute(
         onAction = artworkDetailViewModel::onAction,
         snackbarHostState = snackbarHostState,
         animatedVisibilityScope = animatedVisibilityScope,
-        onScrollingChanged = { isScrolling = it }
+        onScrollPositionChanged = { isScrollPositionChanged = it }
     )
 }
 
@@ -144,22 +145,23 @@ internal fun ArtworkDetailScreen(
     onAction: (ArtworkDetailUiAction) -> Unit,
     snackbarHostState: SnackbarHostState,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    onScrollingChanged: (Boolean) -> Unit,
+    onScrollPositionChanged: (Boolean) -> Unit,
 ) {
     val scrollState = rememberLazyListState()
-    val isScrolling by remember {
+    val isAtTop by remember {
         derivedStateOf {
-            scrollState.isScrollInProgress
+            scrollState.firstVisibleItemIndex == 0 && scrollState.firstVisibleItemScrollOffset == 0
         }
     }
 
-    LaunchedEffect(isScrolling) {
-        onScrollingChanged(isScrolling)
+    LaunchedEffect(isAtTop) {
+        onScrollPositionChanged(!isAtTop)
     }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(bottom = padding.calculateBottomPadding()),
     ) {
         LazyColumn(
@@ -207,7 +209,7 @@ internal fun ArtworkDetailScreen(
 
         ArtworkDetailTopBar(
             onBackClick = { onAction(ArtworkDetailUiAction.OnBackClick) },
-            isScrolling = isScrolling,
+            isAtTop = isAtTop,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = padding.calculateTopPadding()),
@@ -225,7 +227,7 @@ internal fun ArtworkDetailScreen(
 @DevicePreview
 @Composable
 private fun ArtworkDetailScreenPreview(
-    @PreviewParameter(ArtworksPreviewParameterProvider::class)
+    @PreviewParameter(ArtworkDetailPreviewParameterProvider::class)
     uiState: ArtworkDetailUiState,
 ) {
     ZiineTheme {
@@ -233,7 +235,6 @@ private fun ArtworkDetailScreenPreview(
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
-                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility
                 ) {
                     ArtworkDetailScreen(
                         padding = PaddingValues(),
@@ -241,7 +242,7 @@ private fun ArtworkDetailScreenPreview(
                         onAction = {},
                         snackbarHostState = remember { SnackbarHostState() },
                         animatedVisibilityScope = this@AnimatedVisibility,
-                        onScrollingChanged = {},
+                        onScrollPositionChanged = {},
                     )
                 }
             }

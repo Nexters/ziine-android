@@ -26,17 +26,17 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 @Composable
 internal fun ArtworkDetailTopBar(
     onBackClick: () -> Unit,
-    isScrolling: Boolean,
+    isAtTop: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val backgroundColor by animateColorAsState(
-        targetValue = if (isScrolling) MaterialTheme.colorScheme.background else Color.Transparent,
-        label = "backgroundColor"
+        targetValue = if (isAtTop) Color.Transparent else MaterialTheme.colorScheme.background,
+        label = "backgroundColor",
     )
 
     val dividerColor by animateColorAsState(
-        targetValue = if (isScrolling) MaterialTheme.colorScheme.outline else Color.Transparent,
-        label = "dividerColor"
+        targetValue = if (isAtTop) Color.Transparent else MaterialTheme.colorScheme.outline,
+        label = "dividerColor",
     )
 
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -50,7 +50,7 @@ internal fun ArtworkDetailTopBar(
                 onClick = onBackClick,
                 modifier = Modifier
                     .padding(top = 8.dp, start = 16.dp)
-                    .then(Modifier.size(20.dp))
+                    .then(Modifier.size(20.dp)),
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_back),
@@ -72,7 +72,7 @@ internal fun ArtworkDetailTopBar(
 private fun ArtworkDetailTopBarPreview() {
     ZiineTheme {
         ArtworkDetailTopBar(
-            isScrolling = true,
+            isAtTop = true,
             onBackClick = {},
         )
     }

@@ -26,7 +26,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksUiAction
 import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksUiEvent
@@ -132,7 +131,6 @@ private fun ArtworksScreenPreview(
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
-                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility
                 ) {
                     ArtworksScreen(
                         padding = PaddingValues(),
