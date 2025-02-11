@@ -18,13 +18,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
     @Provides
-    fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+    fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
     @Provides
-    fun providesAdjustMaxRequestPerHostOKHttpDispatcher(): Dispatcher = Dispatcher().apply {
-        maxRequestsPerHost = 10
-    }
+    fun providesAdjustMaxRequestPerHostOKHttpDispatcher(): Dispatcher =
+        Dispatcher().apply {
+            maxRequestsPerHost = 10
+        }
 
     @Provides
     fun providesOKHttpClient(
@@ -41,9 +41,7 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun providesTripDrawRetrofit(
-        okHttpClient: OkHttpClient,
-    ): Retrofit {
+    fun providesTripDrawRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val contentType = "application/json".toMediaType()
         /** baseurl 추후 추가 예정 */
         return Retrofit.Builder()

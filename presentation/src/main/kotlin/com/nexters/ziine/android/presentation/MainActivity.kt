@@ -8,7 +8,9 @@ import androidx.compose.runtime.DisposableEffect
 import com.nexters.ziine.android.presentation.ui.theme.Gray900
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 import tech.thdev.compose.exteions.system.ui.controller.rememberExSystemUiController
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
