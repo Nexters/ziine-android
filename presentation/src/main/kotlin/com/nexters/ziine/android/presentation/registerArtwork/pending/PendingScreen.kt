@@ -121,7 +121,6 @@ private fun GuideMainTitle() {
             text = stringResource(R.string.register_artwork_main_title_first),
             color = MaterialTheme.colorScheme.onBackground,
             style = Heading4,
-
             )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
@@ -232,7 +231,7 @@ private fun GuideContentGeneralForm(
 
 @Composable
 private fun StickyFooter(onMoveToRegisterButtonClicked: () -> Unit) {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.background),
