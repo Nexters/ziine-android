@@ -104,9 +104,9 @@ internal fun ArtworksScreen(
                         vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
                         onAction(
                             ArtworksUiAction.OnArtworkItemSelect(
-                                artwork.id,
-                                artwork.artworkImageUrl,
-                                artwork.title,
+                                id = artwork.id,
+                                title = artwork.title,
+                                artworkImageUrl = artwork.artworkImageUrl,
                             ),
                         )
                     },

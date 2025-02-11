@@ -71,16 +71,16 @@ class ArtworkDetailViewModel @Inject constructor(
                                     name = uiArtworkDetail.artist.name,
                                     profileImageUrl = uiArtworkDetail.artist.profileImageUrl,
                                     education = uiArtworkDetail.artist.education.toImmutableList(),
-                                    exhibition = uiArtworkDetail.artist.exhibition.map {
+                                    exhibition = uiArtworkDetail.artist.exhibition.map { exhibition ->
                                         UiExhibition(
-                                            title = it.title,
-                                            exhibitionDate = it.exhibitionDate,
+                                            title = exhibition.title,
+                                            exhibitionDate = exhibition.exhibitionDate,
                                         )
                                     }.toImmutableList(),
-                                    contact = uiArtworkDetail.artist.contact.map {
+                                    contact = uiArtworkDetail.artist.contact.map { contact ->
                                         UiContact(
-                                            type = it.type,
-                                            value = it.value,
+                                            type = contact.type,
+                                            value = contact.value,
                                         )
                                     }.toImmutableList(),
                                     email = uiArtworkDetail.artist.email,
