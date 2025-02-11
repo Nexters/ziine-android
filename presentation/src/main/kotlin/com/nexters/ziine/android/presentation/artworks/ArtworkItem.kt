@@ -32,7 +32,7 @@ import com.nexters.ziine.android.presentation.ui.theme.Paragraph2
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
 @Composable
-fun ArtworkItem(
+internal fun ArtworkItem(
     artwork: UiArtwork,
     onArtworkItemSelect: () -> Unit,
     modifier: Modifier = Modifier,
