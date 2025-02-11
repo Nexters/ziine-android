@@ -15,7 +15,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.nexters.ziine.android.presentation.R
 
 @Composable
-fun SplashScreen(modifier: Modifier = Modifier) {
+internal fun SplashScreen(modifier: Modifier = Modifier) {
     val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(resId = R.raw.splash))
     val progress by animateLottieCompositionAsState(
         composition = composition,
