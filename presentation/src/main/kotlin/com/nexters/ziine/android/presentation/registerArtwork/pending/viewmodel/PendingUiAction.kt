@@ -1,6 +1,7 @@
 package com.nexters.ziine.android.presentation.registerArtwork.pending.viewmodel
 
-interface PendingUiAction {
+sealed interface PendingUiAction {
     object OnMoveToRegisterButtonClicked : PendingUiAction
-    object OnBackButtonClicked: PendingUiAction
+
+    object OnBackButtonClicked : PendingUiAction
 }

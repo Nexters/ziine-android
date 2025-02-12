@@ -38,7 +38,6 @@ class RegisterArtworkActivity : ComponentActivity() {
     }
 
     companion object {
-        fun getIntent(context: Context): Intent =
-            Intent(context, RegisterArtworkActivity::class.java)
+        fun getIntent(context: Context): Intent = Intent(context, RegisterArtworkActivity::class.java)
     }
 }

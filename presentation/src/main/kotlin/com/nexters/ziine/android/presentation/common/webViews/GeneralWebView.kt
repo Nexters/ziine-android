@@ -19,7 +19,10 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 
 @Composable
-internal fun ComposeWrappedWebView(modifier: Modifier = Modifier, getWebView: (Context) -> WebView) {
+internal fun ComposeWrappedWebView(
+    modifier: Modifier = Modifier,
+    getWebView: (Context) -> WebView
+) {
     val lifecycleOwner = LocalLifecycleOwner.current
     var webViewLifecycleObserver: LifecycleObserver? = null
     var webView: WebView? = null
@@ -65,7 +68,6 @@ private fun WebView.setGeneralSetting(photoPickerLauncher: ManagedActivityResult
     setBackgroundColor(0)
     /** 웹뷰 깜빡임 제거 설정(하드웨어 가속시 cpu/gpu 사용 관련 설정) */
     setLayerType(WebView.LAYER_TYPE_SOFTWARE, null)
-
 }
 
 /** 웹뷰 생명 주기 관련 함수 */

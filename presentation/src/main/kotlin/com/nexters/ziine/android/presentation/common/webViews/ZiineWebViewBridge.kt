@@ -5,7 +5,7 @@ import android.webkit.JavascriptInterface
 class ZiineWebViewBridge(
     private val navigateToRegisterComplete: (() -> Unit)? = null,
 ) {
-    companion object{
+    companion object {
         const val ZIINE_APP_BRIDGE_NAME = "ziineApp"
     }
 

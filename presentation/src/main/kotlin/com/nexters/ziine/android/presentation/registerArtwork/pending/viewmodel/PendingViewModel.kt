@@ -10,26 +10,28 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PendingViewModel @Inject constructor() : ViewModel() {
-    private val _uiEvent = Channel<PendingUiEvent>()
-    val uiEvent: Flow<PendingUiEvent> = _uiEvent.receiveAsFlow()
+class PendingViewModel
+    @Inject
+    constructor() : ViewModel() {
+        private val _uiEvent = Channel<PendingUiEvent>()
+        val uiEvent: Flow<PendingUiEvent> = _uiEvent.receiveAsFlow()
 
-    fun onAction(action: PendingUiAction) {
-        when (action) {
-            is PendingUiAction.OnMoveToRegisterButtonClicked -> navigateToRegister()
-            is PendingUiAction.OnBackButtonClicked -> finishActivity()
+        fun onAction(action: PendingUiAction) {
+            when (action) {
+                is PendingUiAction.OnMoveToRegisterButtonClicked -> navigateToRegister()
+                is PendingUiAction.OnBackButtonClicked -> finishActivity()
+            }
+        }
+
+        private fun navigateToRegister() {
+            viewModelScope.launch {
+                _uiEvent.send(PendingUiEvent.NavigateToRegister)
+            }
+        }
+
+        private fun finishActivity() {
+            viewModelScope.launch {
+                _uiEvent.send(PendingUiEvent.FinishActivity)
+            }
         }
     }
-
-    private fun navigateToRegister() {
-        viewModelScope.launch {
-            _uiEvent.send(PendingUiEvent.NavigateToRegister)
-        }
-    }
-
-    private fun finishActivity() {
-        viewModelScope.launch {
-            _uiEvent.send(PendingUiEvent.FinishActivity)
-        }
-    }
-}

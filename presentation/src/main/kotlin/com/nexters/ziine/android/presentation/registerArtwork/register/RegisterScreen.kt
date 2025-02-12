@@ -42,7 +42,10 @@ internal fun RegisterRoute(
 }
 
 @Composable
-internal fun RegisterScreen(modifier: Modifier = Modifier, onAction: (RegisterUiAction) -> Unit) {
+internal fun RegisterScreen(
+    modifier: Modifier = Modifier,
+    onAction: (RegisterUiAction) -> Unit
+) {
     val (isScrolled, setIsScrolled) = remember { mutableStateOf(false) }
 
     Column(
@@ -69,7 +72,11 @@ private fun WebView.setBridgeToWebView(onAction: (RegisterUiAction) -> Unit): We
 }
 
 @Composable
-private fun ComposeWrappedWebViewWithTopBar(modifier: Modifier = Modifier, setIsScrolled: (Boolean) -> Unit, onAction: (RegisterUiAction) -> Unit) {
+private fun ComposeWrappedWebViewWithTopBar(
+    modifier: Modifier = Modifier,
+    setIsScrolled: (Boolean) -> Unit,
+    onAction: (RegisterUiAction) -> Unit
+) {
     ComposeWrappedWebView(modifier = modifier.fillMaxSize()) { context ->
         WebView(context).setRegisterSettingsToWebView(setIsScrolled).setBridgeToWebView(onAction).apply {
             setTestPage()
@@ -106,10 +113,8 @@ private fun WebView.setTestPage() {
         </html>
     """.trimIndent()
 
-
     loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8", null)
 }
-
 
 @DevicePreview
 @Composable

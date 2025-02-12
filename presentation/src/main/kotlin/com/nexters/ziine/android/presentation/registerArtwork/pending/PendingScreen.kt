@@ -10,7 +10,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -92,12 +91,15 @@ internal fun PendingScreen(
     ) {
         RegisterTopBar(isScrolled = isScrolled) { onAction(PendingUiAction.OnBackButtonClicked) }
         GuideUI(scrollState, Modifier.weight(1f))
-        StickyFooter() { onAction(PendingUiAction.OnMoveToRegisterButtonClicked) }
+        StickyFooter { onAction(PendingUiAction.OnMoveToRegisterButtonClicked) }
     }
 }
 
 @Composable
-private fun GuideUI(scrollState: ScrollState, modifier: Modifier = Modifier) {
+private fun GuideUI(
+    scrollState: ScrollState,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -121,7 +123,7 @@ private fun GuideMainTitle() {
             text = stringResource(R.string.register_artwork_main_title_first),
             color = MaterialTheme.colorScheme.onBackground,
             style = Heading4,
-            )
+        )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = stringResource(R.string.register_artwork_main_title_second),
@@ -194,7 +196,6 @@ private fun GuideContentGeneralForm(
     content: AnnotatedString,
     @DrawableRes imageId: Int,
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxWidth()

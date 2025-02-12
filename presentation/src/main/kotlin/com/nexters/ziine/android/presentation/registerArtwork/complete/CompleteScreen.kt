@@ -67,7 +67,7 @@ internal fun CompleteScreen(
     ) {
         RegisterTopBar(isScrolled = false) { onAction(CompleteUiAction.OnBackButtonClicked) }
         CompleteUi(Modifier.weight(1f))
-        StickyFooter() { onAction(CompleteUiAction.OnMoveToHomeButtonClicked) }
+        StickyFooter { onAction(CompleteUiAction.OnMoveToHomeButtonClicked) }
     }
 }
 
@@ -147,6 +147,6 @@ private fun getVibrator(): Vibrator {
 @Composable
 private fun CompleteScreenPreview() {
     ZiineTheme {
-        CompleteScreen(){}
+        CompleteScreen {}
     }
 }

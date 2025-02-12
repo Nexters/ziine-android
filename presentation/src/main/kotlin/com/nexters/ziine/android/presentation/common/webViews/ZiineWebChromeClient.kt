@@ -27,5 +27,3 @@ class ZiineWebChromeClient(private val photoPickerLauncher: ManagedActivityResul
         filePathCallback = null
     }
 }
-
-
