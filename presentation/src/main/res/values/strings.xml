@@ -22,4 +22,7 @@
     <string name="register_artwork_thirdcontent_content_first">심사 통과 시, 별도의 추가 등록 과정 없이 자동으로 업로드 돼요.</string>
 
     <string name="register_artwork_footer_button_text">작품 등록하기</string>
+    <!-- 작품 등록 완료 화면 -->
+    <string name="register_complete_footer_button_text">홈으로 이동하기</string>
+    <string name="register_complete_title">작품 등록이 완료되었어요!</string>
 </resources>

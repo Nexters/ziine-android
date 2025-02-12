@@ -12,6 +12,7 @@ import com.nexters.ziine.android.presentation.preview.ComponentPreview
 private val DarkColorScheme = darkColorScheme(
     primary = Primary500,
     onPrimary = Gray900,
+    primaryContainer = Primary200,
     background = Gray900,
     onBackground = Gray0,
     onSurface = Gray300,
