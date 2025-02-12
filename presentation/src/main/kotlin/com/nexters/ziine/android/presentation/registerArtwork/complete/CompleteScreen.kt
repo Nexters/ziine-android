@@ -27,28 +27,47 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.nexters.ziine.android.presentation.R
+import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
 import com.nexters.ziine.android.presentation.component.RegisterTopBar
 import com.nexters.ziine.android.presentation.preview.DevicePreview
+import com.nexters.ziine.android.presentation.registerArtwork.complete.viewmodel.CompleteUiAction
+import com.nexters.ziine.android.presentation.registerArtwork.complete.viewmodel.CompleteUiEvent
+import com.nexters.ziine.android.presentation.registerArtwork.complete.viewmodel.CompleteViewModel
 import com.nexters.ziine.android.presentation.ui.theme.Heading4
 import com.nexters.ziine.android.presentation.ui.theme.Subtitle2
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
 @Composable
-internal fun CompleteRoute(modifier: Modifier = Modifier) {
+internal fun CompleteRoute(
+    modifier: Modifier = Modifier,
+    activityFinishAction: () -> Unit,
+    completeViewModel: CompleteViewModel = hiltViewModel(),
+) {
+    ObserveAsEvents(flow = completeViewModel.uiEvent) { event ->
+        when (event) {
+            is CompleteUiEvent.FinishActivity -> activityFinishAction()
+        }
+    }
+
     CompleteScreen(
         modifier = modifier,
+        onAction = completeViewModel::onAction,
     )
 }
 
 @Composable
-internal fun CompleteScreen(modifier: Modifier = Modifier) {
+internal fun CompleteScreen(
+    modifier: Modifier = Modifier,
+    onAction: (CompleteUiAction) -> Unit,
+) {
     Column(
         modifier = modifier.fillMaxSize(),
     ) {
-        RegisterTopBar(isScrolled = false) { /** 액티비티 finish 로직 */ }
+        RegisterTopBar(isScrolled = false) { onAction(CompleteUiAction.OnBackButtonClicked) }
         CompleteUi(Modifier.weight(1f))
-        StickyFooter() { }
+        StickyFooter() { onAction(CompleteUiAction.OnMoveToHomeButtonClicked) }
     }
 }
 
@@ -128,6 +147,6 @@ private fun getVibrator(): Vibrator {
 @Composable
 private fun CompleteScreenPreview() {
     ZiineTheme {
-        CompleteScreen()
+        CompleteScreen(){}
     }
 }

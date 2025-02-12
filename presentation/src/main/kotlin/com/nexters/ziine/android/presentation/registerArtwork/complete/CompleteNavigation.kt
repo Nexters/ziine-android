@@ -10,10 +10,11 @@ fun NavController.navigateToComplete() {
     navigate(RegisterArtWorkRoute.Complete)
 }
 
-fun NavGraphBuilder.completeScreen(modifier: Modifier = Modifier) {
+fun NavGraphBuilder.completeScreen(modifier: Modifier = Modifier, activityFinishAction: () -> Unit) {
     composable<RegisterArtWorkRoute.Complete> {
         CompleteRoute(
             modifier = modifier,
+            activityFinishAction = activityFinishAction,
         )
     }
 }

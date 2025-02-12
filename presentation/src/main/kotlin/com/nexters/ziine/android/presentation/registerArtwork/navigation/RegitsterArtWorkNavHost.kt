@@ -24,6 +24,6 @@ fun RegisterArtWorkNavHost(
     ) {
         pendingScreen(activityFinishAction = activityFinishAction, navigateToRegister = navController::navigateToRegister)
         registerScreen(backToPrevious = { navController.popBackStack() }, navigateToComplete = navController::navigateToComplete)
-        completeScreen()
+        completeScreen(activityFinishAction = activityFinishAction)
     }
 }
