@@ -52,7 +52,7 @@ internal fun RegisterScreen(
         modifier = modifier.fillMaxSize(),
     ) {
         RegisterTopBar(isScrolled = isScrolled) { onAction(RegisterUiAction.OnBackButtonClicked) }
-        ComposeWrappedWebViewWithTopBar(modifier = Modifier.weight(1f), setIsScrolled, onAction)
+        ComposeWrappedWebViewPairedWithTopBar(modifier = Modifier.weight(1f), setIsScrolled, onAction)
     }
 }
 
@@ -72,7 +72,7 @@ private fun WebView.setBridgeToWebView(onAction: (RegisterUiAction) -> Unit): We
 }
 
 @Composable
-private fun ComposeWrappedWebViewWithTopBar(
+private fun ComposeWrappedWebViewPairedWithTopBar(
     modifier: Modifier = Modifier,
     setIsScrolled: (Boolean) -> Unit,
     onAction: (RegisterUiAction) -> Unit
