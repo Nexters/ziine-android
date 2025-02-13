@@ -11,4 +11,7 @@
     <string name="other">OTHER</string>
     <string name="link_has_been_copied">링크가 복사되었습니다.</string>
     <string name="instagram_id_has_been_copied">인스타그램 아이디가 복사되었습니다.</string>
+    <string name="error_title">앗, 오류가 발생했어요.</string>
+    <string name="error_description">다시 시도해주세요.</string>
+    <string name="retry">다시 시도하기</string>
 </resources>
