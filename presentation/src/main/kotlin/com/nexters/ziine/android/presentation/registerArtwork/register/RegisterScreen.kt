@@ -44,7 +44,7 @@ internal fun RegisterRoute(
 @Composable
 internal fun RegisterScreen(
     modifier: Modifier = Modifier,
-    onAction: (RegisterUiAction) -> Unit
+    onAction: (RegisterUiAction) -> Unit,
 ) {
     val (isScrolled, setIsScrolled) = remember { mutableStateOf(false) }
 
@@ -52,7 +52,11 @@ internal fun RegisterScreen(
         modifier = modifier.fillMaxSize(),
     ) {
         RegisterTopBar(isScrolled = isScrolled) { onAction(RegisterUiAction.OnBackButtonClicked) }
-        ComposeWrappedWebViewPairedWithTopBar(modifier = Modifier.weight(1f), setIsScrolled, onAction)
+        ComposeWrappedWebViewPairedWithTopBar(
+            modifier = Modifier.weight(1f),
+            setIsScrolled = setIsScrolled,
+            onAction = onAction,
+        )
     }
 }
 
@@ -75,7 +79,7 @@ private fun WebView.setBridgeToWebView(onAction: (RegisterUiAction) -> Unit): We
 private fun ComposeWrappedWebViewPairedWithTopBar(
     modifier: Modifier = Modifier,
     setIsScrolled: (Boolean) -> Unit,
-    onAction: (RegisterUiAction) -> Unit
+    onAction: (RegisterUiAction) -> Unit,
 ) {
     ComposeWrappedWebView(modifier = modifier.fillMaxSize()) { context ->
         WebView(context).setRegisterSettingsToWebView(setIsScrolled).setBridgeToWebView(onAction).apply {
