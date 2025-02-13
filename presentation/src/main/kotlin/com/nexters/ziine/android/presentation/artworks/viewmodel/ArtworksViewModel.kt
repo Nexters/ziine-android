@@ -19,58 +19,58 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ArtworksViewModel
-@Inject
-constructor(
-    private val artworkRepository: ArtworkRepository,
-) : ViewModel() {
-    private val _uiState = MutableStateFlow(ArtworksUiState())
-    val uiState: StateFlow<ArtworksUiState> = _uiState.asStateFlow()
+    @Inject
+    constructor(
+        private val artworkRepository: ArtworkRepository,
+    ) : ViewModel() {
+        private val _uiState = MutableStateFlow(ArtworksUiState())
+        val uiState: StateFlow<ArtworksUiState> = _uiState.asStateFlow()
 
-    private val _uiEvent = Channel<ArtworksUiEvent>()
-    val uiEvent: Flow<ArtworksUiEvent> = _uiEvent.receiveAsFlow()
+        private val _uiEvent = Channel<ArtworksUiEvent>()
+        val uiEvent: Flow<ArtworksUiEvent> = _uiEvent.receiveAsFlow()
 
-    fun onAction(action: ArtworksUiAction) {
-        when (action) {
-            is ArtworksUiAction.OnArtworkItemSelect -> navigateToArtworkDetail(
-                id = action.id,
-                title = action.title,
-                artworkImageUrl = action.artworkImageUrl,
-            )
+        fun onAction(action: ArtworksUiAction) {
+            when (action) {
+                is ArtworksUiAction.OnArtworkItemSelect -> navigateToArtworkDetail(
+                    id = action.id,
+                    title = action.title,
+                    artworkImageUrl = action.artworkImageUrl,
+                )
+            }
         }
-    }
 
-    init {
-        fetchArtworks()
-    }
+        init {
+            fetchArtworks()
+        }
 
-    private fun fetchArtworks() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
-            delay(1000)
-            artworkRepository.fetchArtworks()
-                .onSuccess { result ->
-                    _uiState.update {
-                        it.copy(artworks = result.map { it.toUiArtworks() }.toImmutableList())
+        private fun fetchArtworks() {
+            viewModelScope.launch {
+                _uiState.update { it.copy(isLoading = true) }
+                delay(1000)
+                artworkRepository.fetchArtworks()
+                    .onSuccess { result ->
+                        _uiState.update {
+                            it.copy(artworks = result.map { it.toUiArtworks() }.toImmutableList())
+                        }
+                    }.onFailure {
                     }
-                }.onFailure {
-                }
-            _uiState.update { it.copy(isLoading = false) }
+                _uiState.update { it.copy(isLoading = false) }
+            }
         }
-    }
 
-    private fun navigateToArtworkDetail(
-        id: Int,
-        title: String,
-        artworkImageUrl: String,
-    ) {
-        viewModelScope.launch {
-            _uiEvent.send(
-                ArtworksUiEvent.NavigateToArtworkDetail(
-                    id = id,
-                    title = title,
-                    artworkImageUrl = artworkImageUrl,
-                ),
-            )
+        private fun navigateToArtworkDetail(
+            id: Int,
+            title: String,
+            artworkImageUrl: String,
+        ) {
+            viewModelScope.launch {
+                _uiEvent.send(
+                    ArtworksUiEvent.NavigateToArtworkDetail(
+                        id = id,
+                        title = title,
+                        artworkImageUrl = artworkImageUrl,
+                    ),
+                )
+            }
         }
     }
-}
