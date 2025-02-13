@@ -97,7 +97,7 @@ private fun CompleteUi(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun StickyFooter(hihi: () -> Unit) {
+private fun StickyFooter(moveToHome: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -109,7 +109,7 @@ private fun StickyFooter(hihi: () -> Unit) {
         Button(
             onClick = {
                 vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
-                hihi()
+                moveToHome()
             },
             modifier = Modifier
                 .padding(horizontal = 16.dp)
