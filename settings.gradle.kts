@@ -24,3 +24,5 @@ dependencyResolutionManagement {
 rootProject.name = "ziine-android"
 include(":app")
 include(":presentation")
+include(":data")
+include(":domain")

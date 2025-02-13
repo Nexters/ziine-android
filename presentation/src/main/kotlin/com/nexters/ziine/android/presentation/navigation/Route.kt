@@ -4,7 +4,11 @@ import kotlinx.serialization.Serializable
 
 sealed interface Route {
     @Serializable
-    data object ArtworkDetail : Route
+    data class ArtworkDetail(
+        val id: Int,
+        val title: String,
+        val artworkImageUrl: String,
+    ) : Route
 
     @Serializable
     data object MagazineDetail : Route

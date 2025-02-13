@@ -40,6 +40,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.domain)
+
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.collections.immutable)
 
@@ -47,13 +49,23 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.core.splashscreen)
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
+
+    implementation(libs.coil.compose)
+    implementation(libs.landscapist.bom)
+    implementation(libs.landscapist.coil)
+    implementation(libs.landscapist.placeholder)
+    implementation(libs.landscapist.animation)
+
+    implementation(libs.compose.system.ui.controller)
+    implementation(libs.lottie.compose)
 }

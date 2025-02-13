@@ -1,5 +1,11 @@
 package com.nexters.ziine.android.presentation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -16,10 +22,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
+import com.nexters.ziine.android.presentation.artworkdetail.artworkDetailScreen
 import com.nexters.ziine.android.presentation.artworks.artworksScreen
 import com.nexters.ziine.android.presentation.component.ZiineTopBar
 import com.nexters.ziine.android.presentation.magazine.magazineScreen
@@ -28,6 +37,10 @@ import com.nexters.ziine.android.presentation.navigation.rememberMainNavControll
 import com.nexters.ziine.android.presentation.registerArtwork.RegisterArtworkActivity
 import kotlinx.collections.immutable.toImmutableList
 
+@OptIn(ExperimentalSharedTransitionApi::class)
+val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
+
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ZiineApp(modifier: Modifier = Modifier) {
     val mainNavController = rememberMainNavController()
@@ -48,34 +61,51 @@ fun ZiineApp(modifier: Modifier = Modifier) {
                 },
                 modifier = Modifier
                     .windowInsetsPadding(
-                        WindowInsets.safeDrawing.only(WindowInsetsSides.Top)
+                        WindowInsets.safeDrawing.only(WindowInsetsSides.Top),
                     )
                     .padding(top = 20.dp, bottom = 8.dp),
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = { with(context) { startActivity(RegisterArtworkActivity.getIntent(this)) } },
-                shape = CircleShape,
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onBackground,
+            AnimatedVisibility(
+                visible = tabController.shouldShowTopBar(),
+                enter = fadeIn(),
+                exit = fadeOut(),
             ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Add",
-                )
+                FloatingActionButton(
+                    onClick = { with(context) { startActivity(RegisterArtworkActivity.getIntent(this)) } },
+                    shape = CircleShape,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onBackground,
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Add",
+                    )
+                }
             }
         },
     ) { padding ->
-        NavHost(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(padding),
-            navController = mainNavController.navController,
-            startDestination = mainNavController.startDestination,
-        ) {
-            artworksScreen()
-            magazineScreen()
+        SharedTransitionLayout {
+            CompositionLocalProvider(
+                LocalSharedTransitionScope provides this@SharedTransitionLayout,
+            ) {
+                NavHost(
+                    modifier = modifier.fillMaxSize(),
+                    navController = mainNavController.navController,
+                    startDestination = mainNavController.startDestination,
+                ) {
+                    artworksScreen(
+                        padding = padding,
+                        navigateToArtworkDetail = mainNavController::navigateToArtworkDetail,
+                    )
+                    magazineScreen(padding = padding)
+                    artworkDetailScreen(
+                        padding = padding,
+                        popBackStack = mainNavController::popBackStackIfNotArtworks,
+                    )
+                }
+            }
         }
     }
 }
