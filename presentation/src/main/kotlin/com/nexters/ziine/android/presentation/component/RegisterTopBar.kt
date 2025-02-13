@@ -55,7 +55,7 @@ fun RegisterTopBar(
         }
         if (isScrolled) {
             HorizontalDivider(
-                color = MaterialTheme.colorScheme.outlineVariant,
+                color = MaterialTheme.colorScheme.outline,
                 thickness = 1.dp,
             )
         }
