@@ -95,7 +95,7 @@ internal fun PendingScreen(
 @Composable
 private fun GuideUI(
     scrollState: ScrollState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
@@ -108,9 +108,9 @@ private fun GuideUI(
 }
 
 @Composable
-private fun GuideMainTitle() {
+private fun GuideMainTitle(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(122.dp),
         verticalArrangement = Arrangement.Center,
