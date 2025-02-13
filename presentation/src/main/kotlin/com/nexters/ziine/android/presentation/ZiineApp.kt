@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import com.nexters.ziine.android.presentation.artworkdetail.artworkDetailScreen
@@ -33,6 +34,7 @@ import com.nexters.ziine.android.presentation.component.ZiineTopBar
 import com.nexters.ziine.android.presentation.magazine.magazineScreen
 import com.nexters.ziine.android.presentation.navigation.MainTab
 import com.nexters.ziine.android.presentation.navigation.rememberMainNavController
+import com.nexters.ziine.android.presentation.registerArtwork.RegisterArtworkActivity
 import kotlinx.collections.immutable.toImmutableList
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -43,6 +45,7 @@ val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { nu
 fun ZiineApp(modifier: Modifier = Modifier) {
     val mainNavController = rememberMainNavController()
     val tabController = mainNavController.tabController
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier
@@ -70,7 +73,7 @@ fun ZiineApp(modifier: Modifier = Modifier) {
                 exit = fadeOut(),
             ) {
                 FloatingActionButton(
-                    onClick = {},
+                    onClick = { with(context) { startActivity(RegisterArtworkActivity.getIntent(this)) } },
                     shape = CircleShape,
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onBackground,

@@ -12,8 +12,10 @@ import androidx.core.view.WindowCompat
 private val DarkColorScheme = darkColorScheme(
     primary = Primary500,
     onPrimary = Gray900,
+    primaryContainer = Primary200,
     background = Gray900,
     onBackground = Gray0,
+    onSurface = Gray300,
     onSurfaceVariant = Gray600,
     outline = Gray700,
     outlineVariant = Primary100,
