@@ -124,6 +124,13 @@ compose = [
     "androidx-material3",
 ]
 
+landscapist = [
+    "landscapist-bom",
+    "landscapist-coil",
+    "landscapist-placeholder",
+    "landscapist-animation",
+]
+
 [plugins]
 
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

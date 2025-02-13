@@ -61,10 +61,7 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(libs.coil.compose)
-    implementation(libs.landscapist.bom)
-    implementation(libs.landscapist.coil)
-    implementation(libs.landscapist.placeholder)
-    implementation(libs.landscapist.animation)
+    implementation(libs.bundles.landscapist)
 
     implementation(libs.compose.system.ui.controller)
     implementation(libs.lottie.compose)
