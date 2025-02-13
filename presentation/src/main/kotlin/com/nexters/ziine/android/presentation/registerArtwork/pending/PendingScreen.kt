@@ -245,7 +245,8 @@ private fun StickyFooter(onMoveToRegisterButtonClicked: () -> Unit) {
             },
             modifier = Modifier
                 .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .height(52.dp),
             shape = RoundedCornerShape(6.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
