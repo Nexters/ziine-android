@@ -21,8 +21,8 @@ internal class ArtworkDetailPreviewParameterProvider : PreviewParameterProvider<
                     name = "Artist 1",
                     profileImageUrl = "https://example.com/profile1.png",
                 ),
+                shareUrl = "https://m.naver.com",
             ),
-            url = "https://m.naver.com",
         ),
     )
 }

@@ -4,8 +4,14 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ArtworkResponse(
+data class ArtworksResponse(
     @SerialName("artworks")
+    val artworks: List<ArtworkResponse>,
+)
+
+@Serializable
+data class ArtworkResponse(
+    @SerialName("id")
     val id: Int,
     @SerialName("title")
     val title: String,

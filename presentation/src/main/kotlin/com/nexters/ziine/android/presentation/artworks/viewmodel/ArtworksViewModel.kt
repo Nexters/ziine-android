@@ -7,7 +7,6 @@ import com.nexters.ziine.android.presentation.mapper.artwork.toUiArtworks
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,13 +46,17 @@ class ArtworksViewModel
         private fun fetchArtworks() {
             viewModelScope.launch {
                 _uiState.update { it.copy(isLoading = true) }
-                delay(1000)
+                // delay(1000)
                 artworkRepository.fetchArtworks()
                     .onSuccess { result ->
                         _uiState.update {
                             it.copy(artworks = result.map { it.toUiArtworks() }.toImmutableList())
                         }
-                    }.onFailure {
+                    }.onFailure { exception ->
+                        Timber.d(exception)
+                        _uiState.update {
+                            it.copy(isError = true)
+                        }
                     }
                 _uiState.update { it.copy(isLoading = false) }
             }

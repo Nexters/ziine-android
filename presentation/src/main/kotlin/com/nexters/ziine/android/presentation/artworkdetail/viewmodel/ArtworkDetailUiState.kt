@@ -5,5 +5,5 @@ import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetai
 data class ArtworkDetailUiState(
     val isLoading: Boolean = false,
     val artworkDetail: UiArtworkDetail = UiArtworkDetail(),
-    val url: String = "",
+    val isError: Boolean = false,
 )

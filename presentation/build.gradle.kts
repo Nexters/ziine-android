@@ -65,4 +65,6 @@ dependencies {
 
     implementation(libs.compose.system.ui.controller)
     implementation(libs.lottie.compose)
+
+    implementation(libs.timber)
 }

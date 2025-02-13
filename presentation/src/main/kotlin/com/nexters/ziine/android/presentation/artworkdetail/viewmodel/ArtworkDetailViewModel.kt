@@ -87,8 +87,8 @@ class ArtworkDetailViewModel
                                         }.toImmutableList(),
                                         email = uiArtworkDetail.artist.email,
                                     ),
+                                    shareUrl = uiArtworkDetail.shareUrl,
                                 ),
-                                url = "https://m.naver.com",
                             )
                         }
                     }.onFailure {
