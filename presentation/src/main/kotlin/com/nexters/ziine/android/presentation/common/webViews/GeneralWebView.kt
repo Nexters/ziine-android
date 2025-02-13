@@ -20,8 +20,8 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 
 @Composable
 internal fun ComposeWrappedWebView(
+    getWebView: (Context) -> WebView,
     modifier: Modifier = Modifier,
-    getWebView: (Context) -> WebView
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     var webViewLifecycleObserver: LifecycleObserver? = null
