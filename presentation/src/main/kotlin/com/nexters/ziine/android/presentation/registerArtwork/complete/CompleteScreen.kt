@@ -1,10 +1,6 @@
 package com.nexters.ziine.android.presentation.registerArtwork.complete
 
-import android.content.Context
-import android.os.Build
 import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
+import com.nexters.ziine.android.presentation.common.util.getVibrator
 import com.nexters.ziine.android.presentation.component.RegisterTopBar
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.registerArtwork.complete.viewmodel.CompleteUiAction
@@ -98,12 +95,13 @@ private fun CompleteUi(modifier: Modifier = Modifier) {
 
 @Composable
 private fun StickyFooter(moveToHome: () -> Unit) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.background),
     ) {
-        val vibrator = getVibrator()
+        val vibrator = getVibrator(context)
 
         Spacer(modifier = Modifier.height(12.dp))
         Button(
@@ -127,20 +125,6 @@ private fun StickyFooter(moveToHome: () -> Unit) {
         }
         Spacer(modifier = Modifier.height(40.dp))
     }
-}
-
-@Composable
-private fun getVibrator(): Vibrator {
-    val context = LocalContext.current
-    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        val vibratorManager =
-            context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-        vibratorManager.defaultVibrator
-    } else {
-        @Suppress("DEPRECATION")
-        context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-    }
-    return vibrator
 }
 
 @DevicePreview
