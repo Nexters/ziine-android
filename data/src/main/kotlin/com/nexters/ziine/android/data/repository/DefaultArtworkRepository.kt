@@ -4,7 +4,6 @@ import com.nexters.ziine.android.data.httpClient.convertClassifiedResult
 import com.nexters.ziine.android.data.mapper.artwork.toArtwork
 import com.nexters.ziine.android.data.mapper.artwork.toArtworkDetail
 import com.nexters.ziine.android.data.service.ZiineService
-import com.nexters.ziine.android.domain.entity.Artwork
 import com.nexters.ziine.android.domain.entity.ArtworkDetail
 import com.nexters.ziine.android.domain.entity.Artworks
 import com.nexters.ziine.android.domain.repository.ArtworkRepository

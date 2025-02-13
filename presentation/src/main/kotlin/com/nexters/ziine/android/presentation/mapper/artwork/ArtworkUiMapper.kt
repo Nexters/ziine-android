@@ -14,7 +14,7 @@ import com.nexters.ziine.android.presentation.artworks.model.UiArtist
 import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
 import kotlinx.collections.immutable.toImmutableList
 
-fun Artwork.toUiArtworks() =
+fun Artwork.toUiArtwork() =
     UiArtwork(
         id = id,
         title = title,

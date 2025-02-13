@@ -3,7 +3,7 @@ package com.nexters.ziine.android.presentation.artworks.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nexters.ziine.android.domain.repository.ArtworkRepository
-import com.nexters.ziine.android.presentation.mapper.artwork.toUiArtworks
+import com.nexters.ziine.android.presentation.mapper.artwork.toUiArtwork
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.channels.Channel
@@ -43,14 +43,17 @@ class ArtworksViewModel
             fetchArtworks()
         }
 
-        private fun fetchArtworks() {
+        fun fetchArtworks() {
             viewModelScope.launch {
                 _uiState.update { it.copy(isLoading = true) }
-                // delay(1000)
                 artworkRepository.fetchArtworks()
                     .onSuccess { result ->
                         _uiState.update {
-                            it.copy(artworks = result.map { it.toUiArtworks() }.toImmutableList())
+                            it.copy(
+                                artworks = result.artworks.map { artwork ->
+                                    artwork.toUiArtwork()
+                                }.toImmutableList(),
+                            )
                         }
                     }.onFailure { exception ->
                         Timber.d(exception)

@@ -18,6 +18,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
+    private val jsonRule = Json {
+        encodeDefaults = true
+        ignoreUnknownKeys = true
+        prettyPrint = true
+        isLenient = true
+    }
+
     @Provides
     fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
@@ -48,7 +55,7 @@ object RetrofitModule {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.SERVER_BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .addConverterFactory(jsonRule.asConverterFactory(contentType))
             .build()
     }
 }
