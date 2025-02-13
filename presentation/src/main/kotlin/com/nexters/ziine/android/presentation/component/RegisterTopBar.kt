@@ -21,6 +21,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
+import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
 @Composable
 fun RegisterTopBar(
@@ -33,18 +34,18 @@ fun RegisterTopBar(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(backGroundColor)
+            .background(backGroundColor),
     ) {
         Row(
             modifier = Modifier.height(44.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Spacer(modifier = Modifier.width(16.dp))
             IconButton(onClick = onBackButtonClickedAction) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_back),
                     contentDescription = "백버튼 아이콘",
-                    tint = MaterialTheme.colorScheme.onBackground
+                    tint = MaterialTheme.colorScheme.onBackground,
                 )
             }
         }
@@ -60,5 +61,7 @@ fun RegisterTopBar(
 @ComponentPreview
 @Composable
 private fun RegisterTopBarPreview() {
-    RegisterTopBar(isScrolled = true) { }
+    ZiineTheme {
+        RegisterTopBar(isScrolled = true) { }
+    }
 }
