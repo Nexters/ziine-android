@@ -112,7 +112,7 @@ private fun StickyFooter(moveToHome: () -> Unit) {
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()
-                .border(1.dp, MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(6.dp))
+                .border(1.dp, MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(6.dp))
                 .height(52.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.background,
