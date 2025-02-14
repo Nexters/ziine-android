@@ -70,7 +70,7 @@ internal fun ArtistDescription(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        EducationTags(educations = uiState.artworkDetail.artist.education)
+        EducationTags(educations = uiState.artworkDetail.artist.educations)
         Spacer(modifier = Modifier.height(40.dp))
         Row(modifier = Modifier.fillMaxWidth()) {
             Text(
@@ -80,7 +80,7 @@ internal fun ArtistDescription(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        ExhibitionRecords(exhibitionRecords = uiState.artworkDetail.artist.exhibition)
+        ExhibitionRecords(exhibitionRecords = uiState.artworkDetail.artist.exhibitions)
         Spacer(modifier = Modifier.height(40.dp))
         Text(
             text = stringResource(R.string.more_work_activities),
@@ -89,7 +89,7 @@ internal fun ArtistDescription(
         )
         Spacer(modifier = Modifier.height(40.dp))
         ContactLinks(
-            contacts = uiState.artworkDetail.artist.contact,
+            contacts = uiState.artworkDetail.artist.contacts,
             onCopyClick = onCopyClick,
         )
     }
@@ -106,8 +106,8 @@ private fun ArtistDescriptionPreview() {
                         id = 0,
                         name = "작가명",
                         profileImageUrl = "",
-                        education = persistentListOf("이화여자대학교", "서양학과"),
-                        exhibition = persistentListOf(
+                        educations = persistentListOf("이화여자대학교", "서양학과"),
+                        exhibitions = persistentListOf(
                             UiExhibition(
                                 title = "서울 OO갤러리 개인전",
                                 exhibitionDate = "2022.11.30",
@@ -121,7 +121,7 @@ private fun ArtistDescriptionPreview() {
                                 exhibitionDate = "2022.11.30",
                             ),
                         ),
-                        contact = persistentListOf(
+                        contacts = persistentListOf(
                             UiContact(
                                 type = "INSTAGRAM",
                                 value = "인스타그램 아이디",

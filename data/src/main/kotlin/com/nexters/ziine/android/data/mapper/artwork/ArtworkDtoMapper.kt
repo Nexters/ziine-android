@@ -46,9 +46,9 @@ fun ArtistDetailResponse.toArtistDetail() =
         id = id,
         name = name,
         profileImageUrl = profileImageUrl,
-        education = education,
-        exhibition = exhibition.map { it.toExhibition() },
-        contact = contact.map { it.toContact() },
+        educations = educations,
+        exhibitions = exhibitions.map { it.toExhibition() },
+        contacts = contacts.map { it.toContact() },
         email = email,
     )
 

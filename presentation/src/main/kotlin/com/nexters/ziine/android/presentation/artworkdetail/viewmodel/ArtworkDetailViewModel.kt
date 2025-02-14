@@ -72,14 +72,14 @@ class ArtworkDetailViewModel
                                         id = uiArtworkDetail.artist.id,
                                         name = uiArtworkDetail.artist.name,
                                         profileImageUrl = uiArtworkDetail.artist.profileImageUrl,
-                                        education = uiArtworkDetail.artist.education.toImmutableList(),
-                                        exhibition = uiArtworkDetail.artist.exhibition.map { exhibition ->
+                                        educations = uiArtworkDetail.artist.educations.toImmutableList(),
+                                        exhibitions = uiArtworkDetail.artist.exhibitions.map { exhibition ->
                                             UiExhibition(
                                                 title = exhibition.title,
                                                 exhibitionDate = exhibition.exhibitionDate,
                                             )
                                         }.toImmutableList(),
-                                        contact = uiArtworkDetail.artist.contact.map { contact ->
+                                        contacts = uiArtworkDetail.artist.contacts.map { contact ->
                                             UiContact(
                                                 type = contact.type,
                                                 value = contact.value,
@@ -92,6 +92,9 @@ class ArtworkDetailViewModel
                             )
                         }
                     }.onFailure {
+                        _uiState.update {
+                            it.copy(isError = true)
+                        }
                     }
                 _uiState.update { it.copy(isLoading = false) }
             }
