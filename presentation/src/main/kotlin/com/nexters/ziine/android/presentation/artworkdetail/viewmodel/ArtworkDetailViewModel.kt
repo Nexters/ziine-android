@@ -49,6 +49,7 @@ class ArtworkDetailViewModel
                 is ArtworkDetailUiAction.OnBackClick -> navigateBack()
                 is ArtworkDetailUiAction.OnShareClick -> shareUrl(action.url)
                 is ArtworkDetailUiAction.OnCopyClick -> copyValue(action.type, action.value)
+                is ArtworkDetailUiAction.OnRetryClick -> fetchArtworkDetail(id)
             }
         }
 
@@ -89,6 +90,7 @@ class ArtworkDetailViewModel
                                     ),
                                     shareUrl = uiArtworkDetail.shareUrl,
                                 ),
+                                isError = false,
                             )
                         }
                     }.onFailure {

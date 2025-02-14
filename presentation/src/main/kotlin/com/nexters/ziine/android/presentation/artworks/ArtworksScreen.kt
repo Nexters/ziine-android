@@ -27,12 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
+import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksUiAction
 import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksUiEvent
 import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksUiState
 import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksViewModel
 import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
 import com.nexters.ziine.android.presentation.component.LoadingIndicator
+import com.nexters.ziine.android.presentation.component.ZiineErrorDialog
 import com.nexters.ziine.android.presentation.preview.ArtworksPreviewParameterProvider
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
@@ -116,6 +118,14 @@ internal fun ArtworksScreen(
         }
 
         LoadingIndicator(isLoading = uiState.isLoading)
+
+        ZiineErrorDialog(
+            isErrorDialogVisible = uiState.isError,
+            onDismissRequest = {},
+            titleResId = R.string.error_title,
+            descriptionResId = R.string.error_description,
+            onRetryClick = { onAction(ArtworksUiAction.OnRetryClick) },
+        )
     }
 }
 

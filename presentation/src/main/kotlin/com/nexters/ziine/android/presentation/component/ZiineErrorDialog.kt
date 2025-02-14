@@ -1,6 +1,9 @@
 package com.nexters.ziine.android.presentation.component
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,6 +35,7 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ZiineErrorDialog(
+    isErrorDialogVisible: Boolean,
     onDismissRequest: () -> Unit,
     @StringRes titleResId: Int,
     @StringRes descriptionResId: Int,
@@ -39,50 +43,56 @@ fun ZiineErrorDialog(
     modifier: Modifier = Modifier,
     properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
 ) {
-    BasicAlertDialog(
-        onDismissRequest = onDismissRequest,
-        properties = properties,
+    AnimatedVisibility(
+        visible = isErrorDialogVisible,
+        enter = fadeIn(),
+        exit = fadeOut(),
     ) {
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.background),
-            horizontalAlignment = Alignment.CenterHorizontally
+        BasicAlertDialog(
+            onDismissRequest = onDismissRequest,
+            properties = properties,
         ) {
-            Spacer(modifier = Modifier.height(60.dp))
-            Text(
-                text = stringResource(id = titleResId),
-                style = Subtitle2,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = stringResource(id = descriptionResId),
-                style = Subtitle2,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-            Spacer(modifier = Modifier.height(64.dp))
-            Image(
-                painter = painterResource(id = R.drawable.placeholder),
-                contentDescription = "Error Image",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 48.dp)
-            )
-            Spacer(modifier = Modifier.height(40.dp))
-            OutlinedButton(
-                onClick = onRetryClick,
-                modifier = Modifier
-                    .height(45.dp)
-                    .padding(horizontal = 24.dp),
-                shape = RoundedCornerShape(6.dp),
-                border = BorderStroke(1.5.dp, MaterialTheme.colorScheme.outline)
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(color = MaterialTheme.colorScheme.background),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                Spacer(modifier = Modifier.height(60.dp))
                 Text(
-                    text = stringResource(id = R.string.retry),
+                    text = stringResource(id = titleResId),
+                    style = Subtitle2,
                     color = MaterialTheme.colorScheme.onBackground,
-                    style = Paragraph4
                 )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = stringResource(id = descriptionResId),
+                    style = Subtitle2,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+                Spacer(modifier = Modifier.height(64.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.placeholder),
+                    contentDescription = "Error Image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 48.dp),
+                )
+                Spacer(modifier = Modifier.height(40.dp))
+                OutlinedButton(
+                    onClick = onRetryClick,
+                    modifier = Modifier
+                        .height(45.dp)
+                        .padding(horizontal = 24.dp),
+                    shape = RoundedCornerShape(6.dp),
+                    border = BorderStroke(1.5.dp, MaterialTheme.colorScheme.outline),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.retry),
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = Paragraph4,
+                    )
+                }
             }
         }
     }
@@ -93,10 +103,11 @@ fun ZiineErrorDialog(
 private fun ZiineErrorDialogPreview() {
     ZiineTheme {
         ZiineErrorDialog(
+            isErrorDialogVisible = true,
             onDismissRequest = { },
             titleResId = R.string.error_title,
             descriptionResId = R.string.error_description,
-            onRetryClick = { }
+            onRetryClick = { },
         )
     }
 }

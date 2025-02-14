@@ -29,6 +29,10 @@ class ArtworksViewModel
         private val _uiEvent = Channel<ArtworksUiEvent>()
         val uiEvent: Flow<ArtworksUiEvent> = _uiEvent.receiveAsFlow()
 
+        init {
+            fetchArtworks()
+        }
+
         fun onAction(action: ArtworksUiAction) {
             when (action) {
                 is ArtworksUiAction.OnArtworkItemSelect -> navigateToArtworkDetail(
@@ -36,14 +40,12 @@ class ArtworksViewModel
                     title = action.title,
                     artworkImageUrl = action.artworkImageUrl,
                 )
+
+                is ArtworksUiAction.OnRetryClick -> fetchArtworks()
             }
         }
 
-        init {
-            fetchArtworks()
-        }
-
-        fun fetchArtworks() {
+        private fun fetchArtworks() {
             viewModelScope.launch {
                 _uiState.update { it.copy(isLoading = true) }
                 artworkRepository.fetchArtworks()
@@ -53,6 +55,7 @@ class ArtworksViewModel
                                 artworks = result.artworks.map { artwork ->
                                     artwork.toUiArtwork()
                                 }.toImmutableList(),
+                                isError = false,
                             )
                         }
                     }.onFailure { exception ->
