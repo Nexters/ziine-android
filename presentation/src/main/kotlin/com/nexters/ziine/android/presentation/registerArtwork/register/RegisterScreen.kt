@@ -83,7 +83,7 @@ private fun ComposeWrappedWebViewPairedWithTopBar(
 ) {
     ComposeWrappedWebView(modifier = modifier.fillMaxSize()) { context ->
         WebView(context).setRegisterSettingsToWebView(setIsScrolled).setBridgeToWebView(onAction).apply {
-            setTestPage()
+            loadUrl("https://www.ziine.gallery/artwork/register")
         }
     }
 }
