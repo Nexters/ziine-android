@@ -24,6 +24,5 @@ class TabController(
         }
 
     @Composable
-    fun shouldShowFloatingActionButton() =
-        currentDestination?.hasRoute(MainTab.ARTWORKS.route::class) == true
+    fun shouldShowFloatingActionButton() = currentDestination?.hasRoute(MainTab.ARTWORKS.route::class) == true
 }

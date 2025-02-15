@@ -56,8 +56,7 @@ internal fun ArtworkItem(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-
-            ) {
+        ) {
             Box(
                 modifier = Modifier
                     .sharedElement(
