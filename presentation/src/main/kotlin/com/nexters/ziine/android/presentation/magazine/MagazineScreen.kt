@@ -76,7 +76,7 @@ internal fun MagazineScreen(
     )
 
     /** 인디케이터 */
-    val actualPageNumber = pagerState.currentPage % actualPageCount
+    val indicatorPageNumber = pagerState.currentPage % actualPageCount
 
     Column(
         modifier = modifier
@@ -99,6 +99,7 @@ internal fun MagazineScreen(
             pageSpacing = 12.dp,
             /** 대략 줄여놓은것 하단 todo와 동시 처리 필요 */
         ) { page ->
+            val actualPageNumber = page % actualPageCount
             MagazineItem(
                 data = uiState.magazines[actualPageNumber],
                 modifier = Modifier
@@ -110,7 +111,7 @@ internal fun MagazineScreen(
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
-        MagazineIndicator(actualPageCount, actualPageNumber)
+        MagazineIndicator(actualPageCount, indicatorPageNumber)
     }
 }
 
