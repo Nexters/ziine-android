@@ -128,7 +128,6 @@ compose = [
 ]
 
 landscapist = [
-    "landscapist-bom",
     "landscapist-coil",
     "landscapist-placeholder",
     "landscapist-animation",
