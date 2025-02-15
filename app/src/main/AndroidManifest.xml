@@ -27,6 +27,10 @@
                 android:name="com.nexters.ziine.android.initializer.TimberInitializer"
                 android:value="androidx.startup" />
 
+            <meta-data
+                android:name="com.nexters.ziine.android.initializer.FirebaseCrashlyticsInitializer"
+                android:value="androidx.startup" />
+
         </provider>
 
         <!-- Trigger Google Play services to install the backported photo picker module. -->
