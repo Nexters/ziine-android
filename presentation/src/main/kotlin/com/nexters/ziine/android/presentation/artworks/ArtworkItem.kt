@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,9 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
+import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworks.model.UiArtist
 import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
 import com.nexters.ziine.android.presentation.component.NetworkImage
@@ -51,50 +54,74 @@ internal fun ArtworkItem(
     with(sharedTransitionScope) {
         Box(
             modifier = modifier
-                .sharedElement(
-                    rememberSharedContentState(key = artwork.artworkImageUrl),
-                    animatedVisibilityScope = animatedVisibilityScope,
-                )
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .heightIn(max = 900.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .border(
-                    width = 1.5.dp,
-                    color = Gray0.copy(alpha = 0.1f),
-                    shape = RoundedCornerShape(16.dp),
-                )
-                .clickable(onClick = onArtworkItemSelect),
-        ) {
-            NetworkImage(
-                imageUrl = artwork.artworkImageUrl,
-                contentDescription = "${artwork.title} by ${artwork.artist.name}",
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentScale = ContentScale.FillWidth,
-            )
+                .padding(horizontal = 16.dp),
 
-            Row(
+            ) {
+            Box(
                 modifier = Modifier
+                    .sharedElement(
+                        rememberSharedContentState(key = artwork.artworkImageUrl),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                    )
                     .fillMaxWidth()
-                    .padding(top = 20.dp, start = 20.dp)
-                    .align(Alignment.TopStart),
-                verticalAlignment = Alignment.CenterVertically,
+                    .heightIn(max = 900.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .border(
+                        width = 1.5.dp,
+                        color = Gray0.copy(alpha = 0.1f),
+                        shape = RoundedCornerShape(16.dp),
+                    )
+                    .clickable(onClick = onArtworkItemSelect),
             ) {
                 NetworkImage(
-                    imageUrl = artwork.artist.profileImageUrl,
-                    contentDescription = "Profile Image of ${artwork.artist.name}",
+                    imageUrl = artwork.artworkImageUrl,
+                    contentDescription = "${artwork.title} by ${artwork.artist.name}",
                     modifier = Modifier
-                        .size(28.dp)
-                        .clip(CircleShape),
+                        .fillMaxWidth(),
+                    contentScale = ContentScale.FillWidth,
                 )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = artwork.artist.name,
-                    style = Paragraph2,
-                    color = Gray0,
-                    modifier = Modifier.weight(1f),
+
+                Image(
+                    painter = painterResource(id = R.drawable.top_gradient),
+                    contentDescription = "Top Gradient Image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.TopCenter),
+                    contentScale = ContentScale.FillWidth,
                 )
+
+                Image(
+                    painter = painterResource(id = R.drawable.bottom_gradient),
+                    contentDescription = "Top Gradient Image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter),
+                    contentScale = ContentScale.FillWidth,
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp, start = 20.dp)
+                        .align(Alignment.TopStart),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    NetworkImage(
+                        imageUrl = artwork.artist.profileImageUrl,
+                        contentDescription = "Profile Image of ${artwork.artist.name}",
+                        modifier = Modifier
+                            .size(28.dp)
+                            .clip(CircleShape),
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = artwork.artist.name,
+                        style = Paragraph2,
+                        color = Gray0,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
             }
 
             Row(
