@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -36,8 +38,7 @@ fun MagazineItem(data: UiMagazine, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .width(288.dp)
-            .height(479.dp)
-            .padding(16.dp),
+            .height(479.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f),
         ),
@@ -92,8 +93,10 @@ private fun MagazineTags(tags: List<String>, modifier: Modifier = Modifier) {
 private fun MagazineTag(tagName: String, modifier: Modifier = Modifier) {
     Text(
         modifier = modifier
+            .height(27.dp)
             .border(1.5.dp, MaterialTheme.colorScheme.background, RoundedCornerShape(99.dp))
-            .padding(horizontal = 10.dp, vertical = 4.dp),
+            .padding(horizontal = 10.dp, vertical = 4.dp)
+            .wrapContentSize(Alignment.Center),
         text = "#$tagName",
         color = MaterialTheme.colorScheme.background,
         style = Paragraph4,
