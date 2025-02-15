@@ -46,10 +46,10 @@ fun ArtistDetailResponse.toArtistDetail() =
         id = id,
         name = name,
         profileImageUrl = profileImageUrl,
-        educations = educations,
-        exhibitions = exhibitions.map { it.toExhibition() },
-        contacts = contacts.map { it.toContact() },
-        email = email,
+        educations = educations ?: emptyList(),
+        exhibitions = exhibitions?.map { it.toExhibition() } ?: emptyList(),
+        contacts = contacts?.map { it.toContact() } ?: emptyList(),
+        email = email ?: "",
     )
 
 fun ExhibitionResponse.toExhibition() =
