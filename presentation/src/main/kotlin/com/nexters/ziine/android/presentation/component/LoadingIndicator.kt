@@ -25,22 +25,16 @@ fun LoadingIndicator(
     isLoading: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val lottieComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(resId = R.raw.loading))
-    val progress by animateLottieCompositionAsState(
-        composition = lottieComposition,
-        iterations = LottieConstants.IterateForever,
-    )
-
     AnimatedVisibility(
         visible = isLoading,
         enter = fadeIn(),
         exit = fadeOut(),
     ) {
         Box(modifier = modifier.size(88.dp)) {
-            LottieAnimation(
-                composition = lottieComposition,
-                progress = { progress },
-                modifier = modifier.align(Alignment.Center)
+            LottieImage(
+                resId = R.raw.loading,
+                modifier = modifier.align(Alignment.Center),
+                iterations = LottieConstants.IterateForever,
             )
         }
     }
