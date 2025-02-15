@@ -8,17 +8,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.lerp
 import com.nexters.ziine.android.presentation.common.util.toPx
 import com.nexters.ziine.android.presentation.common.util.tooDp
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
+import kotlin.math.absoluteValue
 
 @Composable
 internal fun MagazineRoute(
@@ -63,12 +67,29 @@ internal fun MagazineScreen(
             ),
             pageSpacing = 16.dp,
         ) { page ->
-            MagazineItem()
+            MagazineItem(
+                modifier = Modifier
+                    .graphicsLayer {
+                        val scaleFactor = getScaleFactor(pagerState, page)
+                        scaleX = scaleFactor
+                        scaleY = scaleFactor
+                    },
+            )
         }
     }
 }
 
 private fun getContentPaddingToAlignCenter(screenWidth: Int, pageItemWidth: Int): Int = (screenWidth - pageItemWidth) / 2
+
+private fun getScaleFactor(pagerState: PagerState, page: Int): Float {
+    val pageOffset = ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
+    val scaleFactor = lerp(
+        start = 0.9164f,
+        stop = 1f,
+        fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1f),
+    )
+    return scaleFactor
+}
 
 @DevicePreview
 @Composable
