@@ -15,8 +15,6 @@ data class MagazineResponse(
     data class Magazine(
         @SerialName("backgroundColor")
         val backgroundColor: String,
-        @SerialName("content")
-        val content: String,
         @SerialName("createdAt")
         val createdAt: String,
         @SerialName("id")
