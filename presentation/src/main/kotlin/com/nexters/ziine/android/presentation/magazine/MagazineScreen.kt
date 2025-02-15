@@ -11,6 +11,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,8 +19,12 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nexters.ziine.android.presentation.common.util.toPx
 import com.nexters.ziine.android.presentation.common.util.tooDp
+import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineUiState
+import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineViewModel
 import com.nexters.ziine.android.presentation.preview.DevicePreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 import kotlin.math.absoluteValue
@@ -28,9 +33,13 @@ import kotlin.math.absoluteValue
 internal fun MagazineRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
+    magazineViewModel: MagazineViewModel = hiltViewModel()
 ) {
+    val magazineUiState by magazineViewModel.uiState.collectAsStateWithLifecycle()
+
     MagazineScreen(
         padding = padding,
+        uiState = magazineUiState,
         modifier = modifier,
     )
 }
@@ -38,6 +47,7 @@ internal fun MagazineRoute(
 @Composable
 internal fun MagazineScreen(
     padding: PaddingValues,
+    uiState: MagazineUiState,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -83,7 +93,7 @@ internal fun MagazineScreen(
 @Composable
 private fun MagazineScreenPreview() {
     ZiineTheme {
-        MagazineScreen(padding = PaddingValues())
+        MagazineScreen(padding = PaddingValues(), uiState = MagazineUiState())
     }
 }
 
