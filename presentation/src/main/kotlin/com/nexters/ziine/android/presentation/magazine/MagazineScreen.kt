@@ -2,6 +2,7 @@ package com.nexters.ziine.android.presentation.magazine
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -27,9 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
 import com.nexters.ziine.android.presentation.common.util.toPx
 import com.nexters.ziine.android.presentation.common.util.tooDp
 import com.nexters.ziine.android.presentation.component.LoadingIndicator
+import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineUiAction
+import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineUiEvent
 import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineUiState
 import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineViewModel
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
@@ -46,11 +50,17 @@ internal fun MagazineRoute(
 ) {
     val magazineUiState by magazineViewModel.uiState.collectAsStateWithLifecycle()
 
+    ObserveAsEvents(flow = magazineViewModel.uiEvent) { event ->
+        when (event) {
+            is MagazineUiEvent.MoveToMagazineDetail -> {}
+        }
+    }
     if (!magazineUiState.isLoading) {
         MagazineScreen(
             padding = padding,
             uiState = magazineUiState,
             modifier = modifier,
+            onAction = magazineViewModel::onAction,
         )
     } else LoadingIndicator(isLoading = true)
 }
@@ -60,6 +70,7 @@ internal fun MagazineScreen(
     padding: PaddingValues,
     uiState: MagazineUiState,
     modifier: Modifier = Modifier,
+    onAction: (MagazineUiAction) -> Unit,
 ) {
     /** 페이지 스케일 조정 */
     val context = LocalContext.current
@@ -100,9 +111,11 @@ internal fun MagazineScreen(
             /** 대략 줄여놓은것 하단 todo와 동시 처리 필요 */
         ) { page ->
             val actualPageNumber = page % actualPageCount
+            val pageData = uiState.magazines[actualPageNumber]
             MagazineItem(
-                data = uiState.magazines[actualPageNumber],
+                data = pageData,
                 modifier = Modifier
+                    .clickable { onAction(MagazineUiAction.MagazineClicked(pageData.magazineId)) }
                     .graphicsLayer {
                         val scaleFactor = PagerItemShrinker.scaleFactor(pagerState, page)
                         scaleX = scaleFactor
@@ -135,7 +148,7 @@ private fun MagazineIndicator(totalPageCount: Int, currentPageNumber: Int) {
 @Composable
 private fun MagazineScreenPreview() {
     ZiineTheme {
-        MagazineScreen(padding = PaddingValues(), uiState = MagazineUiState())
+        MagazineScreen(padding = PaddingValues(), uiState = MagazineUiState(), onAction = {})
     }
 }
 

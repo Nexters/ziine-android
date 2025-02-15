@@ -32,8 +32,6 @@ import com.nexters.ziine.android.presentation.ui.theme.Heading3
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph2
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph4
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
-import kotlinx.collections.immutable.persistentListOf
-import kotlin.random.Random
 
 const val MAGAZINE_ITEM_WIDTH = 288
 const val MAGAZINE_ITEM_HEIGHT = 479

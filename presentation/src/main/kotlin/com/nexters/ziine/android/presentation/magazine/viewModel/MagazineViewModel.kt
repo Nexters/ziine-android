@@ -35,7 +35,9 @@ class MagazineViewModel @Inject constructor(
     val uiEvent: Flow<MagazineUiEvent> = _uiEvent.receiveAsFlow()
 
     fun onAction(action: MagazineUiAction) {
-//        when (action) { }
+        when (action) {
+            is MagazineUiAction.MagazineClicked -> moveToMagazineDetail(action.magazineId)
+        }
     }
 
     init {
@@ -53,6 +55,12 @@ class MagazineViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    private fun moveToMagazineDetail(magazineId: Int) {
+        viewModelScope.launch {
+            _uiEvent.send(MagazineUiEvent.MoveToMagazineDetail(magazineId))
         }
     }
 }
