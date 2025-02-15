@@ -8,4 +8,5 @@ data class UiMagazine(
     val subTitle: String,
     val keyWords: ImmutableList<String>,
     val thumbnailUrl: String,
+    val backgroundColor: String
 )

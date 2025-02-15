@@ -1,5 +1,6 @@
 package com.nexters.ziine.android.presentation.magazine
 
+import android.graphics.Color.parseColor
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -43,9 +44,7 @@ fun MagazineItem(data: UiMagazine, modifier: Modifier = Modifier) {
         modifier = modifier
             .width(MAGAZINE_ITEM_WIDTH.dp)
             .height(MAGAZINE_ITEM_HEIGHT.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f),
-        ),
+        colors = CardDefaults.cardColors(containerColor = Color(parseColor(data.backgroundColor))),
         shape = RoundedCornerShape(20.dp),
     ) {
         Column(

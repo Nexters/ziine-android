@@ -50,7 +50,8 @@ class MagazineViewModel @Inject constructor() : ViewModel() {
                             title = "glglglgl$it",
                             subTitle = "알랄라 살랄랄",
                             keyWords = persistentListOf("glgl", "glgl", "glgl"),
-                            thumbnailUrl = "dkskdk"
+                            thumbnailUrl = "dkskdk",
+                            backgroundColor = "#FFFFFF",
                         )
                     }.toImmutableList(),
                 )
