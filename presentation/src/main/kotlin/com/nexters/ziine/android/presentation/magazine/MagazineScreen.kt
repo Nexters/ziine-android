@@ -1,5 +1,6 @@
 package com.nexters.ziine.android.presentation.magazine
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -33,7 +34,7 @@ import kotlin.math.absoluteValue
 internal fun MagazineRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
-    magazineViewModel: MagazineViewModel = hiltViewModel()
+    magazineViewModel: MagazineViewModel = hiltViewModel(),
 ) {
     val magazineUiState by magazineViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -50,12 +51,18 @@ internal fun MagazineScreen(
     uiState: MagazineUiState,
     modifier: Modifier = Modifier,
 ) {
+    /** 페이지 스케일 조정 */
     val context = LocalContext.current
     val screenWidth = remember { context.resources.displayMetrics.widthPixels }
     val magazineItemWidth = MAGAZINE_ITEM_WIDTH.dp.toPx()
 
+    /** 무한 페이저 */
+    val actualPageCount = uiState.magazines.size
+    val pageCount = Int.MAX_VALUE
+    val maxNumOfRounds = Int.MAX_VALUE / actualPageCount
     val pagerState = rememberPagerState(
-        pageCount = { Int.MAX_VALUE },
+        pageCount = { pageCount },
+        initialPage = (maxNumOfRounds / 2) * actualPageCount,
     )
 
     Column(
@@ -75,15 +82,18 @@ internal fun MagazineScreen(
                     pageItemWidth = magazineItemWidth,
                 ).tooDp(),
             ),
-            pageSpacing = 12.dp, /** 대략 줄여놓은것 하단 todo와 동시 처리 필요 */
+            pageSpacing = 12.dp,
+            /** 대략 줄여놓은것 하단 todo와 동시 처리 필요 */
         ) { page ->
+            val actualPageNumber = page % actualPageCount
             MagazineItem(
+                data = uiState.magazines[actualPageNumber],
                 modifier = Modifier
                     .graphicsLayer {
                         val scaleFactor = PagerItemShrinker.scaleFactor(pagerState, page)
                         scaleX = scaleFactor
                         scaleY = scaleFactor
-                    } // todo: 현재 이미지 줄어드는 만큼 페이지간 간격도 넓어짐 보정 잡아야함(우선 넘어감)
+                    }, // todo: 현재 이미지 줄어드는 만큼 페이지간 간격도 넓어짐 보정 잡아야함(우선 넘어감)
             )
         }
     }
