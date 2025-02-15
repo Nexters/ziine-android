@@ -1,7 +1,7 @@
 package com.nexters.ziine.android.data.repository
 
 import com.nexters.ziine.android.data.httpClient.convertClassifiedResult
-import com.nexters.ziine.android.data.mapper.artwork.toMagazines
+import com.nexters.ziine.android.data.mapper.magazine.toMagazines
 import com.nexters.ziine.android.data.service.ZiineService
 import com.nexters.ziine.android.domain.entity.Magazines
 import com.nexters.ziine.android.domain.repository.MagazineRepository

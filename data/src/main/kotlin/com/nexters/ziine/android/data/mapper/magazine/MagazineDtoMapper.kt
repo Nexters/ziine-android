@@ -1,4 +1,4 @@
-package com.nexters.ziine.android.data.mapper.artwork
+package com.nexters.ziine.android.data.mapper.magazine
 
 import com.nexters.ziine.android.data.httpClient.dto.response.MagazineResponse
 import com.nexters.ziine.android.domain.entity.Magazine
