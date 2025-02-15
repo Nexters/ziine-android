@@ -1,5 +1,9 @@
 package com.nexters.ziine.android.domain.entity
 
+data class Artworks(
+    val artworks: List<Artwork>,
+)
+
 data class Artwork(
     val id: Int,
     val title: String,

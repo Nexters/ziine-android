@@ -11,17 +11,17 @@ data class UiArtworkDetail(
     val material: String = "",
     val description: String = "",
     val artworkImageUrl: String = "",
-    val artist: UiArtistDetail = UiArtistDetail(),
     val shareUrl: String = "",
+    val artist: UiArtistDetail = UiArtistDetail(),
 )
 
 data class UiArtistDetail(
     val id: Int = 0,
     val name: String = "",
     val profileImageUrl: String = "",
-    val education: ImmutableList<String> = persistentListOf(),
-    val exhibition: ImmutableList<UiExhibition> = persistentListOf(),
-    val contact: ImmutableList<UiContact> = persistentListOf(),
+    val educations: ImmutableList<String> = persistentListOf(),
+    val exhibitions: ImmutableList<UiExhibition> = persistentListOf(),
+    val contacts: ImmutableList<UiContact> = persistentListOf(),
     val email: String = "",
 )
 

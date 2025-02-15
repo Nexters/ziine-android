@@ -15,6 +15,13 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+private val jsonRule = Json {
+    encodeDefaults = true
+    ignoreUnknownKeys = true
+    prettyPrint = true
+    isLenient = true
+}
+
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
@@ -48,7 +55,7 @@ object RetrofitModule {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.SERVER_BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .addConverterFactory(jsonRule.asConverterFactory(contentType))
             .build()
     }
 }

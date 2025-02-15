@@ -6,4 +6,6 @@ sealed interface ArtworksUiAction {
         val title: String,
         val artworkImageUrl: String,
     ) : ArtworksUiAction
+
+    data object OnRetryClick : ArtworksUiAction
 }

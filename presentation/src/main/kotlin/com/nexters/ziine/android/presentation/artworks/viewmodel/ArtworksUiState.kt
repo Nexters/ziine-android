@@ -7,4 +7,5 @@ import kotlinx.collections.immutable.persistentListOf
 data class ArtworksUiState(
     val isLoading: Boolean = false,
     val artworks: ImmutableList<UiArtwork> = persistentListOf(),
+    val isError: Boolean = false,
 )
