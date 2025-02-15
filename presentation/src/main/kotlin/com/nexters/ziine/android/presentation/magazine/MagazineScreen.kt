@@ -60,35 +60,23 @@ internal fun MagazineScreen(
                 .align(Alignment.CenterHorizontally),
             state = pagerState,
             contentPadding = PaddingValues(
-                horizontal = getContentPaddingToAlignCenter(
+                horizontal = PagerItemShrinker.contentPaddingToAlignCenter(
                     screenWidth = screenWidth,
                     pageItemWidth = magazineItemWidth,
                 ).tooDp(),
             ),
-            pageSpacing = 16.dp,
+            pageSpacing = 12.dp, /** 대략 줄여놓은것 하단 todo와 동시 처리 필요 */
         ) { page ->
             MagazineItem(
                 modifier = Modifier
                     .graphicsLayer {
-                        val scaleFactor = getScaleFactor(pagerState, page)
+                        val scaleFactor = PagerItemShrinker.scaleFactor(pagerState, page)
                         scaleX = scaleFactor
                         scaleY = scaleFactor
-                    },
+                    } // todo: 현재 이미지 줄어드는 만큼 페이지간 간격도 넓어짐 보정 잡아야함(우선 넘어감)
             )
         }
     }
-}
-
-private fun getContentPaddingToAlignCenter(screenWidth: Int, pageItemWidth: Int): Int = (screenWidth - pageItemWidth) / 2
-
-private fun getScaleFactor(pagerState: PagerState, page: Int): Float {
-    val pageOffset = ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
-    val scaleFactor = lerp(
-        start = 0.9164f,
-        stop = 1f,
-        fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1f),
-    )
-    return scaleFactor
 }
 
 @DevicePreview
@@ -96,5 +84,19 @@ private fun getScaleFactor(pagerState: PagerState, page: Int): Float {
 private fun MagazineScreenPreview() {
     ZiineTheme {
         MagazineScreen(padding = PaddingValues())
+    }
+}
+
+private object PagerItemShrinker {
+    fun contentPaddingToAlignCenter(screenWidth: Int, pageItemWidth: Int): Int = (screenWidth - pageItemWidth) / 2
+
+    fun scaleFactor(pagerState: PagerState, page: Int): Float {
+        val pageOffset = ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
+        val scaleFactor = lerp(
+            start = 0.9164f,
+            stop = 1f,
+            fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1f),
+        )
+        return scaleFactor
     }
 }
