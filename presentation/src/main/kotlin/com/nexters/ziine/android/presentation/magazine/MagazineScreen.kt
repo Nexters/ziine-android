@@ -29,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nexters.ziine.android.presentation.common.util.toPx
 import com.nexters.ziine.android.presentation.common.util.tooDp
+import com.nexters.ziine.android.presentation.component.LoadingIndicator
 import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineUiState
 import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineViewModel
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
@@ -45,11 +46,13 @@ internal fun MagazineRoute(
 ) {
     val magazineUiState by magazineViewModel.uiState.collectAsStateWithLifecycle()
 
-    MagazineScreen(
-        padding = padding,
-        uiState = magazineUiState,
-        modifier = modifier,
-    )
+    if (!magazineUiState.isLoading) {
+        MagazineScreen(
+            padding = padding,
+            uiState = magazineUiState,
+            modifier = modifier,
+        )
+    } else LoadingIndicator(isLoading = true)
 }
 
 @Composable

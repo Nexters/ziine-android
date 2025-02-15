@@ -5,6 +5,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 data class MagazineUiState(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val magazines: ImmutableList<UiMagazine> = persistentListOf(),
 )
