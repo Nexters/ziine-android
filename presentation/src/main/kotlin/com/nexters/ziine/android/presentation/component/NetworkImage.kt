@@ -13,6 +13,7 @@ import coil.request.ImageRequest
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
+import timber.log.Timber
 
 @Composable
 fun NetworkImage(
@@ -64,6 +65,9 @@ fun NetworkImage(
             modifier = modifier,
             error = failureImage,
             contentScale = contentScale,
+            onError = { exception ->
+                Timber.e("${exception.result.throwable}")
+            },
         )
     }
 }
