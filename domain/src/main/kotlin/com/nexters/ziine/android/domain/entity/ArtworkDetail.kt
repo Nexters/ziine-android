@@ -8,17 +8,17 @@ data class ArtworkDetail(
     val material: String,
     val description: String,
     val artworkImageUrl: String,
-    val artist: ArtistDetail,
     val shareUrl: String,
+    val artist: ArtistDetail,
 )
 
 data class ArtistDetail(
     val id: Int,
     val name: String,
     val profileImageUrl: String,
-    val education: List<String>,
-    val exhibition: List<Exhibition>,
-    val contact: List<Contact>,
+    val educations: List<String>,
+    val exhibitions: List<Exhibition>,
+    val contacts: List<Contact>,
     val email: String,
 )
 

@@ -79,7 +79,7 @@ internal fun ArtworkDescription(
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 IconButton(
-                    onClick = { onShareClick(uiState.url) },
+                    onClick = { onShareClick(uiState.artworkDetail.shareUrl) },
                     modifier = Modifier.then(Modifier.size(32.dp))
                 ) {
                     Icon(

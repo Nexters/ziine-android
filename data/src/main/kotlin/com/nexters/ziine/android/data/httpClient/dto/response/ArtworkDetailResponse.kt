@@ -19,10 +19,10 @@ data class ArtworkDetailResponse(
     val description: String,
     @SerialName("artworkImageUrl")
     val artworkImageUrl: String,
-    @SerialName("artist")
-    val artist: ArtistDetailResponse,
     @SerialName("shareUrl")
     val shareUrl: String,
+    @SerialName("artist")
+    val artist: ArtistDetailResponse,
 )
 
 @Serializable
@@ -33,12 +33,12 @@ data class ArtistDetailResponse(
     val name: String,
     @SerialName("profileImageUrl")
     val profileImageUrl: String,
-    @SerialName("education")
-    val education: List<String>,
-    @SerialName("exhibition")
-    val exhibition: List<ExhibitionResponse>,
-    @SerialName("contact")
-    val contact: List<ContactResponse>,
+    @SerialName("educations")
+    val educations: List<String>,
+    @SerialName("exhibitions")
+    val exhibitions: List<ExhibitionResponse>,
+    @SerialName("contacts")
+    val contacts: List<ContactResponse>,
     @SerialName("email")
     val email: String,
 )

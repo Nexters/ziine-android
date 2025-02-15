@@ -9,4 +9,6 @@ sealed interface ArtworkDetailUiAction {
         val type: String,
         val value: String,
     ) : ArtworkDetailUiAction
+
+    data object OnRetryClick : ArtworkDetailUiAction
 }

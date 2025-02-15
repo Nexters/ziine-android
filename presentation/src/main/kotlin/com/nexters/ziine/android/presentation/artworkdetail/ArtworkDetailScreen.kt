@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
+import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtistDescription
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtworkDescription
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtworkDetailItem
@@ -50,6 +51,7 @@ import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDet
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiState
 import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailViewModel
 import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
+import com.nexters.ziine.android.presentation.component.ZiineErrorDialog
 import com.nexters.ziine.android.presentation.component.ZiineSnackbar
 import com.nexters.ziine.android.presentation.preview.ArtworkDetailPreviewParameterProvider
 import com.nexters.ziine.android.presentation.preview.DevicePreview
@@ -219,6 +221,14 @@ internal fun ArtworkDetailScreen(
             modifier = Modifier.align(Alignment.BottomCenter),
             hostState = snackbarHostState,
             snackbar = { ZiineSnackbar(message = it.visuals.message) },
+        )
+
+        ZiineErrorDialog(
+            isErrorDialogVisible = uiState.isError,
+            onDismissRequest = {},
+            titleResId = R.string.error_title,
+            descriptionResId = R.string.error_description,
+            onRetryClick = { onAction(ArtworkDetailUiAction.OnRetryClick) },
         )
     }
 }

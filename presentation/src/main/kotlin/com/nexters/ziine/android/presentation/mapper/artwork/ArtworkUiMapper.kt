@@ -14,7 +14,7 @@ import com.nexters.ziine.android.presentation.artworks.model.UiArtist
 import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
 import kotlinx.collections.immutable.toImmutableList
 
-fun Artwork.toUiArtworks() =
+fun Artwork.toUiArtwork() =
     UiArtwork(
         id = id,
         title = title,
@@ -46,9 +46,9 @@ fun ArtistDetail.toUiArtistDetail() =
         id = id,
         name = name,
         profileImageUrl = profileImageUrl,
-        education = education.toImmutableList(),
-        exhibition = exhibition.map { it.toUiExhibition() }.toImmutableList(),
-        contact = contact.map { it.toUiContact() }.toImmutableList(),
+        educations = educations.toImmutableList(),
+        exhibitions = exhibitions.map { it.toUiExhibition() }.toImmutableList(),
+        contacts = contacts.map { it.toUiContact() }.toImmutableList(),
         email = email,
     )
 
