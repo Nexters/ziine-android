@@ -22,8 +22,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.nexters.ziine.android.presentation.R
@@ -72,7 +73,7 @@ fun ZiineErrorDialog(
                 )
                 Spacer(modifier = Modifier.height(64.dp))
                 Image(
-                    painter = painterResource(id = R.drawable.placeholder),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.error_image),
                     contentDescription = "Error Image",
                     modifier = Modifier
                         .fillMaxWidth()

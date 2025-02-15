@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,12 +16,21 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.nexters.ziine.android.presentation.R
 
 @Composable
-internal fun SplashScreen(modifier: Modifier = Modifier) {
+internal fun SplashScreen(
+    onAnimationFinish: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(resId = R.raw.splash))
     val progress by animateLottieCompositionAsState(
         composition = composition,
         iterations = 1,
     )
+
+    LaunchedEffect(progress) {
+        if (progress == 1f) {
+            onAnimationFinish()
+        }
+    }
 
     Surface(
         modifier = modifier.fillMaxSize(),
