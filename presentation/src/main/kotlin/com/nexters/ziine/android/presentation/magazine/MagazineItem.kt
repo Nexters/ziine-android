@@ -31,14 +31,18 @@ import com.nexters.ziine.android.presentation.ui.theme.Heading3
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph2
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph4
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
+import kotlinx.collections.immutable.persistentListOf
 import kotlin.random.Random
+
+const val MAGAZINE_ITEM_WIDTH = 288
+const val MAGAZINE_ITEM_HEIGHT = 479
 
 @Composable
 fun MagazineItem(data: UiMagazine, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .width(288.dp)
-            .height(479.dp),
+            .width(MAGAZINE_ITEM_WIDTH.dp)
+            .height(MAGAZINE_ITEM_HEIGHT.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f),
         ),
