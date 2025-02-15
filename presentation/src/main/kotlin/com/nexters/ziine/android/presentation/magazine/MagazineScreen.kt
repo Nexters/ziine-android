@@ -1,6 +1,7 @@
 package com.nexters.ziine.android.presentation.magazine
 
-import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -8,9 +9,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -26,7 +31,9 @@ import com.nexters.ziine.android.presentation.common.util.toPx
 import com.nexters.ziine.android.presentation.common.util.tooDp
 import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineUiState
 import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineViewModel
+import com.nexters.ziine.android.presentation.preview.ComponentPreview
 import com.nexters.ziine.android.presentation.preview.DevicePreview
+import com.nexters.ziine.android.presentation.ui.theme.Paragraph5
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 import kotlin.math.absoluteValue
 
@@ -65,10 +72,14 @@ internal fun MagazineScreen(
         initialPage = (maxNumOfRounds / 2) * actualPageCount,
     )
 
+    /** 인디케이터 */
+    val actualPageNumber = pagerState.currentPage % actualPageCount
+
     Column(
         modifier = modifier
             .padding(padding)
             .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(24.dp))
         HorizontalPager(
@@ -85,7 +96,6 @@ internal fun MagazineScreen(
             pageSpacing = 12.dp,
             /** 대략 줄여놓은것 하단 todo와 동시 처리 필요 */
         ) { page ->
-            val actualPageNumber = page % actualPageCount
             MagazineItem(
                 data = uiState.magazines[actualPageNumber],
                 modifier = Modifier
@@ -96,7 +106,25 @@ internal fun MagazineScreen(
                     }, // todo: 현재 이미지 줄어드는 만큼 페이지간 간격도 넓어짐 보정 잡아야함(우선 넘어감)
             )
         }
+        Spacer(modifier = Modifier.height(12.dp))
+        MagazineIndicator(actualPageCount, actualPageNumber)
     }
+}
+
+@Composable
+private fun MagazineIndicator(totalPageCount: Int, currentPageNumber: Int) {
+    val uiCurrentPAgeCount = currentPageNumber + 1
+    Text(
+        modifier = Modifier
+            .height(27.dp)
+            .border(1.5.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(99.dp))
+            .background(MaterialTheme.colorScheme.tertiaryContainer, RoundedCornerShape(99.dp))
+            .padding(horizontal = 10.dp, vertical = 4.dp)
+            .wrapContentSize(Alignment.Center),
+        text = "$uiCurrentPAgeCount/$totalPageCount",
+        color = MaterialTheme.colorScheme.primary,
+        style = Paragraph5,
+    )
 }
 
 @DevicePreview
@@ -104,6 +132,14 @@ internal fun MagazineScreen(
 private fun MagazineScreenPreview() {
     ZiineTheme {
         MagazineScreen(padding = PaddingValues(), uiState = MagazineUiState())
+    }
+}
+
+@ComponentPreview
+@Composable
+private fun MagazineTagPreview() {
+    ZiineTheme {
+        MagazineIndicator(22, 1)
     }
 }
 
