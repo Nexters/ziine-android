@@ -13,6 +13,7 @@ private val DarkColorScheme = darkColorScheme(
     primary = Primary500,
     onPrimary = Gray900,
     secondaryContainer = Primary200,
+    onSecondaryContainer = Color(0xFF000000),
     background = Gray900,
     onBackground = Gray0,
     onSurface = Gray300,
