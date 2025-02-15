@@ -159,7 +159,7 @@ private fun getPendingGuideItems(): List<UiPendingGuideItem> =
                 }
                 append(stringResource(R.string.register_artwork_first_content_content_second))
             },
-            imageId = R.drawable.ic_arrow_back,
+            imageId = R.drawable.artwork_guide_1,
         ),
         UiPendingGuideItem(
             title = stringResource(R.string.register_artwork_second_content_title),
@@ -173,7 +173,7 @@ private fun getPendingGuideItems(): List<UiPendingGuideItem> =
                 }
                 append(stringResource(R.string.register_artwork_second_content_content_fourth))
             },
-            imageId = R.drawable.ic_arrow_back,
+            imageId = R.drawable.artwork_guide_2,
         ),
         UiPendingGuideItem(
             title = stringResource(R.string.register_artwork_third_content_title),
@@ -182,7 +182,7 @@ private fun getPendingGuideItems(): List<UiPendingGuideItem> =
                     append(stringResource(R.string.register_artwork_thirdcontent_content_first))
                 }
             },
-            imageId = R.drawable.ic_arrow_back,
+            imageId = R.drawable.artwork_guide_3,
         ),
     )
 
