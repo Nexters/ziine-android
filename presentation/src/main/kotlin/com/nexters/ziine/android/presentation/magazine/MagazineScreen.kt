@@ -48,8 +48,7 @@ internal fun MagazineRoute(
     modifier: Modifier = Modifier,
     navigateToMagazineDetail: (Int) -> Unit,
     magazineViewModel: MagazineViewModel = hiltViewModel(),
-
-    ) {
+) {
     val magazineUiState by magazineViewModel.uiState.collectAsStateWithLifecycle()
 
     ObserveAsEvents(flow = magazineViewModel.uiEvent) { event ->
@@ -64,7 +63,9 @@ internal fun MagazineRoute(
             modifier = modifier,
             onAction = magazineViewModel::onAction,
         )
-    } else LoadingIndicator(isLoading = true)
+    } else {
+        LoadingIndicator(isLoading = true)
+    }
 }
 
 @Composable
@@ -110,7 +111,6 @@ internal fun MagazineScreen(
                 ).tooDp(),
             ),
             pageSpacing = 12.dp,
-            /** 대략 줄여놓은것 하단 todo와 동시 처리 필요 */
         ) { page ->
             val actualPageNumber = page % actualPageCount
             val pageData = uiState.getMagazine(actualPageNumber)
@@ -118,11 +118,11 @@ internal fun MagazineScreen(
                 data = pageData,
                 modifier = Modifier
                     .clickable { onAction(MagazineUiAction.MagazineClicked(pageData.magazineId)) }
-                    .graphicsLayer {
+                    .graphicsLayer { // todo: 현재 이미지 줄어드는 만큼 페이지간 간격도 넓어짐 보정 잡아야함(우선 넘어감)
                         val scaleFactor = PagerItemShrinker.scaleFactor(pagerState, page)
                         scaleX = scaleFactor
                         scaleY = scaleFactor
-                    }, // todo: 현재 이미지 줄어드는 만큼 페이지간 간격도 넓어짐 보정 잡아야함(우선 넘어감)
+                    },
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
@@ -131,7 +131,10 @@ internal fun MagazineScreen(
 }
 
 @Composable
-private fun MagazineIndicator(totalPageCount: Int, currentPageNumber: Int) {
+private fun MagazineIndicator(
+    totalPageCount: Int,
+    currentPageNumber: Int,
+) {
     val uiCurrentPAgeCount = currentPageNumber + 1
     Text(
         modifier = Modifier
@@ -163,9 +166,15 @@ private fun MagazineTagPreview() {
 }
 
 private object PagerItemShrinker {
-    fun contentPaddingToAlignCenter(screenWidth: Int, pageItemWidth: Int): Int = (screenWidth - pageItemWidth) / 2
+    fun contentPaddingToAlignCenter(
+        screenWidth: Int,
+        pageItemWidth: Int,
+    ): Int = (screenWidth - pageItemWidth) / 2
 
-    fun scaleFactor(pagerState: PagerState, page: Int): Float {
+    fun scaleFactor(
+        pagerState: PagerState,
+        page: Int,
+    ): Float {
         val pageOffset = ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
         val scaleFactor = lerp(
             start = 0.9164f,

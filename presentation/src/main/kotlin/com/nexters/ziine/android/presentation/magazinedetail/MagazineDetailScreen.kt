@@ -82,7 +82,7 @@ private fun WebView.setRegisterSettingsToWebView(setIsScrolled: (Boolean) -> Uni
 
 @DevicePreview
 @Composable
-private fun  MagazineDetailScreenPreview() {
+private fun MagazineDetailScreenPreview() {
     ZiineTheme {
         MagazineDetailScreen(
             padding = PaddingValues(),
@@ -91,4 +91,3 @@ private fun  MagazineDetailScreenPreview() {
         )
     }
 }
-

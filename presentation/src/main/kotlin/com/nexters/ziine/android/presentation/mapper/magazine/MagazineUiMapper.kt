@@ -16,4 +16,3 @@ fun Magazines.toUiMagazines(): ImmutableList<UiMagazine> =
             backgroundColor = it.backgroundColor,
         )
     }.toImmutableList()
-

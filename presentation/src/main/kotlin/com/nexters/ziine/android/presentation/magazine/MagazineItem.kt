@@ -37,7 +37,10 @@ const val MAGAZINE_ITEM_WIDTH = 288
 const val MAGAZINE_ITEM_HEIGHT = 479
 
 @Composable
-fun MagazineItem(data: UiMagazine, modifier: Modifier = Modifier) {
+fun MagazineItem(
+    data: UiMagazine,
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = modifier
             .width(MAGAZINE_ITEM_WIDTH.dp)
@@ -81,7 +84,10 @@ fun MagazineItem(data: UiMagazine, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun MagazineTags(tags: List<String>, modifier: Modifier = Modifier) {
+private fun MagazineTags(
+    tags: List<String>,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -91,7 +97,10 @@ private fun MagazineTags(tags: List<String>, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun MagazineTag(tagName: String, modifier: Modifier = Modifier) {
+private fun MagazineTag(
+    tagName: String,
+    modifier: Modifier = Modifier
+) {
     Text(
         modifier = modifier
             .height(27.dp)

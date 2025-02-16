@@ -13,23 +13,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MagazineDetailViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-) : ViewModel() {
-    val magazineId = savedStateHandle.toRoute<Route.MagazineDetail>().magazineId
+class MagazineDetailViewModel
+    @Inject
+    constructor(
+        savedStateHandle: SavedStateHandle,
+    ) : ViewModel() {
+        val magazineId = savedStateHandle.toRoute<Route.MagazineDetail>().magazineId
 
-    private val _uiEvent = Channel<MagazineDetailUiEvent>()
-    val uiEvent: Flow<MagazineDetailUiEvent> = _uiEvent.receiveAsFlow()
+        private val _uiEvent = Channel<MagazineDetailUiEvent>()
+        val uiEvent: Flow<MagazineDetailUiEvent> = _uiEvent.receiveAsFlow()
 
-    fun onAction(action: MagazineDetailUiAction) {
-        when (action) {
-            is MagazineDetailUiAction.OnBackButtonClicked -> backToPrevious()
+        fun onAction(action: MagazineDetailUiAction) {
+            when (action) {
+                is MagazineDetailUiAction.OnBackButtonClicked -> backToPrevious()
+            }
+        }
+
+        private fun backToPrevious() {
+            viewModelScope.launch {
+                _uiEvent.send(MagazineDetailUiEvent.BackToPrevious)
+            }
         }
     }
-
-    private fun backToPrevious() {
-        viewModelScope.launch {
-            _uiEvent.send(MagazineDetailUiEvent.BackToPrevious)
-        }
-    }
-}

@@ -17,4 +17,3 @@ fun MagazineResponse.toMagazines(): Magazines =
             )
         },
     )
-
