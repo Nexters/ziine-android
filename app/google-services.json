@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "490168820196",
+    "project_id": "ziine-e6643",
+    "storage_bucket": "ziine-e6643.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490168820196:android:44ef933ef6aab8c05227f1",
+        "android_client_info": {
+          "package_name": "com.nexters.ziine.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNQ6j_g-QIrUMoSgivrClqDe_xMMZXJNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490168820196:android:c31e4481d01e415b5227f1",
+        "android_client_info": {
+          "package_name": "com.nexters.ziine.android.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNQ6j_g-QIrUMoSgivrClqDe_xMMZXJNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,41 @@
+<resources>
+    <string name="artworks">Artworks</string>
+    <string name="manazine">Magazine</string>
+
+    <!-- 작품 등록 대기 화면-->
+    <string name="register_artwork_main_title_first">작가님의 작품을 등록하기 전,</string>
+    <string name="register_artwork_main_title_second">꼭 확인해주세요!</string>
+
+    <string name="register_artwork_first_content_title">깔끔한 배경에서 촬영 또는 보정 및 크롭하여 업로드 해주세요.</string>
+    <string name="register_artwork_first_content_content_first">배경이 많이 보이거 빛 반사가 된 이미지와 같은 경우, </string>
+    <string name="register_artwork_first_content_content_second">작품 심사가 반려될 수 있어요.</string>
+
+    <string name="register_artwork_second_content_title">작품 승인 후 등록이 가능해요.</string>
+    <string name="register_artwork_second_content_content_first">작가가 작품 등록 요청 후, </string>
+    <string name="register_artwork_second_content_content_second">Ziine 측에서 등록 여부를 심사 후 등록돼요. </string>
+    <string name="register_artwork_second_content_content_third">작품 등록 화면에서 메일을 작성하면 </string>
+    <string name="register_artwork_second_content_content_fourth">심사 통과 여부를 메일로 받아볼 수 있어요.</string>
+
+
+    <string name="register_artwork_third_content_title">승인까지의 시간은 최대 3일 소요 예정이에요.</string>
+    <string name="register_artwork_thirdcontent_content_first">심사 통과 시, 별도의 추가 등록 과정 없이 자동으로 업로드 돼요.</string>
+
+    <string name="register_artwork_footer_button_text">작품 등록하기</string>
+    <!-- 작품 등록 완료 화면 -->
+    <string name="register_complete_footer_button_text">홈으로 이동하기</string>
+    <string name="register_complete_title">작품 등록이 완료되었어요!</string>
+
+    <string name="artwork_size">작품 사이즈</string>
+    <string name="artwork_material">재료</string>
+    <string name="artist_exhibition_record">작가 전시 이력</string>
+    <string name="more_work_activities">더 많은 작품 활동</string>
+    <string name="instagram">INSTAGRAM</string>
+    <string name="copy">복사하기</string>
+    <string name="website">WEBSITE</string>
+    <string name="other">OTHER</string>
+    <string name="link_has_been_copied">링크가 복사되었습니다.</string>
+    <string name="instagram_id_has_been_copied">인스타그램 아이디가 복사되었습니다.</string>
+    <string name="error_title">앗, 오류가 발생했어요.</string>
+    <string name="error_description">다시 시도해주세요.</string>
+    <string name="retry">다시 시도하기</string>
+</resources>
