@@ -61,6 +61,9 @@ private fun WebView.setGeneralSetting(photoPickerLauncher: ManagedActivityResult
         allowFileAccess = true
         mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         cacheMode = WebSettings.LOAD_NO_CACHE
+        setSupportZoom(false)
+        builtInZoomControls = false
+        displayZoomControls = false
     }
     webViewClient = WebViewClient()
     webChromeClient = ZiineWebChromeClient(photoPickerLauncher)
