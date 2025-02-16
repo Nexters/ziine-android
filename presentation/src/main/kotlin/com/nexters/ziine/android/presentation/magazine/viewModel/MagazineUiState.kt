@@ -7,4 +7,6 @@ import kotlinx.collections.immutable.persistentListOf
 data class MagazineUiState(
     val isLoading: Boolean = true,
     val magazines: ImmutableList<UiMagazine> = persistentListOf(),
-)
+) {
+    fun getMagazine(index: Int): UiMagazine = magazines[index]
+}

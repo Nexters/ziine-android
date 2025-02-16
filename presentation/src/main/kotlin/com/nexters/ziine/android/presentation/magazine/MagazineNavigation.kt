@@ -14,12 +14,14 @@ fun NavController.navigateToMagazine(navOptions: NavOptions) {
 
 fun NavGraphBuilder.magazineScreen(
     padding: PaddingValues,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToMagazineDetail: (Int) -> Unit
 ) {
     composable<MainTabRoute.Magazine> {
         MagazineRoute(
             padding = padding,
             modifier = modifier,
+            navigateToMagazineDetail = navigateToMagazineDetail
         )
     }
 }

@@ -46,13 +46,15 @@ import kotlin.math.absoluteValue
 internal fun MagazineRoute(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
+    navigateToMagazineDetail: (Int) -> Unit,
     magazineViewModel: MagazineViewModel = hiltViewModel(),
-) {
+
+    ) {
     val magazineUiState by magazineViewModel.uiState.collectAsStateWithLifecycle()
 
     ObserveAsEvents(flow = magazineViewModel.uiEvent) { event ->
         when (event) {
-            is MagazineUiEvent.MoveToMagazineDetail -> {}
+            is MagazineUiEvent.MoveToMagazineDetail -> navigateToMagazineDetail(event.magazineId)
         }
     }
     if (!magazineUiState.isLoading) {
@@ -111,7 +113,7 @@ internal fun MagazineScreen(
             /** 대략 줄여놓은것 하단 todo와 동시 처리 필요 */
         ) { page ->
             val actualPageNumber = page % actualPageCount
-            val pageData = uiState.magazines[actualPageNumber]
+            val pageData = uiState.getMagazine(actualPageNumber)
             MagazineItem(
                 data = pageData,
                 modifier = Modifier

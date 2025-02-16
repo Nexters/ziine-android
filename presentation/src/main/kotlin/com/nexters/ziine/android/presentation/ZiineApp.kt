@@ -32,6 +32,7 @@ import com.nexters.ziine.android.presentation.artworkdetail.artworkDetailScreen
 import com.nexters.ziine.android.presentation.artworks.artworksScreen
 import com.nexters.ziine.android.presentation.component.ZiineTopBar
 import com.nexters.ziine.android.presentation.magazine.magazineScreen
+import com.nexters.ziine.android.presentation.magazinedetail.magazineDetailScreen
 import com.nexters.ziine.android.presentation.navigation.MainTab
 import com.nexters.ziine.android.presentation.navigation.rememberMainNavController
 import com.nexters.ziine.android.presentation.registerArtwork.RegisterArtworkActivity
@@ -99,10 +100,17 @@ fun ZiineApp(modifier: Modifier = Modifier) {
                         padding = padding,
                         navigateToArtworkDetail = mainNavController::navigateToArtworkDetail,
                     )
-                    magazineScreen(padding = padding)
+                    magazineScreen(
+                        padding = padding,
+                        navigateToMagazineDetail = mainNavController::navigateToMagazineDetail,
+                    )
                     artworkDetailScreen(
                         padding = padding,
                         popBackStack = mainNavController::popBackStackIfNotArtworks,
+                    )
+                    magazineDetailScreen(
+                        padding = padding,
+                        backToPrevious = mainNavController::popBackStackIfNotArtworks,
                     )
                 }
             }

@@ -11,6 +11,7 @@ import androidx.navigation.navOptions
 import com.nexters.ziine.android.presentation.artworkdetail.navigateToArtworkDetail
 import com.nexters.ziine.android.presentation.artworks.navigateToArtworks
 import com.nexters.ziine.android.presentation.magazine.navigateToMagazine
+import com.nexters.ziine.android.presentation.magazinedetail.navigateToMagazineDetail
 
 class MainNavController(
     val navController: NavHostController,
@@ -43,6 +44,10 @@ class MainNavController(
             title = title,
             artworkImageUrl = artworkImageUrl,
         )
+    }
+
+    fun navigateToMagazineDetail(magazineId: Int) {
+        navController.navigateToMagazineDetail(magazineId)
     }
 
     private fun popBackStack() {

@@ -11,7 +11,7 @@ sealed interface Route {
     ) : Route
 
     @Serializable
-    data object MagazineDetail : Route
+    data class MagazineDetail(val magazineId: Int) : Route
 }
 
 sealed interface MainTabRoute : Route {
