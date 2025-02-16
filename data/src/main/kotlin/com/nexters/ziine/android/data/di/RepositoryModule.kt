@@ -15,7 +15,7 @@ import javax.inject.Singleton
 abstract class RepositoryModule {
     @Binds
     @Singleton
-    abstract fun bindArtworkRepository(defaultArtworkRepository: DefaultArtworkRepository): ArtworkRepository
+    abstract fun bindArtworkRepository(repository: DefaultArtworkRepository): ArtworkRepository
 
     @Binds
     @Singleton

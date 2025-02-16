@@ -34,13 +34,13 @@ data class ArtistDetailResponse(
     @SerialName("profileImageUrl")
     val profileImageUrl: String,
     @SerialName("educations")
-    val educations: List<String>,
+    val educations: List<String>?,
     @SerialName("exhibitions")
-    val exhibitions: List<ExhibitionResponse>,
+    val exhibitions: List<ExhibitionResponse>?,
     @SerialName("contacts")
-    val contacts: List<ContactResponse>,
+    val contacts: List<ContactResponse>?,
     @SerialName("email")
-    val email: String,
+    val email: String?,
 )
 
 @Serializable

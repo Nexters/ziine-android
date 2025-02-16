@@ -11,10 +11,10 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="${appName}"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ziine"
-        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <provider
@@ -27,17 +27,24 @@
                 android:name="com.nexters.ziine.android.initializer.TimberInitializer"
                 android:value="androidx.startup" />
 
+            <meta-data
+                android:name="com.nexters.ziine.android.initializer.FirebaseCrashlyticsInitializer"
+                android:value="androidx.startup" />
+
         </provider>
 
         <!-- Trigger Google Play services to install the backported photo picker module. -->
-        <service android:name="com.google.android.gms.metadata.ModuleDependencies"
+        <service
+            android:name="com.google.android.gms.metadata.ModuleDependencies"
             android:enabled="false"
             android:exported="false"
             tools:ignore="MissingClass">
             <intent-filter>
                 <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
             </intent-filter>
-            <meta-data android:name="photopicker_activity:0:required" android:value="" />
+            <meta-data
+                android:name="photopicker_activity:0:required"
+                android:value="" />
         </service>
 
     </application>

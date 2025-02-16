@@ -7,10 +7,10 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ZiineService {
-    @GET("/api/v1/artworks")
+    @GET("api/v1/artworks")
     suspend fun fetchArtworks(): ArtworksResponse
 
-    @GET("/api/v1/artworks/{artwork_id}")
+    @GET("api/v1/artworks/{artwork_id}")
     suspend fun fetchArtworkDetail(
         @Path("artwork_id") artworkId: Int,
     ): ArtworkDetailResponse

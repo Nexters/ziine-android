@@ -69,7 +69,7 @@ fun ZiineApp(modifier: Modifier = Modifier) {
         },
         floatingActionButton = {
             AnimatedVisibility(
-                visible = tabController.shouldShowTopBar(),
+                visible = tabController.shouldShowFloatingActionButton(),
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {
