@@ -1,7 +1,6 @@
 package com.nexters.ziine.android.presentation.artworks
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.Image
@@ -28,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworks.model.UiArtist
@@ -39,17 +39,18 @@ import com.nexters.ziine.android.presentation.ui.theme.Heading4
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph2
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 
-// TODO title 영역 그라이언트 박스 깔아야함
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworkItem(
     artwork: UiArtwork,
     onArtworkItemSelect: () -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No SharedElementScope found")
+
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No AnimatedVisibilityScope found")
 
     with(sharedTransitionScope) {
         Box(
@@ -157,6 +158,7 @@ private fun ArtworkItemPreview() {
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
                 ) {
                     ArtworkItem(
                         artwork = UiArtwork(
@@ -170,7 +172,6 @@ private fun ArtworkItemPreview() {
                             title = "Artwork Name",
                         ),
                         onArtworkItemSelect = {},
-                        animatedVisibilityScope = this@AnimatedVisibility,
                     )
                 }
             }

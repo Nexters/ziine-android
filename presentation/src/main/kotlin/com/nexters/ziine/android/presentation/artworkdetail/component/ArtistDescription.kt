@@ -20,10 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtistDetail
-import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetail
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiContact
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiExhibition
-import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiState
 import com.nexters.ziine.android.presentation.component.NetworkImage
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph2
@@ -34,7 +32,7 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 internal fun ArtistDescription(
-    uiState: ArtworkDetailUiState,
+    artistDetail: UiArtistDetail,
     onCopyClick: (String, String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -46,7 +44,7 @@ internal fun ArtistDescription(
     ) {
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = uiState.artworkDetail.artist.name,
+            text = artistDetail.name,
             style = Subtitle1,
             color = MaterialTheme.colorScheme.onBackground,
         )
@@ -56,21 +54,21 @@ internal fun ArtistDescription(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             NetworkImage(
-                imageUrl = uiState.artworkDetail.artist.profileImageUrl,
-                contentDescription = "Profile Image of ${uiState.artworkDetail.artist.name}",
+                imageUrl = artistDetail.profileImageUrl,
+                contentDescription = "Artist Profile Image",
                 modifier = Modifier
                     .size(28.dp)
                     .clip(CircleShape),
             )
             Spacer(modifier = Modifier.width(6.dp))
             Text(
-                text = uiState.artworkDetail.artist.name,
+                text = artistDetail.name,
                 style = Paragraph2,
                 color = MaterialTheme.colorScheme.onBackground,
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        EducationTags(educations = uiState.artworkDetail.artist.educations)
+        EducationTags(educations = artistDetail.educations)
         Spacer(modifier = Modifier.height(40.dp))
         Row(modifier = Modifier.fillMaxWidth()) {
             Text(
@@ -80,7 +78,7 @@ internal fun ArtistDescription(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        ExhibitionRecords(exhibitionRecords = uiState.artworkDetail.artist.exhibitions)
+        ExhibitionRecords(exhibitionRecords = artistDetail.exhibitions)
         Spacer(modifier = Modifier.height(40.dp))
         Text(
             text = stringResource(R.string.more_work_activities),
@@ -89,7 +87,7 @@ internal fun ArtistDescription(
         )
         Spacer(modifier = Modifier.height(40.dp))
         ContactLinks(
-            contacts = uiState.artworkDetail.artist.contacts,
+            contacts = artistDetail.contacts,
             onCopyClick = onCopyClick,
         )
     }
@@ -100,38 +98,34 @@ internal fun ArtistDescription(
 private fun ArtistDescriptionPreview() {
     ZiineTheme {
         ArtistDescription(
-            uiState = ArtworkDetailUiState(
-                artworkDetail = UiArtworkDetail(
-                    artist = UiArtistDetail(
-                        id = 0,
-                        name = "작가명",
-                        profileImageUrl = "",
-                        educations = persistentListOf("이화여자대학교", "서양학과"),
-                        exhibitions = persistentListOf(
-                            UiExhibition(
-                                title = "서울 OO갤러리 개인전",
-                                exhibitionDate = "2022.11.30",
-                            ),
-                            UiExhibition(
-                                title = "서울 OO갤러리 개인전",
-                                exhibitionDate = "2022.11.30",
-                            ),
-                            UiExhibition(
-                                title = "서울 OO갤러리 개인전",
-                                exhibitionDate = "2022.11.30",
-                            ),
-                        ),
-                        contacts = persistentListOf(
-                            UiContact(
-                                type = "INSTAGRAM",
-                                value = "인스타그램 아이디",
-                            ),
-                            UiContact(
-                                type = "WEBSITE",
-                                value = "www.aaaabbbbcccc.com",
-                            ),
-                        )
-                    )
+            artistDetail = UiArtistDetail(
+                id = 0,
+                name = "작가명",
+                profileImageUrl = "",
+                educations = persistentListOf("이화여자대학교", "서양학과"),
+                exhibitions = persistentListOf(
+                    UiExhibition(
+                        title = "서울 OO갤러리 개인전",
+                        exhibitionDate = "2022.11.30",
+                    ),
+                    UiExhibition(
+                        title = "서울 OO갤러리 개인전",
+                        exhibitionDate = "2022.11.30",
+                    ),
+                    UiExhibition(
+                        title = "서울 OO갤러리 개인전",
+                        exhibitionDate = "2022.11.30",
+                    ),
+                ),
+                contacts = persistentListOf(
+                    UiContact(
+                        type = "INSTAGRAM",
+                        value = "인스타그램 아이디",
+                    ),
+                    UiContact(
+                        type = "WEBSITE",
+                        value = "www.aaaabbbbcccc.com",
+                    ),
                 ),
             ),
             onCopyClick = { _, _ -> },

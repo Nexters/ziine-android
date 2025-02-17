@@ -1,6 +1,7 @@
 package com.nexters.ziine.android.presentation
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
@@ -40,6 +41,8 @@ import kotlinx.collections.immutable.toImmutableList
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
+
+val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibilityScope?> { null }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable

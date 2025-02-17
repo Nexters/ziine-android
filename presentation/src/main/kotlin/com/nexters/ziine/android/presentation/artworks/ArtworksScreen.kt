@@ -6,7 +6,6 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +25,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksUiAction
@@ -43,7 +43,6 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 internal fun ArtworksRoute(
     padding: PaddingValues,
     navigateToArtworkDetail: (Int, String, String) -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     artworksViewModel: ArtworksViewModel = hiltViewModel(),
 ) {
     val artworksUiState by artworksViewModel.uiState.collectAsStateWithLifecycle()
@@ -64,7 +63,6 @@ internal fun ArtworksRoute(
         padding = padding,
         uiState = artworksUiState,
         onAction = artworksViewModel::onAction,
-        animatedVisibilityScope = animatedVisibilityScope,
     )
 }
 
@@ -73,7 +71,6 @@ internal fun ArtworksScreen(
     padding: PaddingValues,
     uiState: ArtworksUiState,
     onAction: (ArtworksUiAction) -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     val context = LocalContext.current
     val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -112,7 +109,6 @@ internal fun ArtworksScreen(
                             ),
                         )
                     },
-                    animatedVisibilityScope = animatedVisibilityScope,
                 )
             }
         }
@@ -141,12 +137,12 @@ private fun ArtworksScreenPreview(
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
                 ) {
                     ArtworksScreen(
                         padding = PaddingValues(),
                         uiState = uiState,
                         onAction = {},
-                        animatedVisibilityScope = this@AnimatedVisibility,
                     )
                 }
             }

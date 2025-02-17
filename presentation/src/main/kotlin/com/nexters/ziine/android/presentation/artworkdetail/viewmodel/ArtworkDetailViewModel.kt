@@ -69,6 +69,7 @@ class ArtworkDetailViewModel
                                     material = uiArtworkDetail.material,
                                     description = uiArtworkDetail.description,
                                     artworkImageUrl = artworkImageUrl,
+                                    shareUrl = uiArtworkDetail.shareUrl,
                                     artist = UiArtistDetail(
                                         id = uiArtworkDetail.artist.id,
                                         name = uiArtworkDetail.artist.name,
@@ -88,7 +89,6 @@ class ArtworkDetailViewModel
                                         }.toImmutableList(),
                                         email = uiArtworkDetail.artist.email,
                                     ),
-                                    shareUrl = uiArtworkDetail.shareUrl,
                                 ),
                                 isError = false,
                             )

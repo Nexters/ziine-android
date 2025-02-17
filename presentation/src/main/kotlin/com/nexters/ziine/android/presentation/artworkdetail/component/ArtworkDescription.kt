@@ -1,7 +1,6 @@
 package com.nexters.ziine.android.presentation.artworkdetail.component
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
@@ -32,10 +31,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetail
-import com.nexters.ziine.android.presentation.artworkdetail.viewmodel.ArtworkDetailUiState
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
 import com.nexters.ziine.android.presentation.ui.theme.Heading4
 import com.nexters.ziine.android.presentation.ui.theme.Paragraph2
@@ -46,13 +45,15 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworkDescription(
-    uiState: ArtworkDetailUiState,
+    artworkDetail: UiArtworkDetail,
     onShareClick: (String) -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No SharedElementScope found")
+
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No AnimatedVisibilityScope found")
 
     with(sharedTransitionScope) {
         Column(
@@ -67,10 +68,10 @@ internal fun ArtworkDescription(
                 verticalAlignment = Alignment.Top,
             ) {
                 Text(
-                    text = uiState.artworkDetail.title,
+                    text = artworkDetail.title,
                     modifier = Modifier
                         .sharedBounds(
-                            sharedContentState = rememberSharedContentState(key = uiState.artworkDetail.title),
+                            sharedContentState = rememberSharedContentState(key = artworkDetail.title),
                             animatedVisibilityScope = animatedVisibilityScope
                         )
                         .weight(1f),
@@ -79,7 +80,7 @@ internal fun ArtworkDescription(
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 IconButton(
-                    onClick = { onShareClick(uiState.artworkDetail.shareUrl) },
+                    onClick = { onShareClick(artworkDetail.shareUrl) },
                     modifier = Modifier.then(Modifier.size(32.dp))
                 ) {
                     Icon(
@@ -120,7 +121,7 @@ internal fun ArtworkDescription(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = "${uiState.artworkDetail.width}cm",
+                        text = "${artworkDetail.width}cm",
                         color = MaterialTheme.colorScheme.onSecondary,
                         style = Paragraph3,
                     )
@@ -132,7 +133,7 @@ internal fun ArtworkDescription(
                     )
                     Spacer(modifier = Modifier.width(2.dp))
                     Text(
-                        text = "${uiState.artworkDetail.height}cm",
+                        text = "${artworkDetail.height}cm",
                         color = MaterialTheme.colorScheme.onSecondary,
                         style = Paragraph3,
                     )
@@ -168,7 +169,7 @@ internal fun ArtworkDescription(
                 Spacer(modifier = Modifier.width(8.dp))
                 Row {
                     Text(
-                        text = uiState.artworkDetail.material,
+                        text = artworkDetail.material,
                         color = MaterialTheme.colorScheme.onSecondary,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
@@ -179,7 +180,7 @@ internal fun ArtworkDescription(
             Spacer(modifier = Modifier.height(20.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = uiState.artworkDetail.description,
+                    text = artworkDetail.description,
                     style = Paragraph2,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
@@ -198,20 +199,18 @@ private fun ArtworkDescriptionPreview() {
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
                 ) {
                     ArtworkDescription(
-                        uiState = ArtworkDetailUiState(
-                            artworkDetail = UiArtworkDetail(
-                                id = 0,
-                                title = "작품 제목 작품 제목 작품 제목 작품 제목 작품 제목 작품 제목",
-                                width = 120,
-                                height = 120,
-                                material = "캔버스에 유화 캔버스에 유화 캔버스에 유화 캔버스에 유화 캔버스에 유화 캔버스에 유화",
-                                description = "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text",
-                            ),
+                        artworkDetail = UiArtworkDetail(
+                            id = 0,
+                            title = "작품 제목 작품 제목 작품 제목 작품 제목 작품 제목 작품 제목",
+                            width = 120,
+                            height = 120,
+                            material = "캔버스에 유화 캔버스에 유화 캔버스에 유화 캔버스에 유화 캔버스에 유화 캔버스에 유화",
+                            description = "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text",
                         ),
                         onShareClick = {},
-                        animatedVisibilityScope = this@AnimatedVisibility,
                     )
                 }
             }
