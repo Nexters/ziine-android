@@ -30,7 +30,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -71,7 +70,7 @@ internal fun ArtworkDetailRoute(
     val context = LocalContext.current
     val systemUiController = rememberExSystemUiController()
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+//    val scope = rememberCoroutineScope()
     var isScrollPositionChanged by remember { mutableStateOf(false) }
 
     DisposableEffect(systemUiController, isScrollPositionChanged) {
@@ -92,15 +91,6 @@ internal fun ArtworkDetailRoute(
         when (event) {
             is ArtworkDetailUiEvent.NavigateBack -> popBackStack()
             is ArtworkDetailUiEvent.ShareUrl -> {
-//                val clipboardManager =
-//                    context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-//                val clip = ClipData.newPlainText("artwork_url", event.url)
-//                clipboardManager.setPrimaryClip(clip)
-
-//                scope.launch {
-//                    snackbarHostState.showSnackbar(context.getString(R.string.link_has_been_copied))
-//                }
-
                 val sendIntent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, event.url)
@@ -172,13 +162,13 @@ internal fun ArtworkDetailScreen(
         ) {
             item {
                 ArtworkDetailItem(
-                    artwork = uiState.artworkDetail,
+                    artworkImageUrl = uiState.artworkDetail.artworkImageUrl,
                     animatedVisibilityScope = animatedVisibilityScope,
                 )
             }
             item {
                 ArtworkDescription(
-                    uiState = uiState,
+                    artworkDetail = uiState.artworkDetail,
                     onShareClick = { url -> onAction(ArtworkDetailUiAction.OnShareClick(url)) },
                     animatedVisibilityScope = animatedVisibilityScope,
                 )
@@ -198,7 +188,7 @@ internal fun ArtworkDetailScreen(
             }
             item {
                 ArtistDescription(
-                    uiState = uiState,
+                    artistDetail = uiState.artworkDetail.artist,
                     onCopyClick = { type, value ->
                         onAction(ArtworkDetailUiAction.OnCopyClick(type, value))
                     },

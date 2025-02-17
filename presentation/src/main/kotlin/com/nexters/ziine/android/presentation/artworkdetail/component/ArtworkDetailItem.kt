@@ -13,10 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
-import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetail
-import com.nexters.ziine.android.presentation.artworks.ArtworkItem
-import com.nexters.ziine.android.presentation.artworks.model.UiArtist
-import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
 import com.nexters.ziine.android.presentation.component.NetworkImage
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
@@ -24,7 +20,7 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworkDetailItem(
-    artwork: UiArtworkDetail,
+    artworkImageUrl: String,
     animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
@@ -35,15 +31,15 @@ internal fun ArtworkDetailItem(
         Box(
             modifier = modifier
                 .sharedElement(
-                    rememberSharedContentState(key = artwork.artworkImageUrl),
+                    rememberSharedContentState(key = artworkImageUrl),
                     animatedVisibilityScope = animatedVisibilityScope,
                 )
                 .fillMaxWidth()
                 .heightIn(max = 900.dp),
         ) {
             NetworkImage(
-                imageUrl = artwork.artworkImageUrl,
-                contentDescription = "${artwork.title} by ${artwork.artist.name}",
+                imageUrl = artworkImageUrl,
+                contentDescription = "Artwork Image",
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.FillWidth,
             )
@@ -61,18 +57,8 @@ private fun ArtworkItemPreview() {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
                 ) {
-                    ArtworkItem(
-                        artwork = UiArtwork(
-                            id = 1,
-                            artworkImageUrl = "",
-                            artist = UiArtist(
-                                id = 1,
-                                name = "Artist Name",
-                                profileImageUrl = "",
-                            ),
-                            title = "Artwork Name",
-                        ),
-                        onArtworkItemSelect = {},
+                    ArtworkDetailItem(
+                        artworkImageUrl = "",
                         animatedVisibilityScope = this@AnimatedVisibility,
                     )
                 }
