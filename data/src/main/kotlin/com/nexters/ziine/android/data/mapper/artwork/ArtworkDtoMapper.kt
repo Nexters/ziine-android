@@ -37,8 +37,8 @@ fun ArtworkDetailResponse.toArtworkDetail() =
         material = material,
         description = description,
         artworkImageUrl = artworkImageUrl,
-        artist = artist.toArtistDetail(),
         shareUrl = shareUrl,
+        artist = artist.toArtistDetail(),
     )
 
 fun ArtistDetailResponse.toArtistDetail() =

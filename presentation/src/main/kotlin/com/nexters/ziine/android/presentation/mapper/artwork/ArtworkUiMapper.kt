@@ -38,7 +38,8 @@ fun ArtworkDetail.toUiArtworkDetail() =
         material = material,
         description = description,
         artworkImageUrl = artworkImageUrl,
-        artist = artist.toUiArtistDetail()
+        shareUrl = shareUrl,
+        artist = artist.toUiArtistDetail(),
     )
 
 fun ArtistDetail.toUiArtistDetail() =
