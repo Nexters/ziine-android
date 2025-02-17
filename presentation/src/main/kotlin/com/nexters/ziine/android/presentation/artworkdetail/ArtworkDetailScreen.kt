@@ -5,7 +5,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
@@ -39,6 +38,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworkdetail.component.ArtistDescription
@@ -62,7 +62,6 @@ import tech.thdev.compose.exteions.system.ui.controller.rememberExSystemUiContro
 internal fun ArtworkDetailRoute(
     padding: PaddingValues,
     popBackStack: () -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     artworkDetailViewModel: ArtworkDetailViewModel = hiltViewModel()
 ) {
     val artworkDetailUiState by artworkDetailViewModel.uiState.collectAsStateWithLifecycle()
@@ -125,7 +124,6 @@ internal fun ArtworkDetailRoute(
         uiState = artworkDetailUiState,
         onAction = artworkDetailViewModel::onAction,
         snackbarHostState = snackbarHostState,
-        animatedVisibilityScope = animatedVisibilityScope,
         onScrollPositionChanged = { isScrollPositionChanged = it }
     )
 }
@@ -136,7 +134,6 @@ internal fun ArtworkDetailScreen(
     uiState: ArtworkDetailUiState,
     onAction: (ArtworkDetailUiAction) -> Unit,
     snackbarHostState: SnackbarHostState,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     onScrollPositionChanged: (Boolean) -> Unit,
 ) {
     val scrollState = rememberLazyListState()
@@ -161,17 +158,10 @@ internal fun ArtworkDetailScreen(
             modifier = Modifier.fillMaxSize(),
         ) {
             item {
-                ArtworkDetailItem(
-                    artworkImageUrl = uiState.artworkDetail.artworkImageUrl,
-                    animatedVisibilityScope = animatedVisibilityScope,
-                )
+                ArtworkDetailItem(artworkImageUrl = uiState.artworkDetail.artworkImageUrl)
             }
             item {
-                ArtworkDescription(
-                    artworkDetail = uiState.artworkDetail,
-                    onShareClick = { url -> onAction(ArtworkDetailUiAction.OnShareClick(url)) },
-                    animatedVisibilityScope = animatedVisibilityScope,
-                )
+                ArtworkDescription(artworkDetail = uiState.artworkDetail, onShareClick = { url -> onAction(ArtworkDetailUiAction.OnShareClick(url)) })
             }
             item {
                 Spacer(modifier = Modifier.height(16.dp))
@@ -235,13 +225,13 @@ private fun ArtworkDetailScreenPreview(
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
                 ) {
                     ArtworkDetailScreen(
                         padding = PaddingValues(),
                         uiState = uiState,
                         onAction = {},
                         snackbarHostState = remember { SnackbarHostState() },
-                        animatedVisibilityScope = this@AnimatedVisibility,
                         onScrollPositionChanged = {},
                     )
                 }

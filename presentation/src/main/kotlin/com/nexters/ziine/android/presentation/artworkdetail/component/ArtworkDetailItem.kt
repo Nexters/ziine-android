@@ -1,7 +1,6 @@
 package com.nexters.ziine.android.presentation.artworkdetail.component
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Box
@@ -12,6 +11,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.component.NetworkImage
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
@@ -21,11 +21,13 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 @Composable
 internal fun ArtworkDetailItem(
     artworkImageUrl: String,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No SharedElementScope found")
+
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No AnimatedVisibilityScope found")
 
     with(sharedTransitionScope) {
         Box(
@@ -56,11 +58,9 @@ private fun ArtworkItemPreview() {
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
                 ) {
-                    ArtworkDetailItem(
-                        artworkImageUrl = "",
-                        animatedVisibilityScope = this@AnimatedVisibility,
-                    )
+                    ArtworkDetailItem(artworkImageUrl = "")
                 }
             }
         }

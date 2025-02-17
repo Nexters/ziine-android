@@ -1,7 +1,6 @@
 package com.nexters.ziine.android.presentation.artworkdetail.component
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
@@ -32,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
 import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetail
@@ -47,11 +47,13 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 internal fun ArtworkDescription(
     artworkDetail: UiArtworkDetail,
     onShareClick: (String) -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No SharedElementScope found")
+
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No AnimatedVisibilityScope found")
 
     with(sharedTransitionScope) {
         Column(
@@ -197,6 +199,7 @@ private fun ArtworkDescriptionPreview() {
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
                 ) {
                     ArtworkDescription(
                         artworkDetail = UiArtworkDetail(
@@ -208,7 +211,6 @@ private fun ArtworkDescriptionPreview() {
                             description = "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text",
                         ),
                         onShareClick = {},
-                        animatedVisibilityScope = this@AnimatedVisibility,
                     )
                 }
             }

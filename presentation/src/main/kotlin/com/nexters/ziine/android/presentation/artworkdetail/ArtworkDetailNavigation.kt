@@ -1,9 +1,11 @@
 package com.nexters.ziine.android.presentation.artworkdetail
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.navigation.Route
 
 fun NavController.navigateToArtworkDetail(
@@ -19,10 +21,11 @@ fun NavGraphBuilder.artworkDetailScreen(
     popBackStack: () -> Unit,
 ) {
     composable<Route.ArtworkDetail> {
-        ArtworkDetailRoute(
-            padding = padding,
-            popBackStack = popBackStack,
-            animatedVisibilityScope = this@composable,
-        )
+        CompositionLocalProvider(LocalNavAnimatedVisibilityScope provides this@composable) {
+            ArtworkDetailRoute(
+                padding = padding,
+                popBackStack = popBackStack,
+            )
+        }
     }
 }
