@@ -16,6 +16,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -92,13 +93,13 @@ private fun CompleteUi(modifier: Modifier = Modifier) {
 @Composable
 private fun StickyFooter(moveToHome: () -> Unit) {
     val context = LocalContext.current
+    val vibrator = remember { getVibrator(context) }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.background),
     ) {
-        val vibrator = getVibrator(context)
-
         Spacer(modifier = Modifier.height(12.dp))
         Button(
             onClick = {
