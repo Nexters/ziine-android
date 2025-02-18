@@ -30,7 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
 import com.nexters.ziine.android.presentation.common.util.toPx
-import com.nexters.ziine.android.presentation.common.util.tooDp
+import com.nexters.ziine.android.presentation.common.util.toDp
 import com.nexters.ziine.android.presentation.component.LoadingIndicator
 import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineUiAction
 import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineUiEvent
@@ -108,7 +108,7 @@ internal fun MagazineScreen(
                 horizontal = PagerItemShrinker.contentPaddingToAlignCenter(
                     screenWidth = screenWidth,
                     pageItemWidth = magazineItemWidth,
-                ).tooDp(),
+                ).toDp(),
             ),
             pageSpacing = 12.dp,
         ) { page ->

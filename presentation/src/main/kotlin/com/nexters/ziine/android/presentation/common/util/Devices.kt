@@ -27,7 +27,7 @@ fun Dp.toPx(): Int {
 }
 
 @Composable
-fun Int.tooDp(): Dp {
+fun Int.toDp(): Dp {
     val density = LocalDensity.current
     return with(density) { toDp() }
 }
