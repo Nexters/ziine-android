@@ -230,13 +230,13 @@ private fun GuideContentGeneralForm(
 @Composable
 private fun StickyFooter(onMoveToRegisterButtonClicked: () -> Unit) {
     val context = LocalContext.current
+    val vibrator = remember { getVibrator(context) }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.background),
     ) {
-        val vibrator = getVibrator(context)
-
         Spacer(modifier = Modifier.height(12.dp))
         Button(
             onClick = {

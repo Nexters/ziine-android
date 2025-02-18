@@ -1,10 +1,6 @@
 package com.nexters.ziine.android.presentation.artworks
 
-import android.content.Context
-import android.os.Build
 import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
@@ -18,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,6 +30,7 @@ import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksUiEvent
 import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksUiState
 import com.nexters.ziine.android.presentation.artworks.viewmodel.ArtworksViewModel
 import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
+import com.nexters.ziine.android.presentation.common.util.getVibrator
 import com.nexters.ziine.android.presentation.component.LoadingIndicator
 import com.nexters.ziine.android.presentation.component.ZiineErrorDialog
 import com.nexters.ziine.android.presentation.preview.ArtworksPreviewParameterProvider
@@ -73,14 +71,7 @@ internal fun ArtworksScreen(
     onAction: (ArtworksUiAction) -> Unit,
 ) {
     val context = LocalContext.current
-    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        val vibratorManager =
-            context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-        vibratorManager.defaultVibrator
-    } else {
-        @Suppress("DEPRECATION")
-        context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-    }
+    val vibrator = remember { getVibrator(context) }
 
     Box(
         modifier = Modifier
