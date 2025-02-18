@@ -78,14 +78,6 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.data)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.startup)
 
     implementation(libs.hilt)

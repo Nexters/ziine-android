@@ -1,7 +1,6 @@
 package com.nexters.ziine.android.presentation.artworkdetail.component
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Box
@@ -12,11 +11,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.nexters.ziine.android.presentation.LocalNavAnimatedVisibilityScope
 import com.nexters.ziine.android.presentation.LocalSharedTransitionScope
-import com.nexters.ziine.android.presentation.artworkdetail.model.UiArtworkDetail
-import com.nexters.ziine.android.presentation.artworks.ArtworkItem
-import com.nexters.ziine.android.presentation.artworks.model.UiArtist
-import com.nexters.ziine.android.presentation.artworks.model.UiArtwork
 import com.nexters.ziine.android.presentation.component.NetworkImage
 import com.nexters.ziine.android.presentation.preview.ComponentPreview
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
@@ -24,26 +20,28 @@ import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtworkDetailItem(
-    artwork: UiArtworkDetail,
-    animatedVisibilityScope: AnimatedVisibilityScope,
+    artworkImageUrl: String,
     modifier: Modifier = Modifier,
 ) {
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No SharedElementScope found")
 
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No AnimatedVisibilityScope found")
+
     with(sharedTransitionScope) {
         Box(
             modifier = modifier
                 .sharedElement(
-                    rememberSharedContentState(key = artwork.artworkImageUrl),
+                    rememberSharedContentState(key = artworkImageUrl),
                     animatedVisibilityScope = animatedVisibilityScope,
                 )
                 .fillMaxWidth()
                 .heightIn(max = 900.dp),
         ) {
             NetworkImage(
-                imageUrl = artwork.artworkImageUrl,
-                contentDescription = "${artwork.title} by ${artwork.artist.name}",
+                imageUrl = artworkImageUrl,
+                contentDescription = "Artwork Image",
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.FillWidth,
             )
@@ -60,21 +58,9 @@ private fun ArtworkItemPreview() {
             AnimatedVisibility(visible = true) {
                 CompositionLocalProvider(
                     LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                    LocalNavAnimatedVisibilityScope provides this@AnimatedVisibility,
                 ) {
-                    ArtworkItem(
-                        artwork = UiArtwork(
-                            id = 1,
-                            artworkImageUrl = "",
-                            artist = UiArtist(
-                                id = 1,
-                                name = "Artist Name",
-                                profileImageUrl = "",
-                            ),
-                            title = "Artwork Name",
-                        ),
-                        onArtworkItemSelect = {},
-                        animatedVisibilityScope = this@AnimatedVisibility,
-                    )
+                    ArtworkDetailItem(artworkImageUrl = "")
                 }
             }
         }
