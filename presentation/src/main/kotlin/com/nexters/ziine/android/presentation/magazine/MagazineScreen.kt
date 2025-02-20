@@ -169,7 +169,10 @@ private object PagerItemShrinker {
     fun contentPaddingToAlignCenter(
         screenWidth: Int,
         pageItemWidth: Int,
-    ): Int = (screenWidth - pageItemWidth) / 2
+    ): Int {
+        if (screenWidth <= pageItemWidth) return 0
+        return (screenWidth - pageItemWidth) / 2
+    }
 
     fun scaleFactor(
         pagerState: PagerState,
