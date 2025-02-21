@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.webkit.WebSettings
 import android.webkit.WebView
+import android.webkit.WebView.setWebContentsDebuggingEnabled
 import android.webkit.WebViewClient
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -17,6 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.nexters.ziine.android.presentation.BuildConfig
 
 @Composable
 internal fun ComposeWrappedWebView(
@@ -34,6 +36,10 @@ internal fun ComposeWrappedWebView(
         modifier = modifier,
         factory = { context ->
             getWebView(context).apply {
+                /** 디버그 모드에서 웹 콘텐츠 디버깅 활성화 */
+                if (BuildConfig.DEBUG) {
+                    setWebContentsDebuggingEnabled(true)
+                }
                 /** 웹뷰 일반 설정 초기화 */
                 setGeneralSetting(photoPickerLauncher)
                 /** 웹뷰 생명주기 관련 초기화 */
