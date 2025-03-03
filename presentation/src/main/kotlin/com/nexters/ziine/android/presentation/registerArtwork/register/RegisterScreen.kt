@@ -1,5 +1,6 @@
 package com.nexters.ziine.android.presentation.registerArtwork.register
 
+import android.os.VibrationEffect
 import android.webkit.WebView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -9,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
+import com.nexters.ziine.android.presentation.common.util.getVibrator
 import com.nexters.ziine.android.presentation.common.webViews.ComposeWrappedWebView
 import com.nexters.ziine.android.presentation.common.webViews.ZiineWebViewBridge
 import com.nexters.ziine.android.presentation.common.webViews.ZiineWebViewBridge.Companion.ZIINE_APP_BRIDGE_NAME
@@ -28,9 +31,15 @@ internal fun RegisterRoute(
     navigateToComplete: () -> Unit,
     registerViewModel: RegisterViewModel = hiltViewModel(),
 ) {
+    val context = LocalContext.current
+    val vibrator = remember { getVibrator(context) }
+
     ObserveAsEvents(flow = registerViewModel.uiEvent) { event ->
         when (event) {
-            is RegisterUiEvent.NavigateToComplete -> navigateToComplete()
+            is RegisterUiEvent.NavigateToComplete -> {
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                navigateToComplete()
+            }
             is RegisterUiEvent.BackToPrevious -> backToPrevious()
         }
     }

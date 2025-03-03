@@ -60,9 +60,15 @@ internal fun PendingRoute(
     navigateToRegister: () -> Unit,
     pendingViewModel: PendingViewModel = hiltViewModel(),
 ) {
+    val context = LocalContext.current
+    val vibrator = remember { getVibrator(context) }
+
     ObserveAsEvents(flow = pendingViewModel.uiEvent) { event ->
         when (event) {
-            is PendingUiEvent.NavigateToRegister -> navigateToRegister()
+            is PendingUiEvent.NavigateToRegister -> {
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                navigateToRegister()
+            }
             is PendingUiEvent.FinishActivity -> activityFinishAction()
         }
     }
@@ -229,9 +235,6 @@ private fun GuideContentGeneralForm(
 
 @Composable
 private fun StickyFooter(onMoveToRegisterButtonClicked: () -> Unit) {
-    val context = LocalContext.current
-    val vibrator = remember { getVibrator(context) }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -240,7 +243,6 @@ private fun StickyFooter(onMoveToRegisterButtonClicked: () -> Unit) {
         Spacer(modifier = Modifier.height(12.dp))
         Button(
             onClick = {
-                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
                 onMoveToRegisterButtonClicked()
             },
             modifier = Modifier

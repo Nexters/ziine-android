@@ -1,5 +1,6 @@
 package com.nexters.ziine.android.presentation.magazine
 
+import android.os.VibrationEffect
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -29,6 +30,7 @@ import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
+import com.nexters.ziine.android.presentation.common.util.getVibrator
 import com.nexters.ziine.android.presentation.common.util.toPx
 import com.nexters.ziine.android.presentation.common.util.toDp
 import com.nexters.ziine.android.presentation.component.LoadingIndicator
@@ -50,10 +52,15 @@ internal fun MagazineRoute(
     magazineViewModel: MagazineViewModel = hiltViewModel(),
 ) {
     val magazineUiState by magazineViewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val vibrator = remember { getVibrator(context) }
 
     ObserveAsEvents(flow = magazineViewModel.uiEvent) { event ->
         when (event) {
-            is MagazineUiEvent.MoveToMagazineDetail -> navigateToMagazineDetail(event.magazineId)
+            is MagazineUiEvent.MoveToMagazineDetail -> {
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                navigateToMagazineDetail(event.magazineId)
+            }
         }
     }
     if (!magazineUiState.isLoading) {
