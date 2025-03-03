@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -48,9 +47,7 @@ internal fun ArtworkDetailTopBar(
         ) {
             IconButton(
                 onClick = onBackClick,
-                modifier = Modifier
-                    .padding(top = 8.dp, start = 16.dp)
-                    .then(Modifier.size(20.dp)),
+                modifier = Modifier.size(44.dp),
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_back),
