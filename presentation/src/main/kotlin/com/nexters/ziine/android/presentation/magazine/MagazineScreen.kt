@@ -1,8 +1,10 @@
 package com.nexters.ziine.android.presentation.magazine
 
+import android.os.VibrationEffect
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -28,10 +30,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nexters.ziine.android.presentation.R
 import com.nexters.ziine.android.presentation.common.util.ObserveAsEvents
+import com.nexters.ziine.android.presentation.common.util.getVibrator
 import com.nexters.ziine.android.presentation.common.util.toPx
 import com.nexters.ziine.android.presentation.common.util.toDp
 import com.nexters.ziine.android.presentation.component.LoadingIndicator
+import com.nexters.ziine.android.presentation.component.ZiineErrorDialog
 import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineUiAction
 import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineUiEvent
 import com.nexters.ziine.android.presentation.magazine.viewModel.MagazineUiState
@@ -50,22 +55,24 @@ internal fun MagazineRoute(
     magazineViewModel: MagazineViewModel = hiltViewModel(),
 ) {
     val magazineUiState by magazineViewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val vibrator = remember { getVibrator(context) }
 
     ObserveAsEvents(flow = magazineViewModel.uiEvent) { event ->
         when (event) {
-            is MagazineUiEvent.MoveToMagazineDetail -> navigateToMagazineDetail(event.magazineId)
+            is MagazineUiEvent.MoveToMagazineDetail -> {
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                navigateToMagazineDetail(event.magazineId)
+            }
         }
     }
-    if (!magazineUiState.isLoading) {
-        MagazineScreen(
-            padding = padding,
-            uiState = magazineUiState,
-            modifier = modifier,
-            onAction = magazineViewModel::onAction,
-        )
-    } else {
-        LoadingIndicator(isLoading = true)
-    }
+
+    MagazineScreen(
+        padding = padding,
+        uiState = magazineUiState,
+        modifier = modifier,
+        onAction = magazineViewModel::onAction,
+    )
 }
 
 @Composable
@@ -80,53 +87,71 @@ internal fun MagazineScreen(
     val screenWidth = remember { context.resources.displayMetrics.widthPixels }
     val magazineItemWidth = MAGAZINE_ITEM_WIDTH.dp.toPx()
 
-    /** 무한 페이저 */
-    val actualPageCount = uiState.magazines.size
-    val pageCount = Int.MAX_VALUE
-    val maxNumOfRounds = Int.MAX_VALUE / actualPageCount
-    val pagerState = rememberPagerState(
-        pageCount = { pageCount },
-        initialPage = (maxNumOfRounds / 2) * actualPageCount,
-    )
-
-    /** 인디케이터 */
-    val indicatorPageNumber = pagerState.currentPage % actualPageCount
-
-    Column(
+    Box(
         modifier = modifier
-            .padding(padding)
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .fillMaxSize()
+            .padding(padding),
     ) {
-        Spacer(modifier = Modifier.height(24.dp))
-        HorizontalPager(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally),
-            state = pagerState,
-            contentPadding = PaddingValues(
-                horizontal = PagerItemShrinker.contentPaddingToAlignCenter(
-                    screenWidth = screenWidth,
-                    pageItemWidth = magazineItemWidth,
-                ).toDp(),
-            ),
-            pageSpacing = 12.dp,
-        ) { page ->
-            val actualPageNumber = page % actualPageCount
-            val pageData = uiState.getMagazine(actualPageNumber)
-            MagazineItem(
-                data = pageData,
-                modifier = Modifier
-                    .clickable { onAction(MagazineUiAction.MagazineClicked(pageData.magazineId)) }
-                    .graphicsLayer { // todo: 현재 이미지 줄어드는 만큼 페이지간 간격도 넓어짐 보정 잡아야함(우선 넘어감)
-                        val scaleFactor = PagerItemShrinker.scaleFactor(pagerState, page)
-                        scaleX = scaleFactor
-                        scaleY = scaleFactor
-                    },
+        if (uiState.magazines.isNotEmpty()) {
+            /** 무한 페이저 */
+            val actualPageCount = uiState.magazines.size
+            val pageCount = Int.MAX_VALUE
+            val maxNumOfRounds = Int.MAX_VALUE / actualPageCount
+            val pagerState = rememberPagerState(
+                pageCount = { pageCount },
+                initialPage = (maxNumOfRounds / 2) * actualPageCount,
             )
+
+            /** 인디케이터 */
+            val indicatorPageNumber = pagerState.currentPage % actualPageCount
+
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Spacer(modifier = Modifier.height(24.dp))
+                HorizontalPager(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    state = pagerState,
+                    contentPadding = PaddingValues(
+                        horizontal = PagerItemShrinker.contentPaddingToAlignCenter(
+                            screenWidth = screenWidth,
+                            pageItemWidth = magazineItemWidth,
+                        ).toDp(),
+                    ),
+                    pageSpacing = 12.dp,
+                ) { page ->
+                    val actualPageNumber = page % actualPageCount
+                    val pageData = uiState.getMagazine(actualPageNumber)
+
+                    MagazineItem(
+                        data = pageData,
+                        modifier = Modifier
+                            .clickable { onAction(MagazineUiAction.OnMagazineClicked(pageData.magazineId)) }
+                            .graphicsLayer { // todo: 현재 이미지 줄어드는 만큼 페이지간 간격도 넓어짐 보정 잡아야함(우선 넘어감)
+                                val scaleFactor = PagerItemShrinker.scaleFactor(pagerState, page)
+                                scaleX = scaleFactor
+                                scaleY = scaleFactor
+                            },
+                    )
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+
+                MagazineIndicator(actualPageCount, indicatorPageNumber)
+            }
         }
-        Spacer(modifier = Modifier.height(12.dp))
-        MagazineIndicator(actualPageCount, indicatorPageNumber)
+
+        LoadingIndicator(isLoading = uiState.isLoading)
+
+        ZiineErrorDialog(
+            isErrorDialogVisible = uiState.isError,
+            onDismissRequest = {},
+            titleResId = R.string.error_title,
+            descriptionResId = R.string.error_description,
+            onRetryClick = { onAction(MagazineUiAction.OnRetryClicked) },
+        )
     }
 }
 
@@ -169,7 +194,10 @@ private object PagerItemShrinker {
     fun contentPaddingToAlignCenter(
         screenWidth: Int,
         pageItemWidth: Int,
-    ): Int = (screenWidth - pageItemWidth) / 2
+    ): Int {
+        if (screenWidth <= pageItemWidth) return 0
+        return (screenWidth - pageItemWidth) / 2
+    }
 
     fun scaleFactor(
         pagerState: PagerState,

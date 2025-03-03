@@ -42,9 +42,15 @@ internal fun CompleteRoute(
     activityFinishAction: () -> Unit,
     completeViewModel: CompleteViewModel = hiltViewModel(),
 ) {
+    val context = LocalContext.current
+    val vibrator = remember { getVibrator(context) }
+
     ObserveAsEvents(flow = completeViewModel.uiEvent) { event ->
         when (event) {
-            is CompleteUiEvent.FinishActivity -> activityFinishAction()
+            is CompleteUiEvent.FinishActivity -> {
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                activityFinishAction()
+            }
         }
     }
 
@@ -84,7 +90,7 @@ private fun CompleteUi(modifier: Modifier = Modifier) {
         LottieImage(
             resId = R.raw.artwork_register_completed,
             iterations = 1,
-            modifier = Modifier.size(280.dp)
+            modifier = Modifier.size(280.dp),
         )
         Spacer(Modifier.weight(155f))
     }
@@ -92,9 +98,6 @@ private fun CompleteUi(modifier: Modifier = Modifier) {
 
 @Composable
 private fun StickyFooter(moveToHome: () -> Unit) {
-    val context = LocalContext.current
-    val vibrator = remember { getVibrator(context) }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -102,10 +105,7 @@ private fun StickyFooter(moveToHome: () -> Unit) {
     ) {
         Spacer(modifier = Modifier.height(12.dp))
         Button(
-            onClick = {
-                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
-                moveToHome()
-            },
+            onClick = moveToHome,
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()

@@ -2,7 +2,6 @@ package com.nexters.ziine.android.presentation.magazine.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nexters.ziine.android.domain.repository.MagazineRepository
 import com.nexters.ziine.android.presentation.mapper.magazine.toUiMagazines
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,13 +13,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MagazineViewModel
     @Inject
     constructor(
-        private val magazineRepository: MagazineRepository
+        private val magazineRepository: MagazineRepository,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(MagazineUiState())
         val uiState: StateFlow<MagazineUiState> = _uiState.asStateFlow()
@@ -30,7 +30,8 @@ class MagazineViewModel
 
         fun onAction(action: MagazineUiAction) {
             when (action) {
-                is MagazineUiAction.MagazineClicked -> moveToMagazineDetail(action.magazineId)
+                is MagazineUiAction.OnMagazineClicked -> moveToMagazineDetail(action.magazineId)
+                is MagazineUiAction.OnRetryClicked -> fetchMagazines()
             }
         }
 
@@ -41,14 +42,20 @@ class MagazineViewModel
         private fun fetchMagazines() {
             viewModelScope.launch {
                 _uiState.update { it.copy(isLoading = true) }
-                magazineRepository.fetchMagazines().onSuccess { magazines ->
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            magazines = magazines.toUiMagazines()
-                        )
+                magazineRepository.fetchMagazines()
+                    .onSuccess { magazines ->
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                magazines = magazines.toUiMagazines(),
+                                isError = false,
+                            )
+                        }
+                    }.onFailure { exception ->
+                        Timber.e(exception)
+                        _uiState.update { it.copy(isError = true) }
                     }
-                }
+                _uiState.update { it.copy(isLoading = false) }
             }
         }
 

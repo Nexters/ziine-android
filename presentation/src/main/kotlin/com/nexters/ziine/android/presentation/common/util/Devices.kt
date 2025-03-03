@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 
@@ -20,12 +21,14 @@ fun getVibrator(context: Context): Vibrator {
     return vibrator
 }
 
+@ReadOnlyComposable
 @Composable
 fun Dp.toPx(): Int {
     val density = LocalDensity.current
     return with(density) { toPx() }.toInt()
 }
 
+@ReadOnlyComposable
 @Composable
 fun Int.toDp(): Dp {
     val density = LocalDensity.current

@@ -44,10 +44,13 @@ internal fun ArtworksRoute(
     artworksViewModel: ArtworksViewModel = hiltViewModel(),
 ) {
     val artworksUiState by artworksViewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val vibrator = remember { getVibrator(context) }
 
     ObserveAsEvents(flow = artworksViewModel.uiEvent) { event ->
         when (event) {
             is ArtworksUiEvent.NavigateToArtworkDetail -> {
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
                 navigateToArtworkDetail(
                     event.id,
                     event.title,
@@ -70,9 +73,6 @@ internal fun ArtworksScreen(
     uiState: ArtworksUiState,
     onAction: (ArtworksUiAction) -> Unit,
 ) {
-    val context = LocalContext.current
-    val vibrator = remember { getVibrator(context) }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -91,7 +91,6 @@ internal fun ArtworksScreen(
                 ArtworkItem(
                     artwork = artwork,
                     onArtworkItemSelect = {
-                        vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
                         onAction(
                             ArtworksUiAction.OnArtworkItemSelect(
                                 id = artwork.id,
