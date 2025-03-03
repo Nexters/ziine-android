@@ -15,20 +15,22 @@ class TabController(
 
     private var lastSelectedTab = mutableStateOf(MainTab.ARTWORKS)
 
-    val currentTab: MainTab?
+    val currentTab: MainTab
         @Composable get() {
             val tabFromDestination = MainTab.find { tab ->
                 currentDestination?.hasRoute(tab::class) == true
             }
 
+            if (currentDestination?.hasRoute<Route.MagazineDetail>() == true) {
+                if (lastSelectedTab.value != MainTab.MAGAZINE) {
+                    lastSelectedTab.value = MainTab.MAGAZINE
+                }
+                return MainTab.MAGAZINE
+            }
+
             // 메인 탭 화면에 있을 때 마지막 선택된 탭 업데이트
             if (tabFromDestination != null) {
                 lastSelectedTab.value = tabFromDestination
-            }
-
-            // Magazine 상세 화면에서는 Magazine 탭을 선택된 상태로 유지
-            if (tabFromDestination == null && currentDestination?.hasRoute<Route.MagazineDetail>() == true) {
-                return MainTab.MAGAZINE
             }
 
             // 현재 탭 또는 마지막 선택된 탭 반환
