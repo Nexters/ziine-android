@@ -3,8 +3,8 @@
 targetSdk = "35"
 compileSdk = "35"
 minSdk = "28"
-versionCode = "3"
-versionName = "1.0.2"
+versionCode = "4"
+versionName = "1.0.3"
 
 secrets-gradle-plugin = "2.0.1"
 
@@ -17,10 +17,10 @@ kotlinx-collections-immutable = "0.3.8"
 
 # android
 agp = "8.7.3"
-activity-compose = "1.10.0"
-androidx-activity-ktx = "1.10.0"
+activity-compose = "1.10.1"
+androidx-activity-ktx = "1.10.1"
 androidx-lifecycle = "2.8.7"
-androidx-navigation = "2.8.7"
+androidx-navigation = "2.8.8"
 androidx-core-splashscreen = "1.0.1"
 androidx-core-ktx = "1.15.0"
 androidx-startup = "1.2.0"

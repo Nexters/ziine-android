@@ -56,6 +56,19 @@ fun ZiineTopBar(
 ) {
     val density = LocalDensity.current
 
+    // 이전 탭 추적
+    var previousTab by remember { mutableStateOf(currentTab) }
+    // 애니메이션 스킵 여부
+    var skipAnimation by remember { mutableStateOf(false) }
+
+    // 이전 탭과 현재 탭이 같으면 애니메이션 스킵
+    if (previousTab == MainTab.MAGAZINE && currentTab == MainTab.MAGAZINE) {
+        skipAnimation = true
+    } else {
+        skipAnimation = false
+        previousTab = currentTab
+    }
+
     AnimatedVisibility(
         visible = visible,
         enter = fadeIn(),
@@ -72,14 +85,20 @@ fun ZiineTopBar(
 
             val targetOffset: Int =
                 if (currentTab != null) tabPositions[tabs.indexOf(currentTab)].offset else 0
-            val animatedOffset by animateIntAsState(
-                targetValue = targetOffset,
-                animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioNoBouncy,
-                    stiffness = Spring.StiffnessLow
-                ),
-                label = "tab offset animation"
-            )
+
+            // 애니메이션 조건부 적용
+            val animatedOffset by if (skipAnimation) {
+                remember(targetOffset) { mutableIntStateOf(targetOffset) }
+            } else {
+                animateIntAsState(
+                    targetValue = targetOffset,
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessLow
+                    ),
+                    label = "tab offset animation"
+                )
+            }
 
             Box(
                 modifier = Modifier.align(Alignment.Center)

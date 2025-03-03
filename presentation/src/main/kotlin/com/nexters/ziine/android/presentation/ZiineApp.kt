@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,8 +23,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import com.nexters.ziine.android.presentation.artworkdetail.artworkDetailScreen
@@ -50,11 +58,24 @@ fun ZiineApp(modifier: Modifier = Modifier) {
     val mainNavController = rememberMainNavController()
     val tabController = mainNavController.tabController
     val context = LocalContext.current
+    var isVisible by remember { mutableStateOf(true) }
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(
+                available: Offset,
+                source: NestedScrollSource
+            ): Offset {
+                isVisible = available.y >= 0
+                return Offset.Zero
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.background),
+            .background(color = MaterialTheme.colorScheme.background)
+            .nestedScroll(nestedScrollConnection),
         topBar = {
             ZiineTopBar(
                 visible = tabController.shouldShowTopBar(),
@@ -72,7 +93,7 @@ fun ZiineApp(modifier: Modifier = Modifier) {
         },
         floatingActionButton = {
             AnimatedVisibility(
-                visible = tabController.shouldShowFloatingActionButton(),
+                visible = tabController.shouldShowFloatingActionButton() && isVisible,
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {
@@ -83,7 +104,7 @@ fun ZiineApp(modifier: Modifier = Modifier) {
                     contentColor = MaterialTheme.colorScheme.onBackground,
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Add,
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_add),
                         contentDescription = "Add",
                     )
                 }

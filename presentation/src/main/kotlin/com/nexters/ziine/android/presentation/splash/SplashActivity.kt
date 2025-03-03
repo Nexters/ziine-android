@@ -1,6 +1,7 @@
 package com.nexters.ziine.android.presentation.splash
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
@@ -9,7 +10,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.DisposableEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.nexters.ziine.android.presentation.MainActivity
-import com.nexters.ziine.android.presentation.common.extensions.startActivityWithAnimation
 import com.nexters.ziine.android.presentation.ui.theme.Primary500
 import com.nexters.ziine.android.presentation.ui.theme.ZiineTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,10 +39,11 @@ class SplashActivity : ComponentActivity() {
             ZiineTheme {
                 SplashScreen(
                     onAnimationFinish = {
-                        activity?.startActivityWithAnimation<MainActivity>(
-                            withFinish = true,
-                            intentBuilder = { this },
-                        )
+                        activity?.let {
+                            val intent = Intent(it, MainActivity::class.java)
+                            it.startActivity(intent)
+                            it.finish()
+                        }
                     }
                 )
             }

@@ -65,6 +65,9 @@ fun NetworkImage(
             modifier = modifier,
             error = failureImage,
             contentScale = contentScale,
+            onSuccess = { drawable ->
+                Timber.d("Image loaded successfully: $drawable")
+            },
             onError = { exception ->
                 Timber.e("${exception.result.throwable}")
             },
